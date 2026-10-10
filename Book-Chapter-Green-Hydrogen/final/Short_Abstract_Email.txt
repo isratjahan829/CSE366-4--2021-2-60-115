@@ -1,0 +1,22 @@
+To: lahby@ieee.org
+Subject: Short abstract submission - Springer book "Generative AI and Mathematical Optimization for Green Hydrogen Systems"
+
+Dear Editors,
+
+Please find below our short abstract for the Springer volume "Generative AI and Mathematical Optimization for Green Hydrogen Systems: Operational Trends and Technical Challenges".
+
+Author list:
+[Author name 1], Department of Computer Science and Engineering, East West University, Dhaka, Bangladesh, [email]
+[Add co-authors / supervisor]
+
+Chapter title:
+Generative AI-Driven Scenario Generation and Stochastic Optimization for Solar-Powered Green Hydrogen Systems
+
+Suggested part:
+Part III - Generative AI for Renewable Energy Forecasting, Scenario Generation, and Uncertainty Modeling
+
+Abstract:
+Sizing solar-powered green hydrogen plants on a single typical weather year hides the bad years that drive storage needs and supply shortfalls. This chapter couples a physics-informed conditional variational autoencoder, trained on open NREL irradiance data, with a genetic algorithm that sizes the PV array, PEM electrolyser, battery and hydrogen tank under risk-neutral and CVaR risk-averse formulations with a reliability chance constraint. The generator produces realistic hourly weather years with multi-day persistence and matches or outperforms Gaussian and bootstrap baselines on probabilistic scores. In semi-arid and humid case studies, scenario-based designs kept 95% supply reliability in 49-78% of unseen real-weather years versus 32-42% for single-year designs, for an LCOH premium of only 1-2.5%. The chapter closes with practical lessons on validating generative models for storage sizing, arid-site deployment and trustworthy AI in hydrogen infrastructure.
+
+Best regards,
+[Your name]
