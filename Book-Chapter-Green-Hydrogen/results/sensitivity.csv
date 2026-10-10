@@ -1,0 +1,21 @@
+site,param,factor,lcoh_mean
+A_semiarid_CO,Electrolyzer CAPEX,0.7,6.612205721298048
+B_humid_NC,Electrolyzer CAPEX,0.7,7.101817747246632
+A_semiarid_CO,Electrolyzer CAPEX,1.3,8.650533044160902
+B_humid_NC,Electrolyzer CAPEX,1.3,9.050780213500317
+A_semiarid_CO,PV CAPEX,0.7,6.815467198381218
+B_humid_NC,PV CAPEX,0.7,7.131505287207034
+A_semiarid_CO,PV CAPEX,1.3,8.447271567077733
+B_humid_NC,PV CAPEX,1.3,9.021092673539913
+A_semiarid_CO,Backup H2 price,0.7,7.522290041640132
+B_humid_NC,Backup H2 price,0.7,7.954306550890416
+A_semiarid_CO,Backup H2 price,1.3,7.740448723818819
+B_humid_NC,Backup H2 price,1.3,8.198291409856534
+A_semiarid_CO,Battery CAPEX,0.7,7.606694425818521
+B_humid_NC,Battery CAPEX,0.7,8.05648316032889
+A_semiarid_CO,Battery CAPEX,1.3,7.65604433964043
+B_humid_NC,Battery CAPEX,1.3,8.096114800418059
+A_semiarid_CO,Discount rate,0.7,6.677501060032025
+B_humid_NC,Discount rate,0.7,7.056676745447005
+A_semiarid_CO,Discount rate,1.3,8.659459286501773
+B_humid_NC,Discount rate,1.3,9.17558723229055

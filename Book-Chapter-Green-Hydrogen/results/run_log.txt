@@ -1,0 +1,69 @@
+               GHI_kWh_m2_yr  Tair_mean   kt_mean
+site                                             
+A_semiarid_CO       1748.852   8.075908  0.764140
+B_humid_NC          1566.203  14.421849  0.787979
+epoch     0  rec   827.387  KL   1.390  beta 0.00
+epoch   250  rec     9.236  KL  19.417  beta 0.42
+epoch   500  rec     9.466  KL  12.578  beta 0.83
+epoch   750  rec     9.540  KL  10.220  beta 1.00
+epoch  1000  rec     8.770  KL   9.679  beta 1.00
+epoch  1250  rec     8.256  KL   9.534  beta 1.00
+epoch  1500  rec     7.826  KL   9.337  beta 1.00
+epoch  1750  rec     7.619  KL   9.127  beta 1.00
+epoch  2000  rec     7.602  KL   8.966  beta 1.00
+epoch  2250  rec     6.985  KL   8.983  beta 1.00
+epoch  2500  rec     6.903  KL   8.876  beta 1.00
+epoch  2750  rec     6.515  KL   8.830  beta 1.00
+            site                  method        ES      CRPS    PICP90
+0  A_semiarid_CO                    CVAE  0.314719  0.683735  0.876712
+1  A_semiarid_CO  Gaussian (monthly MVN)  0.316393  0.718980  0.808219
+2  A_semiarid_CO     Bootstrap (+/-15 d)  0.315736  0.714073  0.753425
+3  A_semiarid_CO     Climatology (point)  0.721641  2.129180  0.000000
+4     B_humid_NC                    CVAE  0.322206  0.694136  0.863014
+5     B_humid_NC  Gaussian (monthly MVN)  0.329600  0.715896  0.849315
+6     B_humid_NC     Bootstrap (+/-15 d)  0.323614  0.694201  0.849315
+7     B_humid_NC     Climatology (point)  0.609638  1.617732  0.000000
+{'A_semiarid_CO': {'hist_kwh_m2': 1748.852, 'cvae_mean': 1760.5529265675996, 'cvae_p5': 1701.601750740857, 'cvae_p95': 1807.8989664717362, 'hist_dark_run': 4, 'cvae_dark_run_mean': 3.72, 'cvae_dark_run_p95': 6.0, 'boot_dark_run_mean': 3.99}, 'B_humid_NC': {'hist_kwh_m2': 1566.203, 'cvae_mean': 1589.1192314080402, 'cvae_p5': 1547.0717336576952, 'cvae_p95': 1633.0735785511486, 'hist_dark_run': 4, 'cvae_dark_run_mean': 4.135, 'cvae_dark_run_p95': 7.0, 'boot_dark_run_mean': 3.83}} {'A_semiarid_CO': 0.3521333338106467, 'B_humid_NC': 0.29566771890067345}
+gen   0  best 9.9301  x=[1800.4  662.9 2986.   129.6]
+gen  10  best 7.9019  x=[1848.8  957.9    0.   198.7]
+gen  20  best 7.6716  x=[1794.7  859.7  108.7  232.8]
+gen  30  best 7.6714  x=[1792.   859.   115.3  232.9]
+gen  40  best 7.6706  x=[1793.5  859.   111.5  232.9]
+gen  50  best 7.6516  x=[1777.8  871.6  105.   211.7]
+{'site': 'A_semiarid_CO', 'formulation': 'deterministic', 'PV_kWp': np.float64(1777.7765197607107), 'EL_kW': np.float64(876.4405297144203), 'BATT_kWh': np.float64(86.46641478234265), 'TANK_kg': np.float64(212.70359006895387), 'capex_musd': 2.2502017117038573, 'ga_seconds': 22.5, 'cvae_lcoh_mean': 7.551197407431087, 'cvae_lcoh_p95': 7.751815686948787, 'cvae_lcoh_cvar90': 7.7581675374762735, 'cvae_rel_mean': 0.9600847449261449, 'cvae_rel_p5': 0.9399322195663368, 'cvae_p_rel95': 0.8, 'cvae_curtail_pct': 32.12301316377306, 'cvae_el_cf': 25.78846144897666, 'cvae_el_hours': 3916.22, 'boot_lcoh_mean': 7.687418761863058, 'boot_lcoh_p95': 7.811029078203099, 'boot_lcoh_cvar90': 7.826284091858179, 'boot_rel_mean': 0.9464010216844412, 'boot_rel_p5': 0.933984113965703, 'boot_p_rel95': 0.32, 'boot_curtail_pct': 31.92517434057664, 'boot_el_cf': 25.4208433203649, 'boot_el_hours': 3898.795, 'hist_lcoh_mean': 7.651021304758621, 'hist_lcoh_p95': 7.651021304758621, 'hist_lcoh_cvar90': 7.651021304758621, 'hist_rel_mean': 0.9500572202886035, 'hist_rel_p5': 0.9500572202886035, 'hist_p_rel95': 1.0, 'hist_curtail_pct': 32.29342261572419, 'hist_el_cf': 25.519050792393138, 'hist_el_hours': 3995.0}
+gen   0  best 9.8073  x=[1800.4  662.9 2986.   129.6]
+gen  10  best 7.8535  x=[1793.   821.9  482.7  283.6]
+gen  20  best 7.6621  x=[1775.6  930.8   23.   233.4]
+gen  30  best 7.6479  x=[1788.8  919.8   23.3  231.9]
+gen  40  best 7.6295  x=[1778.9  907.    73.1  224.4]
+gen  50  best 7.6289  x=[1778.6  906.7   73.5  224.8]
+{'site': 'A_semiarid_CO', 'formulation': 'risk_neutral', 'PV_kWp': np.float64(1779.7369996291188), 'EL_kW': np.float64(906.2064987235887), 'BATT_kWh': np.float64(73.4867041609374), 'TANK_kg': np.float64(223.907040337308), 'capex_musd': 2.2861859956885913, 'ga_seconds': 42.9, 'cvae_lcoh_mean': 7.631369382729475, 'cvae_lcoh_p95': 7.832578318946398, 'cvae_lcoh_cvar90': 7.8385665952735355, 'cvae_rel_mean': 0.9636402196368854, 'cvae_rel_p5': 0.9434294862267097, 'cvae_p_rel95': 0.895, 'cvae_curtail_pct': 32.03940511850975, 'cvae_el_cf': 25.034320762861185, 'cvae_el_hours': 3891.98, 'boot_lcoh_mean': 7.766894743614915, 'boot_lcoh_p95': 7.889860147245382, 'boot_lcoh_cvar90': 7.906880964139273, 'boot_rel_mean': 0.9500263233976959, 'boot_rel_p5': 0.937674187595892, 'boot_p_rel95': 0.485, 'boot_curtail_pct': 31.825375865610923, 'boot_el_cf': 24.6800919063529, 'boot_el_hours': 3867.435, 'hist_lcoh_mean': 7.726745573182745, 'hist_lcoh_p95': 7.726745573182745, 'hist_lcoh_cvar90': 7.726745573182745, 'hist_rel_mean': 0.954059378360597, 'hist_rel_p5': 0.954059378360597, 'hist_p_rel95': 1.0, 'hist_curtail_pct': 32.16274560824234, 'hist_el_cf': 24.784801143235942, 'hist_el_hours': 3946.0}
+gen   0  best 9.8906  x=[1800.4  662.9 2986.   129.6]
+gen  10  best 7.9612  x=[1629.2  925.8  135.5  523.7]
+gen  20  best 7.7565  x=[1826.5  905.5   77.9  187.1]
+gen  30  best 7.7332  x=[1827.9  905.2   45.5  185.8]
+gen  40  best 7.7283  x=[1815.6  904.2   63.5  187.2]
+gen  50  best 7.7279  x=[1812.6  905.4   64.   187. ]
+{'site': 'A_semiarid_CO', 'formulation': 'risk_averse', 'PV_kWp': np.float64(1812.6409040788753), 'EL_kW': np.float64(905.3985821682267), 'BATT_kWh': np.float64(64.0083331343254), 'TANK_kg': np.float64(187.03992392748285), 'capex_musd': 2.285597323277671, 'ga_seconds': 44.0, 'cvae_lcoh_mean': 7.6345998208953985, 'cvae_lcoh_p95': 7.83343561892155, 'cvae_lcoh_cvar90': 7.83588812151695, 'cvae_rel_mean': 0.9634945451691296, 'cvae_rel_p5': 0.9435208705126095, 'cvae_p_rel95': 0.89, 'cvae_curtail_pct': 33.278407615614526, 'cvae_el_cf': 25.05347791920419, 'cvae_el_hours': 3887.965, 'boot_lcoh_mean': 7.764846960738228, 'boot_lcoh_p95': 7.888449914356566, 'boot_lcoh_cvar90': 7.904092570336223, 'boot_rel_mean': 0.950410742721982, 'boot_rel_p5': 0.9379945726286297, 'boot_p_rel95': 0.5, 'boot_curtail_pct': 33.03393737610185, 'boot_el_cf': 24.712059006768634, 'boot_el_hours': 3862.045, 'hist_lcoh_mean': 7.733924435533728, 'hist_lcoh_p95': 7.733924435533728, 'hist_lcoh_cvar90': 7.733924435533728, 'hist_rel_mean': 0.9535169713049572, 'hist_rel_p5': 0.9535169713049572, 'hist_p_rel95': 1.0, 'hist_curtail_pct': 33.43101855508755, 'hist_el_cf': 24.7928140617519, 'hist_el_hours': 3934.0}
+gen   0  best 9.9567  x=[1800.4  662.9 2986.   129.6]
+gen  10  best 8.0985  x=[1867.7  970.5    0.   272.8]
+gen  20  best 7.9513  x=[1847.7  926.    81.7  228. ]
+gen  30  best 7.9130  x=[1847.8  927.2   83.8  187.2]
+gen  40  best 7.8845  x=[1897.   895.2   84.   181.2]
+gen  50  best 7.8845  x=[1873.   898.5  113.2  180.9]
+{'site': 'B_humid_NC', 'formulation': 'deterministic', 'PV_kWp': np.float64(1897.1435691023235), 'EL_kW': np.float64(891.6370676268687), 'BATT_kWh': np.float64(89.86420324607141), 'TANK_kg': np.float64(181.15674445506139), 'capex_musd': 2.3296844434424964, 'ga_seconds': 22.4, 'cvae_lcoh_mean': 7.900418596347907, 'cvae_lcoh_p95': 8.07071245254729, 'cvae_lcoh_cvar90': 8.081901052815578, 'cvae_rel_mean': 0.9480585265330375, 'cvae_rel_p5': 0.9309907186155059, 'cvae_p_rel95': 0.435, 'cvae_curtail_pct': 26.50384843189136, 'cvae_el_cf': 25.03157961285783, 'cvae_el_hours': 3913.81, 'boot_lcoh_mean': 7.901762794921934, 'boot_lcoh_p95': 8.066435012795731, 'boot_lcoh_cvar90': 8.082603699323313, 'boot_rel_mean': 0.9479238028915518, 'boot_rel_p5': 0.9314194271849431, 'boot_p_rel95': 0.42, 'boot_curtail_pct': 25.709626075683772, 'boot_el_cf': 25.028014842251906, 'boot_el_hours': 3930.69, 'hist_lcoh_mean': 7.879447104774853, 'hist_lcoh_p95': 7.879447104774853, 'hist_lcoh_cvar90': 7.879447104774853, 'hist_rel_mean': 0.9501603851424353, 'hist_rel_p5': 0.9501603851424353, 'hist_p_rel95': 1.0, 'hist_curtail_pct': 26.13565102692373, 'hist_el_cf': 25.086842930867707, 'hist_el_hours': 4027.0}
+gen   0  best 10.7012  x=[3180.   535.9  551.6 1177.3]
+gen  10  best 8.3515  x=[2204.8  826.9   49.6  433. ]
+gen  20  best 8.1121  x=[2029.6  900.7   50.4  247.1]
+gen  30  best 8.0944  x=[2035.4  879.8   71.5  264.2]
+gen  40  best 8.0813  x=[2045.4  866.1   88.9  260.5]
+gen  50  best 8.0809  x=[2045.4  865.9   88.9  260.9]
+{'site': 'B_humid_NC', 'formulation': 'risk_neutral', 'PV_kWp': np.float64(2060.8895588234304), 'EL_kW': np.float64(866.476366615567), 'BATT_kWh': np.float64(59.01527247150767), 'TANK_kg': np.float64(257.1449029600092), 'capex_musd': 2.4377989442843804, 'ga_seconds': 43.3, 'cvae_lcoh_mean': 8.076298980373474, 'cvae_lcoh_p95': 8.25110166753766, 'cvae_lcoh_cvar90': 8.253350103643623, 'cvae_rel_mean': 0.9593358568389803, 'cvae_rel_p5': 0.9418161632576368, 'cvae_p_rel95': 0.805, 'cvae_curtail_pct': 31.396008767364965, 'cvae_el_cf': 26.064672907853954, 'cvae_el_hours': 3920.085, 'boot_lcoh_mean': 8.099107264100722, 'boot_lcoh_p95': 8.25448457513933, 'boot_lcoh_cvar90': 8.269679991269888, 'boot_rel_mean': 0.9570498861226819, 'boot_rel_p5': 0.9414771096268003, 'boot_p_rel95': 0.775, 'boot_curtail_pct': 30.855759199450926, 'boot_el_cf': 26.002577561199715, 'boot_el_hours': 3944.955, 'hist_lcoh_mean': 8.079269501921498, 'hist_lcoh_p95': 8.079269501921498, 'hist_lcoh_cvar90': 8.079269501921498, 'hist_rel_mean': 0.9590381292427194, 'hist_rel_p5': 0.9590381292427194, 'hist_p_rel95': 1.0, 'hist_curtail_pct': 31.259854498359818, 'hist_el_cf': 26.056516748912482, 'hist_el_hours': 4009.0}
+gen   0  best 10.7558  x=[3180.   535.9  551.6 1177.3]
+gen  10  best 8.4735  x=[2206.8  766.4   77.9  550. ]
+gen  20  best 8.2124  x=[2166.1  858.2    0.   200.3]
+gen  30  best 8.2021  x=[2120.7  871.1    0.   215.6]
+gen  40  best 8.1998  x=[2121.6  874.8   12.7  193.2]
+gen  50  best 8.1906  x=[2121.5  865.6   36.8  192. ]
+{'site': 'B_humid_NC', 'formulation': 'risk_averse', 'PV_kWp': np.float64(2120.790707041553), 'EL_kW': np.float64(835.5973053695974), 'BATT_kWh': np.float64(80.14514402463927), 'TANK_kg': np.float64(240.84981578763148), 'capex_musd': 2.440536543704281, 'ga_seconds': 43.8, 'cvae_lcoh_mean': 8.07877155587449, 'cvae_lcoh_p95': 8.244441556070335, 'cvae_lcoh_cvar90': 8.250189424676044, 'cvae_rel_mean': 0.9593542603039967, 'cvae_rel_p5': 0.9427498978238749, 'cvae_p_rel95': 0.81, 'cvae_curtail_pct': 33.20801404088354, 'cvae_el_cf': 27.028361317444556, 'cvae_el_hours': 3949.215, 'boot_lcoh_mean': 8.11046449666309, 'boot_lcoh_p95': 8.260739998765036, 'boot_lcoh_cvar90': 8.27476291127246, 'boot_rel_mean': 0.9561778180260275, 'boot_rel_p5': 0.9411163781351051, 'boot_p_rel95': 0.76, 'boot_curtail_pct': 32.76248203725775, 'boot_el_cf': 26.938854874506358, 'boot_el_hours': 3974.56, 'hist_lcoh_mean': 8.090323825766395, 'hist_lcoh_p95': 8.090323825766395, 'hist_lcoh_cvar90': 8.090323825766395, 'hist_rel_mean': 0.9581964255416339, 'hist_rel_p5': 0.9581964255416339, 'hist_p_rel95': 1.0, 'hist_curtail_pct': 33.169188322228464, 'hist_el_cf': 26.995707987971084, 'hist_el_hours': 4080.0}
+done
