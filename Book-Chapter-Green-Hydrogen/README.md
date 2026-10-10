@@ -12,6 +12,11 @@ It builds on the CSE366 genetic-algorithm and battery-aware robot assignments in
 4. `src/h2system.py` – PV (Erbs + isotropic POA) → PEM electrolyser → battery → H2 tank simulator with rule-based EMS and LCOH.
 5. `src/ga.py` – real-coded GA (tournament, BLX-α, Gaussian mutation, elitism) and a random-search baseline.
 6. `src/run_all.py` – full experiment; writes `results/*.csv`, `results/results.json` and `figures/*.png`.
+7. `src/analysis.py` – deep statistical analysis (descriptive stats, Wilcoxon/bootstrap/PIT/KS tests of the generator,
+   persistence, Monte Carlo CIs + McNemar tests, monthly shortfall, Latin-hypercube global sensitivity, variance
+   decomposition, cost–reliability trade-off, GA seed robustness, SAA convergence); writes `results/analysis_*`.
+
+Final documents are in `final/` (chapter DOCX + PDF, abstract email, dataset).
 
 ## Data sources (downloaded from the pvlib-python GitHub repository)
 | File | Content |
@@ -21,6 +26,7 @@ It builds on the CSE366 genetic-algorithm and battery-aware robot assignments in
 
 ## Run
 ```bash
-pip install numpy pandas pvlib matplotlib openpyxl
+pip install numpy pandas scipy pvlib matplotlib openpyxl
 cd src && python run_all.py      # ~10 min on one CPU core
+python analysis.py               # ~15 min, run after run_all.py
 ```

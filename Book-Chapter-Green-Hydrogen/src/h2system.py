@@ -65,7 +65,7 @@ def annual_fixed_cost(x, p=P):
             + t * p["t_capex"] * (crf(p["rate"], p["t_life"]) + p["t_om"]))
 
 
-def simulate(x, pv1, p=P, trace=False):
+def simulate(x, pv1, p=P, trace=False, monthly=False):
     """x: (N,4) designs [PV kWp, EL kW, battery kWh, tank kg]; pv1: (S,8760) kW per kWp.
     Returns dict of (N,S) arrays."""
     N, S = len(x), len(pv1)
@@ -79,6 +79,9 @@ def simulate(x, pv1, p=P, trace=False):
     sec_full = p["sec_a"] + p["sec_b"] + p["comp"]
     prod = np.zeros((N, S)); short = np.zeros((N, S)); curt = np.zeros((N, S)); hours = np.zeros((N, S))
     tr = {"pv": [], "el": [], "soc": [], "tank": []} if trace else None
+    mon = np.minimum(np.arange(8760) // 24 * 12 // 365, 11)
+    short_m = np.zeros((N, S, 12)) if monthly else None
+    prod_m = np.zeros((N, S, 12)) if monthly else None
     for t in range(pv1.shape[1]):
         pv = PV * pv1[:, t][None, :]
         room = np.maximum(T - h + D, 0.0)
@@ -97,6 +100,9 @@ def simulate(x, pv1, p=P, trace=False):
         h = h + m
         sup = np.minimum(h, D)
         short += D - sup
+        if monthly:
+            short_m[:, :, mon[t]] += D - sup
+            prod_m[:, :, mon[t]] += m
         h -= sup
         prod += m
         hours += run
@@ -104,6 +110,8 @@ def simulate(x, pv1, p=P, trace=False):
             tr["pv"].append(pv[0, 0]); tr["el"].append(p_el[0, 0]); tr["soc"].append(e[0, 0]); tr["tank"].append(h[0, 0])
     short += np.maximum(h0 - h, 0.0)  # terminal condition: refill the tank to its initial level
     out = dict(prod=prod, short=short, curt=curt, hours=hours)
+    if monthly:
+        out["short_m"], out["prod_m"] = short_m, prod_m
     if trace:
         out["trace"] = {k: np.array(v) for k, v in tr.items()}
     return out
