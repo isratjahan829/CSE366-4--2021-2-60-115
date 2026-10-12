@@ -1,0 +1,210 @@
+{
+ "weight_winners": [
+  {
+   "site": "A_semiarid_CO",
+   "scenario": "base",
+   "PV_kWp": 1808.01083724999,
+   "EL_kW": 965.7806202584494,
+   "BATT_kWh": 275.9931629085748,
+   "TANK_kg": 144.24538795535452,
+   "clean_days": 31.15087902462937,
+   "lcoh": 8.225655231287814,
+   "short_pct": 5.1038719542512805,
+   "water_l_kg": 16.528634626803104,
+   "soil_loss_pct": 3.75,
+   "land_ha": 2.260013546562487,
+   "curtail_pct": 30.411508053926703,
+   "share": 0.1994
+  },
+  {
+   "site": "A_semiarid_CO",
+   "scenario": "base",
+   "PV_kWp": 1393.6801614164017,
+   "EL_kW": 804.2036384363556,
+   "BATT_kWh": 145.14000550276833,
+   "TANK_kg": 161.7302892156423,
+   "clean_days": 41.02746968203196,
+   "lcoh": 7.272046823862075,
+   "short_pct": 11.120175679870256,
+   "water_l_kg": 15.955648111801349,
+   "soil_loss_pct": 5.0,
+   "land_ha": 1.742100201770502,
+   "curtail_pct": 13.912330253856137,
+   "share": 0.1887
+  },
+  {
+   "site": "A_semiarid_CO",
+   "scenario": "base",
+   "PV_kWp": 2256.089195956251,
+   "EL_kW": 812.1853622950142,
+   "BATT_kWh": 187.1515771763712,
+   "TANK_kg": 374.6192553766469,
+   "clean_days": 26.283580578074545,
+   "lcoh": 8.604233872440556,
+   "short_pct": 3.6942150472561552,
+   "water_l_kg": 17.228017264346963,
+   "soil_loss_pct": 3.125,
+   "land_ha": 2.820111494945313,
+   "curtail_pct": 43.330369035598274,
+   "share": 0.1398
+  },
+  {
+   "site": "B_humid_NC",
+   "scenario": "base",
+   "PV_kWp": 1966.615487093443,
+   "EL_kW": 785.6105722261832,
+   "BATT_kWh": 0.0,
+   "TANK_kg": 110.85648554535248,
+   "clean_days": 90.0,
+   "lcoh": 7.656022928465577,
+   "short_pct": 7.1385908546797525,
+   "water_l_kg": 15.588417348879243,
+   "soil_loss_pct": 2.2250000000000005,
+   "land_ha": 2.458269358866804,
+   "curtail_pct": 28.05886412454993,
+   "share": 0.2542
+  },
+  {
+   "site": "B_humid_NC",
+   "scenario": "base",
+   "PV_kWp": 2252.222144520808,
+   "EL_kW": 890.2795433830729,
+   "BATT_kWh": 52.41116466021911,
+   "TANK_kg": 559.2170414780255,
+   "clean_days": 53.7569253042162,
+   "lcoh": 8.738000307051083,
+   "short_pct": 1.8553541324417444,
+   "water_l_kg": 16.067235502591224,
+   "soil_loss_pct": 1.3250000000000002,
+   "land_ha": 2.8152776806510103,
+   "curtail_pct": 34.380935123901644,
+   "share": 0.1861
+  },
+  {
+   "site": "B_humid_NC",
+   "scenario": "base",
+   "PV_kWp": 1964.335947334845,
+   "EL_kW": 935.552712479182,
+   "BATT_kWh": 194.51379804675457,
+   "TANK_kg": 167.75954974293737,
+   "clean_days": 36.22693655289638,
+   "lcoh": 8.19646843913117,
+   "short_pct": 3.779651951441544,
+   "water_l_kg": 16.408353352884994,
+   "soil_loss_pct": 0.8750000000000001,
+   "land_ha": 2.4554199341685563,
+   "curtail_pct": 26.74768681335883,
+   "share": 0.083
+  }
+ ],
+ "obj_corr": [
+  {
+   "site": "A_semiarid_CO",
+   "lcoh_short": 0.49467892967295546,
+   "lcoh_water": -0.6851260107254994,
+   "short_water": -0.8886882102864763
+  },
+  {
+   "site": "B_humid_NC",
+   "lcoh_short": 0.5787601767206645,
+   "lcoh_water": -0.7308622078968572,
+   "short_water": -0.9038595126288586
+  }
+ ],
+ "topsis_sensitivity": [
+  {
+   "site": "A_semiarid_CO",
+   "n_front": 60,
+   "n_distinct_winners": 23,
+   "top1_share": 0.1994,
+   "top3_share": 0.5279,
+   "top1_idx": 21,
+   "spearman_median": 0.8677095779265884,
+   "spearman_p5": 0.09093889799661009
+  },
+  {
+   "site": "B_humid_NC",
+   "n_front": 60,
+   "n_distinct_winners": 26,
+   "top1_share": 0.2542,
+   "top3_share": 0.5233,
+   "top1_idx": 43,
+   "spearman_median": 0.8987468393120118,
+   "spearman_p5": 0.7641862791408484
+  }
+ ],
+ "hv_stats": [
+  {
+   "site": "A_semiarid_CO",
+   "nsga_mean": 0.565785,
+   "nsga_sd": 0.005668738836813715,
+   "rs_mean": 0.5574760000000001,
+   "rs_sd": 0.009212718382757619,
+   "wilcoxon_p": 0.03125,
+   "mannwhitney_p": 0.047619047619047616
+  },
+  {
+   "site": "B_humid_NC",
+   "nsga_mean": 0.582946,
+   "nsga_sd": 0.005528073127229793,
+   "rs_mean": 0.555473,
+   "rs_sd": 0.01878357480619706,
+   "wilcoxon_p": 0.0625,
+   "mannwhitney_p": 0.007936507936507936
+  }
+ ],
+ "front_summary": [
+  {
+   "site": "A_semiarid_CO",
+   "scenario": "base",
+   "n": 60,
+   "lcoh_min": 6.96035539125486,
+   "short_min": 0.0,
+   "water_min": 15.37856235529163,
+   "water_max": 28.90334260649278,
+   "clean_days_median": 89.93633482576791,
+   "soil_loss_median": 11.125,
+   "lcoh_at_short_le5": 8.441184840826786,
+   "land_ha_median": 1.387241573277439
+  },
+  {
+   "site": "A_semiarid_CO",
+   "scenario": "high dust",
+   "n": 60,
+   "lcoh_min": 7.009828290071658,
+   "short_min": 0.0,
+   "water_min": 15.410131117146804,
+   "water_max": 28.51671141568358,
+   "clean_days_median": 34.70225901571179,
+   "soil_loss_median": 8.5,
+   "lcoh_at_short_le5": 8.353580783980787,
+   "land_ha_median": 1.7060766809000176
+  },
+  {
+   "site": "A_semiarid_CO",
+   "scenario": "low dust",
+   "n": 60,
+   "lcoh_min": 6.991438958682295,
+   "short_min": 0.0,
+   "water_min": 15.352104274203962,
+   "water_max": 23.8978455883555,
+   "clean_days_median": 89.9982980863591,
+   "soil_loss_median": 4.450000000000001,
+   "lcoh_at_short_le5": 8.30603389449187,
+   "land_ha_median": 1.581183308725095
+  },
+  {
+   "site": "B_humid_NC",
+   "scenario": "base",
+   "n": 60,
+   "lcoh_min": 7.255776061008333,
+   "short_min": 0.0,
+   "water_min": 15.40088594067418,
+   "water_max": 17.734528785402933,
+   "clean_days_median": 89.99997232269973,
+   "soil_loss_median": 2.2250000000000005,
+   "lcoh_at_short_le5": 7.964721012408984,
+   "land_ha_median": 1.463290531292527
+  }
+ ]
+}

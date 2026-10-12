@@ -16,7 +16,12 @@ It builds on the CSE366 genetic-algorithm and battery-aware robot assignments in
    persistence, Monte Carlo CIs + McNemar tests, monthly shortfall, Latin-hypercube global sensitivity, variance
    decomposition, cost–reliability trade-off, GA seed robustness, SAA convergence); writes `results/analysis_*`.
 
-Final documents are in `final/` (chapter DOCX + PDF, abstract email, dataset).
+8. `src/mpc.py`, `src/run_ch2.py`, `src/ch2_stats.py` – Chapter 2: two-layer degradation-aware MPC (daily MILP via
+   SciPy/HiGHS + real-time layer), five strategies over 10 block-bootstrap weather years, Friedman/Wilcoxon statistics.
+9. `src/nsga2.py`, `src/run_ch3.py` – Chapter 3: NSGA-II and TOPSIS from scratch, soiling/cleaning-water model,
+   hypervolume statistics and weight sensitivity.
+
+Final documents are in `final/`: three chapters (DOCX + PDF each), one email with the three short abstracts, dataset.
 
 ## Data sources (downloaded from the pvlib-python GitHub repository)
 | File | Content |
@@ -29,4 +34,6 @@ Final documents are in `final/` (chapter DOCX + PDF, abstract email, dataset).
 pip install numpy pandas scipy pvlib matplotlib openpyxl
 cd src && python run_all.py      # ~10 min on one CPU core
 python analysis.py               # ~15 min, run after run_all.py
+python run_ch2.py && python ch2_stats.py   # chapter 2, ~2 h on 4 cores
+python run_ch3.py                # chapter 3, ~15 min
 ```

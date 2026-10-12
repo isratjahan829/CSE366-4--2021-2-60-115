@@ -78,11 +78,18 @@ if __name__ == "__main__":
         for hz in [24, 72]:
             jobs.append(("A_semiarid_CO", yr, "mpc_deg", "perfect", 10.0, hz))
     jobs.sort(key=lambda j: j[2] == "rule")  # slow jobs first
+    rows = []
+    done_path = os.path.join(RES, "ch2_runs.csv")
+    if os.path.exists(done_path):                      # resume: skip jobs already finished
+        prev = pd.read_csv(done_path)
+        rows = prev.to_dict(orient="records")
+        have = {(r["site"], int(r["year"]), r["strategy"], r["forecast"], float(r["start_h"]), int(r["horizon"])) for r in rows}
+        jobs = [j for j in jobs if (j[0], j[1], j[2], j[3], float(j[4]), j[5]) not in have]
+        print("resuming,", len(jobs), "jobs left", flush=True)
     with Pool(4, initializer=init) as pool:
-        rows = []
         for k, r in enumerate(pool.imap_unordered(job, jobs)):
             rows.append(r)
-            if k % 10 == 0:
+            if True:
                 print(k, len(jobs), flush=True)
                 pd.DataFrame(rows).to_csv(os.path.join(RES, "ch2_runs.csv"), index=False)
     pd.DataFrame(rows).to_csv(os.path.join(RES, "ch2_runs.csv"), index=False)

@@ -1,22 +1,41 @@
 To: lahby@ieee.org
-Subject: Short abstract submission - Springer book "Generative AI and Mathematical Optimization for Green Hydrogen Systems"
+Subject: Three short abstract submissions - Springer book "Generative AI and Mathematical Optimization for Green Hydrogen Systems"
 
 Dear Editors,
 
-Please find below our short abstract for the Springer volume "Generative AI and Mathematical Optimization for Green Hydrogen Systems: Operational Trends and Technical Challenges".
+Please find below three short abstracts for the Springer volume "Generative AI and Mathematical Optimization for Green Hydrogen Systems: Operational Trends and Technical Challenges". Each proposal is a separate chapter with its own research question, methods and results.
 
-Author list:
-[Author name 1], Department of Computer Science and Engineering, East West University, Dhaka, Bangladesh, [email]
-[Add co-authors / supervisor]
-
-Chapter title:
-Generative AI-Driven Scenario Generation and Stochastic Optimization for Solar-Powered Green Hydrogen Systems
-
-Suggested part:
-Part III - Generative AI for Renewable Energy Forecasting, Scenario Generation, and Uncertainty Modeling
+------------------------------------------------------------------------
+PROPOSAL 1
+Chapter title: Generative AI-Driven Scenario Generation and Stochastic Optimization for Solar-Powered Green Hydrogen Systems
+Suggested part: Part III - Generative AI for Renewable Energy Forecasting, Scenario Generation, and Uncertainty Modeling
+Author list: [Student author name(s), department, institution, email]; [Supervisor name, designation, department, institution, email - corresponding author]
 
 Abstract:
-Sizing solar-powered green hydrogen plants on a single typical weather year hides the bad years that drive storage needs and supply shortfalls. This chapter couples a physics-informed conditional variational autoencoder, trained on open NREL irradiance data, with a genetic algorithm that sizes the PV array, PEM electrolyser, battery and hydrogen tank under risk-neutral and CVaR risk-averse formulations with a reliability chance constraint. The generator produces realistic hourly weather years with multi-day persistence and matches or outperforms Gaussian and bootstrap baselines on probabilistic scores. In semi-arid and humid case studies, scenario-based designs kept 95% supply reliability in 49-78% of unseen real-weather years versus 32-42% for single-year designs, for an LCOH premium of only 1-2.5%. The chapter closes with practical lessons on validating generative models for storage sizing, arid-site deployment and trustworthy AI in hydrogen infrastructure.
+Sizing solar-powered green hydrogen plants on a single typical weather year hides the bad years that drive storage needs and supply shortfalls. This chapter couples a physics-informed conditional variational autoencoder, trained on open NREL irradiance data, with a genetic algorithm that sizes the PV array, PEM electrolyser, battery and hydrogen tank under risk-neutral and CVaR risk-averse formulations with a reliability chance constraint. The generator matches Gaussian and bootstrap baselines on probabilistic scores, is the only well-calibrated one, and alone reproduces the observed multi-day weather persistence. In semi-arid and humid case studies, scenario-based designs kept 95% supply reliability in 49-78% of unseen real-weather years versus 32-42% for single-year designs, for an LCOH premium of only 1-2.5%. The chapter closes with practical lessons on validating generative models for storage sizing, arid-site deployment and trustworthy AI in hydrogen infrastructure.
+
+------------------------------------------------------------------------
+PROPOSAL 2
+Chapter title: Degradation-Aware Model Predictive Control for Off-Grid Solar Green Hydrogen Production: A Statistical Comparison with Rule-Based Energy Management
+Suggested part: Part II - Intelligent Energy Management, Model Predictive Control, and Degradation-Aware Optimization
+Author list: [Student author name(s), department, institution, email]; [Supervisor name, designation, department, institution, email - corresponding author]
+
+Abstract:
+The energy management system of a solar hydrogen plant decides not only how much hydrogen it delivers but also how fast its electrolyser stack degrades. This chapter compares rule-based control with a two-layer model predictive controller that solves a daily mixed-integer programme including start-up and load-dependent wear costs, for an off-grid PV-battery-PEM-hydrogen plant at a semi-arid and a humid site. Five strategies, including forecasts of different quality, are evaluated over ten weather years per site with paired non-parametric tests and bootstrap confidence intervals. Degradation-aware MPC cut annual operating cost by 8-10% and was the best strategy in every year, while an energy-only MPC performed worse than the rules because it increased stack starts by 25-37%. The savings survived realistic forecasts, a threefold change in start-up cost and different horizons, showing that advanced electrolyser control should be designed around stack wear rather than energy alone.
+
+------------------------------------------------------------------------
+PROPOSAL 3
+Chapter title: Multi-Objective Optimisation and Multi-Criteria Decision-Making for Solar Green Hydrogen in Arid Environments: Cost, Reliability, Water and Land Trade-offs
+Suggested part: Part II - Multi-Objective Optimization and Multi-Criteria Decision-Making (also fits Part IV - Green Hydrogen in Arid, Desert, and Harsh Environments)
+Author list: [Student author name(s), department, institution, email]; [Supervisor name, designation, department, institution, email - corresponding author]
+
+Abstract:
+Arid regions offer the best solar resource for green hydrogen, but dust, water scarcity and land use create trade-offs that single-objective cost studies overlook. This chapter sizes an off-grid PV-battery-PEM electrolyser-hydrogen plant with a three-objective NSGA-II that trades cost, supply shortfall and water intensity, treating the PV cleaning interval as a decision that balances soiling losses against cleaning water. TOPSIS then selects designs for four stakeholder weightings, and a statistical analysis over random seeds and 10,000 random weightings tests the robustness of both fronts and choices. Using open NREL data for a semi-arid and a humid site, the results show that reducing shortfall from 5% to 1-2% costs 1-1.7 USD/kg more, that reliability conflicts most strongly with water through module cleaning, and that a compromise near 8.2 USD/kg and 16.5 L/kg is achievable at both sites. The chapter closes with practical guidance for hydrogen deployment in dusty, water-scarce environments.
+
+------------------------------------------------------------------------
 
 Best regards,
-[Your name]
+[Supervisor name]
+[Designation, Department]
+[Institution]
+[Email]

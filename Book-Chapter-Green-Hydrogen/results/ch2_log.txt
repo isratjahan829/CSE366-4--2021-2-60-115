@@ -1,0 +1,33 @@
+               GHI_kWh_m2_yr  Tair_mean   kt_mean
+site                                             
+A_semiarid_CO       1748.852   8.075908  0.764140
+B_humid_NC          1566.203  14.421849  0.787979
+               GHI_kWh_m2_yr  Tair_mean   kt_mean
+site                                             
+A_semiarid_CO       1748.852   8.075908  0.764140
+B_humid_NC          1566.203  14.421849  0.787979
+               GHI_kWh_m2_yr  Tair_mean   kt_mean
+site                                             
+A_semiarid_CO       1748.852   8.075908  0.764140
+B_humid_NC          1566.203  14.421849  0.787979
+               GHI_kWh_m2_yr  Tair_mean   kt_mean
+site                                             
+A_semiarid_CO       1748.852   8.075908  0.764140
+B_humid_NC          1566.203  14.421849  0.787979
+0 190
+HighsMipSolverData::transformNewIntegerFeasibleSolution tmpSolver.run();
+HighsMipSolverData::transformNewIntegerFeasibleSolution tmpSolver.run();
+10 190
+HighsMipSolverData::transformNewIntegerFeasibleSolution tmpSolver.run();
+HighsMipSolverData::transformNewIntegerFeasibleSolution tmpSolver.run();
+20 190
+HighsMipSolverData::transformNewIntegerFeasibleSolution tmpSolver.run();
+30 190
+HighsMipSolverData::transformNewIntegerFeasibleSolution tmpSolver.run();
+40 190
+HighsMipSolverData::transformNewIntegerFeasibleSolution tmpSolver.run();
+HighsMipSolverData::transformNewIntegerFeasibleSolution tmpSolver.run();
+HighsMipSolverData::transformNewIntegerFeasibleSolution tmpSolver.run();
+HighsMipSolverData::transformNewIntegerFeasibleSolution tmpSolver.run();
+50 190
+60 190
