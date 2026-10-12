@@ -1,0 +1,25 @@
+site,scenario,method,seed,hv,n_front
+A_semiarid_CO,base,NSGA-II,0,0.575225,60
+A_semiarid_CO,base,Random search,0,0.558665,156
+A_semiarid_CO,base,NSGA-II,1,0.565805,60
+A_semiarid_CO,base,Random search,1,0.56515,148
+A_semiarid_CO,base,NSGA-II,2,0.564805,60
+A_semiarid_CO,base,Random search,2,0.562485,142
+A_semiarid_CO,base,NSGA-II,3,0.560425,60
+A_semiarid_CO,base,Random search,3,0.541655,156
+A_semiarid_CO,base,NSGA-II,4,0.562665,60
+A_semiarid_CO,base,Random search,4,0.559425,180
+B_humid_NC,base,NSGA-II,0,0.588105,60
+B_humid_NC,base,Random search,0,0.543375,100
+B_humid_NC,base,NSGA-II,1,0.57385,60
+B_humid_NC,base,Random search,1,0.57754,100
+B_humid_NC,base,NSGA-II,2,0.582975,60
+B_humid_NC,base,Random search,2,0.566845,96
+B_humid_NC,base,NSGA-II,3,0.58652,60
+B_humid_NC,base,Random search,3,0.530295,93
+B_humid_NC,base,NSGA-II,4,0.58328,60
+B_humid_NC,base,Random search,4,0.55931,107
+A_semiarid_CO,low dust,NSGA-II,0,0.5823,60
+A_semiarid_CO,low dust,NSGA-II,1,0.569435,60
+A_semiarid_CO,high dust,NSGA-II,0,0.54394,60
+A_semiarid_CO,high dust,NSGA-II,1,0.55034,60

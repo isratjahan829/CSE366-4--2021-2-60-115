@@ -1,0 +1,26 @@
+               GHI_kWh_m2_yr  Tair_mean   kt_mean
+site                                             
+A_semiarid_CO       1748.852   8.075908  0.764140
+B_humid_NC          1566.203  14.421849  0.787979
+{'site': 'A_semiarid_CO', 'scenario': 'base', 'method': 'Random search', 'seed': 0, 'hv': 0.558665, 'n_front': 156}
+{'site': 'A_semiarid_CO', 'scenario': 'base', 'method': 'Random search', 'seed': 1, 'hv': 0.56515, 'n_front': 148}
+{'site': 'A_semiarid_CO', 'scenario': 'base', 'method': 'Random search', 'seed': 2, 'hv': 0.562485, 'n_front': 142}
+{'site': 'A_semiarid_CO', 'scenario': 'base', 'method': 'Random search', 'seed': 3, 'hv': 0.541655, 'n_front': 156}
+{'site': 'A_semiarid_CO', 'scenario': 'base', 'method': 'Random search', 'seed': 4, 'hv': 0.559425, 'n_front': 180}
+{'site': 'B_humid_NC', 'scenario': 'base', 'method': 'Random search', 'seed': 0, 'hv': 0.543375, 'n_front': 100}
+{'site': 'B_humid_NC', 'scenario': 'base', 'method': 'Random search', 'seed': 1, 'hv': 0.57754, 'n_front': 100}
+{'site': 'B_humid_NC', 'scenario': 'base', 'method': 'Random search', 'seed': 2, 'hv': 0.566845, 'n_front': 96}
+{'site': 'B_humid_NC', 'scenario': 'base', 'method': 'Random search', 'seed': 3, 'hv': 0.530295, 'n_front': 93}
+{'site': 'B_humid_NC', 'scenario': 'base', 'method': 'Random search', 'seed': 4, 'hv': 0.55931, 'n_front': 107}
+{'site': 'A_semiarid_CO', 'scenario': 'low dust', 'method': 'NSGA-II', 'seed': 0, 'hv': 0.5823, 'n_front': 60}
+{'site': 'A_semiarid_CO', 'scenario': 'low dust', 'method': 'NSGA-II', 'seed': 1, 'hv': 0.569435, 'n_front': 60}
+{'site': 'A_semiarid_CO', 'scenario': 'high dust', 'method': 'NSGA-II', 'seed': 0, 'hv': 0.54394, 'n_front': 60}
+{'site': 'A_semiarid_CO', 'scenario': 'high dust', 'method': 'NSGA-II', 'seed': 1, 'hv': 0.55034, 'n_front': 60}
+Traceback (most recent call last):
+  File "/home/user/CSE366-4--2021-2-60-115/Book-Chapter-Green-Hydrogen/src/run_ch3.py", line 166, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/CSE366-4--2021-2-60-115/Book-Chapter-Green-Hydrogen/src/run_ch3.py", line 119, in main
+    tops.append(dict(site=name, weights=wname, **g.iloc[k].to_dict(), closeness=float(cl[k])))
+                ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: dict() got multiple values for keyword argument 'site'
