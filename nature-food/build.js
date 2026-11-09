@@ -1,19 +1,18 @@
+// Builds the Nature Food manuscript (.docx) from content.js, figures/ and analysis/microdata_results.json
 const fs = require("fs");
 const path = require("path");
 const {
   Document, Packer, Paragraph, TextRun, ImageRun, Table, TableRow, TableCell, AlignmentType,
-  WidthType, BorderStyle, ShadingType, PageBreak, LineNumberRestartFormat, Footer, PageNumber,
-  HeadingLevel,
+  WidthType, BorderStyle, ShadingType, PageBreak, LineNumberRestartFormat, Footer, PageNumber, HeadingLevel,
 } = require("docx");
-const C = require("./content.js");
-const FIG = "/home/user/CSE366-4--2021-2-60-115/nature-food/figures/";
+const ROOT = __dirname;
+const C = require(path.join(ROOT, "content.js"));
+const R = JSON.parse(fs.readFileSync(path.join(ROOT, "analysis/microdata_results.json"), "utf8"));
+const FIG = path.join(ROOT, "figures") + "/";
 const FONT = "Arial";
 
-// ---- inline markup parser: **bold**, *italic*, ^sup^, [[placeholder]] ----
 function runs(text, base = {}) {
-  const out = [];
-  const re = /(\*\*[^*]+\*\*|\*[^*]+\*|\^[^^]+\^|\[\[[^\]]+\]\])/g;
-  let last = 0, m;
+  const out = []; const re = /(\*\*[^*]+\*\*|\*[^*]+\*|\^[^^]+\^|\[\[[^\]]+\]\])/g; let last = 0, m;
   while ((m = re.exec(text)) !== null) {
     if (m.index > last) out.push(new TextRun({ text: text.slice(last, m.index), ...base }));
     const t = m[0];
@@ -30,15 +29,13 @@ const P = (text, opts = {}) => new Paragraph({ children: runs(text, opts.run || 
 const H1 = (t) => new Paragraph({ heading: HeadingLevel.HEADING_1, children: [new TextRun(t)] });
 const H2 = (t) => new Paragraph({ heading: HeadingLevel.HEADING_2, children: [new TextRun(t)] });
 const pageBreak = () => new Paragraph({ children: [new PageBreak()] });
-
-// ---- word counts ----
 const strip = (s) => s.replace(/\^[^^]+\^/g, "").replace(/\[\[[^\]]+\]\]/g, "").replace(/[*]/g, "");
 const wc = (s) => strip(s).split(/\s+/).filter(Boolean).length;
 const mainWords = C.sections.reduce((a, s) => a + s.paras.reduce((b, p) => b + wc(p), 0), 0);
 const absWords = wc(C.abstract);
 console.log("Abstract words:", absWords, "Main text words:", mainWords);
 
-// ---- tables ----
+// ---------- table helpers ----------
 const border = { style: BorderStyle.SINGLE, size: 4, color: "808080" };
 const none = { style: BorderStyle.NONE, size: 0, color: "FFFFFF" };
 function cell(text, w, { bold = false, shade = false, align = AlignmentType.LEFT, top = false, bottom = false } = {}) {
@@ -47,61 +44,36 @@ function cell(text, w, { bold = false, shade = false, align = AlignmentType.LEFT
     borders: { top: top ? border : none, bottom: bottom ? border : none, left: none, right: none },
     shading: shade ? { fill: "EEF3FA", type: ShadingType.CLEAR, color: "auto" } : undefined,
     margins: { top: 40, bottom: 40, left: 80, right: 80 },
-    children: [new Paragraph({ alignment: align, children: runs(text, { size: 17, bold }) })],
+    children: [new Paragraph({ alignment: align, children: runs(String(text), { size: 17, bold }) })],
   });
 }
 function table(widths, header, rows, sectionRows = new Set()) {
   const total = widths.reduce((a, b) => a + b, 0);
-  const hdr = new TableRow({ tableHeader: true, children: header.map((h, i) =>
-    cell(h, widths[i], { bold: true, top: true, bottom: true, align: i ? AlignmentType.CENTER : AlignmentType.LEFT })) });
-  const body = rows.map((r, ri) => new TableRow({ children: r.map((v, i) =>
-    cell(v, widths[i], { bold: sectionRows.has(ri), shade: sectionRows.has(ri), bottom: ri === rows.length - 1,
-      align: i ? AlignmentType.CENTER : AlignmentType.LEFT })) }));
+  const hdr = new TableRow({ tableHeader: true, children: header.map((h, i) => cell(h, widths[i], { bold: true, top: true, bottom: true, align: i ? AlignmentType.CENTER : AlignmentType.LEFT })) });
+  const body = rows.map((r, ri) => new TableRow({ children: r.map((v, i) => cell(v, widths[i], { bold: sectionRows.has(ri), shade: sectionRows.has(ri), bottom: ri === rows.length - 1, align: i ? AlignmentType.CENTER : AlignmentType.LEFT })) }));
   return new Table({ width: { size: total, type: WidthType.DXA }, columnWidths: widths, rows: [hdr, ...body] });
 }
-// Table 1: sample characteristics (report Table 5)
-const t1rows = [
-  ["**Age (years)**", "", "", "", ""],
-  ["10–19", "3.5", "5.0", "5.9", "100.0"], ["20–29", "17.5", "29.2", "67.0", "–"], ["30–39", "28.6", "32.5", "22.9", "–"],
-  ["40–49", "23.5", "20.5", "3.4", "–"], ["50–59", "14.9", "9.4", "0.3", "–"], ["≥60", "12.0", "3.4", "0.5", "–"],
-  ["**Sex**", "", "", "", ""], ["Male", "62.0", "0.7", "1.2", "43.4"], ["Female", "38.0", "99.3", "98.8", "56.6"],
-  ["**Residence**", "", "", "", ""], ["Rural", "58.4", "58.4", "65.1", "63.2"], ["Urban", "21.4", "21.4", "17.7", "19.5"], ["Slum", "20.2", "20.2", "17.2", "17.4"],
-  ["**Division**", "", "", "", ""], ["Barisal", "9.2", "9.2", "10.0", "12.2"], ["Chattogram", "18.4", "18.4", "16.9", "15.2"],
-  ["Dhaka", "22.8", "22.8", "22.4", "21.8"], ["Khulna", "14.5", "14.5", "19.5", "18.0"], ["Mymensingh", "11.2", "11.2", "11.7", "10.6"],
-  ["Rajshahi", "10.4", "10.4", "7.4", "8.7"], ["Rangpur", "7.2", "7.2", "4.8", "7.2"], ["Sylhet", "6.4", "6.4", "7.4", "6.3"],
-  ["**Education**", "", "", "", ""], ["No formal education", "28.7", "25.4", "7.5", "1.9"], ["Primary", "33.6", "32.9", "32.4", "38.6"],
-  ["Secondary", "29.9", "35.8", "51.6", "57.3"], ["Higher secondary or above", "7.8", "5.9", "8.5", "2.2"],
-];
-const t1sec = new Set(t1rows.map((r, i) => (r[0].startsWith("**") ? i : -1)).filter((i) => i >= 0));
-t1rows.forEach((r, i) => { if (t1sec.has(i)) r[0] = r[0].replace(/\*\*/g, ""); });
-const table1 = table([3600, 1400, 1400, 1400, 1400], ["Characteristic", "Food purchasers (n = 5,000)", "Cooks (n = 5,000)", "Caregivers (n = 581)", "Adolescents (n = 2,473)"], t1rows, t1sec);
+const f2 = (x) => (x == null ? "–" : Number(x).toFixed(2));
+const f1 = (x) => (x == null ? "–" : Number(x).toFixed(1));
+const ci = (e, d = 2) => (e ? `${Number(e.est).toFixed(d)} (${Number(e.lo).toFixed(d)} to ${Number(e.hi).toFixed(d)})` : "–");
+const pv = (p) => (p == null ? "" : p < 0.001 ? "<0.001" : Number(p).toFixed(3));
+const note = (t) => P(t, { run: { size: 18 }, para: { spacing: { before: 120, line: 276 } } });
+const tTitle = (t) => new Paragraph({ spacing: { after: 120 }, children: runs(t) });
+const roles = [["purch", "Food purchasers"], ["cook", "Cooks"], ["adol", "Adolescents"]];
 
-// Table 2: adjusted ORs (high vs low), CI from OR and SE (delta method)
-const ci = (or, se) => { if (or == null) return "–"; const s = se / or; const lo = Math.exp(Math.log(or) - 1.96 * s), hi = Math.exp(Math.log(or) + 1.96 * s);
-  const f = (x) => (x >= 10 ? x.toFixed(1) : x.toFixed(2)); return `${f(or)} (${f(lo)}–${f(hi)})`; };
-const R = (label, p, c, a) => [label, ci(...p), ci(...c), ci(...a)];
-const NA = [null, null];
-const t2rows = [
-  ["Education (ref. none)", "", "", ""],
-  R("Primary", [3.932, 0.607], [3.040, 0.503], NA),
-  R("Secondary", [9.749, 1.653], [5.736, 1.002], [5.045, 0.797]),
-  R("Higher secondary or above", [41.38, 11.11], [23.22, 7.807], [28.57, 20.48]),
-  ["Wealth quintile (ref. poorest)", "", "", ""],
-  R("Poorer", [1.428, 0.244], [1.964, 0.323], [2.504, 0.604]),
-  R("Middle", [1.324, 0.209], [1.906, 0.294], [1.696, 0.377]),
-  R("Richer", [2.275, 0.444], [3.721, 0.74], [1.107, 0.278]),
-  R("Richest", [2.509, 0.593], [4.833, 1.19], [3.332, 0.977]),
-  ["Other characteristics", "", "", ""],
-  R("Female (ref. male)", [0.846, 0.286], NA, [2.409, 0.347]),
-  R("Urban (ref. rural)", [1.020, 0.171], [0.888, 0.159], [0.598, 0.125]),
-  R("Adequate dietary diversity (ref. inadequate)", [0.888, 0.102], [0.889, 0.101], [1.036, 0.162]),
-  R("Normal weight (ref. underweight)", [1.716, 0.317], [1.147, 0.19], [3.046, 0.514]),
-  R("Overweight (ref. underweight)", [2.110, 0.454], [1.584, 0.297], [6.165, 3.667]),
-];
-const t2sec = new Set([0, 4, 9]);
-const table2 = table([3900, 1800, 1800, 1700], ["Characteristic", "Food purchasers", "Cooks", "Adolescents"], t2rows, t2sec);
+// ---------- Table 1: knowledge–diet ----------
+const M2 = R.M2_knowledge_diet;
+const t1 = []; const t1sec = new Set();
+for (const [s, lab] of [["RU", "Rural–urban households"], ["Slum", "Slum households"]]) {
+  t1sec.add(t1.length); t1.push([lab, "", "", "", ""]);
+  for (const [r, n] of roles) {
+    const x = M2[s][r];
+    t1.push([`${n} (n = ${x.dds_adj.n.toLocaleString("en-US")})`, ci(x.dds_crude), ci(x.dds_adj), ci(x.mdd_adj_OR), ci(x.disc_adj_OR)]);
+  }
+}
+const table1 = table([2500, 1800, 1800, 1700, 1800], ["Respondent", "Dietary diversity, crude (food groups)", "Dietary diversity, adjusted (food groups)", "Minimum dietary diversity, adjusted OR", "Discretionary foods, adjusted OR"], t1, t1sec);
 
-// ---- assemble ----
+// ---------- assemble ----------
 const children = [];
 children.push(new Paragraph({ children: runs("Article", { size: 20, color: "52514E" }), spacing: { after: 120 } }));
 children.push(new Paragraph({ heading: HeadingLevel.TITLE, children: [new TextRun(C.title)] }));
@@ -109,42 +81,26 @@ children.push(P(C.authors));
 C.affiliations.forEach((a, i) => children.push(new Paragraph({ spacing: { after: 60 }, children: [new TextRun({ text: String(i + 1), superScript: true }), ...runs(" " + a, { size: 20 })] })));
 children.push(P("Correspondence: " + C.corresponding, { para: { spacing: { before: 120, after: 120 } } }));
 children.push(P("**Running title:** " + C.runningTitle));
-children.push(P(`**Word counts:** abstract ${absWords}; main text (introduction, results and discussion) ${mainWords}; display items: 5 figures and 1 table; Extended Data: 6 tables.`));
+children.push(P(`**Word counts:** abstract ${absWords}; main text (introduction, results and discussion) ${mainWords}; display items: 5 figures and 1 table; Extended Data: 8 tables.`));
 children.push(pageBreak());
-
-children.push(H1("Abstract"));
-children.push(P(C.abstract));
-children.push(pageBreak());
-
-C.sections.forEach((s, i) => {
-  if (i === 0) children.push(H1("Main"));
-  if (s.h) children.push(H1(s.h));
-  if (s.h2) children.push(H2(s.h2));
-  s.paras.forEach((p) => children.push(P(p)));
-});
-
+children.push(H1("Abstract")); children.push(P(C.abstract)); children.push(pageBreak());
+C.sections.forEach((s, i) => { if (i === 0) children.push(H1("Main")); if (s.h) children.push(H1(s.h)); if (s.h2) children.push(H2(s.h2)); s.paras.forEach((p) => children.push(P(p))); });
 children.push(H1("Methods"));
 C.methods.forEach((s) => { children.push(H2(s.h2)); s.paras.forEach((p) => children.push(P(p))); });
-
 children.push(H1("Data availability")); children.push(P(C.dataAvailability));
 children.push(H1("Code availability")); children.push(P(C.codeAvailability));
-
 children.push(H1("References"));
-C.references.forEach((r, i) => children.push(new Paragraph({ spacing: { after: 100, line: 360 }, indent: { left: 440, hanging: 440 },
-  children: [new TextRun({ text: `${i + 1}.\t` }), ...runs(r)], tabStops: [{ type: "left", position: 440 }] })));
-
+C.references.forEach((r, i) => children.push(new Paragraph({ spacing: { after: 100, line: 360 }, indent: { left: 440, hanging: 440 }, children: [new TextRun({ text: `${i + 1}.\t` }), ...runs(r)], tabStops: [{ type: "left", position: 440 }] })));
 children.push(H1("Acknowledgements")); children.push(P(C.acknowledgements));
 children.push(H1("Author contributions")); children.push(P(C.contributions));
 children.push(H1("Competing interests")); children.push(P(C.competing));
 children.push(H1("Inclusion and ethics statement")); children.push(P(C.inclusion));
 
-// Tables
 children.push(pageBreak());
-children.push(new Paragraph({ spacing: { after: 120 }, children: runs("**Table 1 | Factors associated with high basic nutrition knowledge (rural and urban samples).**") }));
-children.push(table2);
-children.push(P("Adjusted odds ratios (95% confidence intervals) for being in the highest versus lowest tertile of basic nutrition knowledge, from multinomial logistic regression models fitted separately for food purchasers (n = 2,836 with complete data), cooks (n = 2,843) and adolescents (n = 2,042). Models also included age group and division, and, for purchasers and cooks, self-rated health. Confidence intervals were derived from reported standard errors. –, not estimated (variable not in model, or sparse data). Cooks were 99.3% female, so sex was not modelled.", { run: { size: 18 }, para: { spacing: { before: 120, line: 276 } } }));
+children.push(tTitle("**Table 1 | Association of basic nutrition knowledge (per 10 points) with diet.**"));
+children.push(table1);
+children.push(note("Estimates per 10-point higher knowledge score (0–100) with 95% confidence intervals. Dietary diversity: number of ten food groups consumed in the previous 24 hours (weighted linear regression). Minimum dietary diversity: five or more groups. Discretionary foods: savoury or fried snacks, sweets or sugar-sweetened beverages in the previous 24 hours (weighted logistic regression; OR, odds ratio). Adjusted models include wealth quintile, log food expenditure per person, food insecurity (HFIAS category), household internet access, division and (rural–urban only) urban residence. Standard errors clustered by primary sampling unit; rural–urban and slum samples analysed separately."));
 
-// Figures
 C.figures.forEach((f) => {
   children.push(pageBreak());
   const width = 620, height = Math.round(width * f.h / f.w);
@@ -152,83 +108,152 @@ C.figures.forEach((f) => {
   children.push(new Paragraph({ spacing: { before: 160, after: 80, line: 360 }, children: runs("**" + f.title + "** " + f.legend) }));
 });
 
-
 // ================= Extended Data =================
-const SR = JSON.parse(fs.readFileSync("/home/user/CSE366-4--2021-2-60-115/nature-food/analysis/secondary_results.json", "utf8"));
-const note = (t) => P(t, { run: { size: 18 }, para: { spacing: { before: 120, line: 276 } } });
-const edTitle = (t) => new Paragraph({ spacing: { after: 120 }, children: runs(t) });
-const fmtCI = (a) => `${a[0].toFixed(1)} (${a[1].toFixed(1)} to ${a[2].toFixed(1)})`;
-children.push(pageBreak());
-children.push(H1("Extended Data"));
-// ED1
-children.push(edTitle("**Extended Data Table 1 | Characteristics of respondents, by role (%).**"));
-children.push(table1);
-children.push(note("Weighted percentages. One respondent per role per household; the same person could be both food purchaser and cook. Caregivers were the primary caregivers of children aged 6–23 months."));
-// ED2 inequality
-children.push(pageBreak());
-children.push(edTitle("**Extended Data Table 2 | Slope and relative indices of inequality in basic nutrition knowledge (rural and urban samples).**"));
-const gl = { purchasers: "Food purchasers", cooks: "Cooks", adolescents: "Adolescents" };
-const ed2 = [];
-for (const g of ["purchasers", "cooks", "adolescents"]) {
-  const q = SR.inequality[g];
-  ed2.push([gl[g], q.edu_SII_high[0].toFixed(1), q.edu_SII_high[1].toFixed(1), q.wealth_SII_high[0].toFixed(1), q.wealth_SII_high[1].toFixed(1),
-    q.edu_SII_low[0].toFixed(1), q.wealth_SII_low[0].toFixed(1)]);
+children.push(pageBreak()); children.push(H1("Extended Data"));
+// ED1 sample characteristics
+const Dd = R.descriptives;
+const e1 = []; const e1s = new Set();
+const sec = (lab) => { e1s.add(e1.length); e1.push([lab, "", ""]); };
+sec("Sample");
+e1.push(["Households (primary sampling units)", `${Dd.RU.n_hh.toLocaleString("en-US")} (${Dd.RU.n_psu})`, `${Dd.Slum.n_hh.toLocaleString("en-US")} (${Dd.Slum.n_psu})`]);
+e1.push(["Separate food purchaser interviewed, n", Dd.RU.bn_purch_n.toLocaleString("en-US"), Dd.Slum.bn_purch_n.toLocaleString("en-US")]);
+e1.push(["Cook was also the main food purchaser, %", f1(Dd.RU.purch_is_cook_share), f1(Dd.Slum.purch_is_cook_share)]);
+e1.push(["Adolescents interviewed, n", Dd.RU.bn_adol_n.toLocaleString("en-US"), Dd.Slum.bn_adol_n.toLocaleString("en-US")]);
+sec("Household characteristics (%)");
+for (const k of ["Secure", "Mild", "Moderate", "Severe"]) e1.push([`Food insecurity (HFIAS): ${k.toLowerCase()}`, f1(Dd.RU.hfias[k]), f1(Dd.Slum.hfias[k])]);
+e1.push(["Household internet access", f1(Dd.RU.internet), f1(Dd.Slum.internet)]);
+e1.push(["Receives any social-safety-net benefit", f1(Dd.RU.safety_net), f1(Dd.Slum.safety_net)]);
+e1.push(["Handwashing place with water and soap (observed)", f1(Dd.RU.hw_station_water_soap), f1(Dd.Slum.hw_station_water_soap)]);
+e1.push(["Food stored near chemicals (observed)", f1(Dd.RU.food_near_chem_obs), f1(Dd.Slum.food_near_chem_obs)]);
+sec("Knowledge (score 0–100, mean; % scoring ≥60)");
+for (const [r, n] of roles) e1.push([`Basic nutrition — ${n.toLowerCase()}`, `${f1(Dd.RU[`bn_${r}_mean`])}; ${f1(Dd.RU[`bn_${r}_ge60`])}`, `${f1(Dd.Slum[`bn_${r}_mean`])}; ${f1(Dd.Slum[`bn_${r}_ge60`])}`]);
+e1.push(["Food safety — cooks", `${f1(Dd.RU.foodsafety_know)}; ${f1(Dd.RU.fs_ge60)}`, `${f1(Dd.Slum.foodsafety_know)}; ${f1(Dd.Slum.fs_ge60)}`]);
+e1.push(["Cooking practices — cooks (mean)", f1(Dd.RU.cooking_know), f1(Dd.Slum.cooking_know)]);
+e1.push(["Infant feeding — caregivers (mean)", f1(Dd.RU.iycf_know), f1(Dd.Slum.iycf_know)]);
+sec("Diets, previous 24 h");
+for (const [r, n] of roles) {
+  e1.push([`${n}: dietary diversity, mean groups; % ≥5 groups`, `${f2(Dd.RU[`dds_${r}_mean`])}; ${f1(Dd.RU[`mdd_${r}`])}`, `${f2(Dd.Slum[`dds_${r}_mean`])}; ${f1(Dd.Slum[`mdd_${r}`])}`]);
+  e1.push([`${n}: any discretionary food / SSB / sweets / snacks, %`, `${f1(Dd.RU[`anydisc_${r}`])} / ${f1(Dd.RU[`ssb_${r}`])} / ${f1(Dd.RU[`sweets_${r}`])} / ${f1(Dd.RU[`snacks_${r}`])}`, `${f1(Dd.Slum[`anydisc_${r}`])} / ${f1(Dd.Slum[`ssb_${r}`])} / ${f1(Dd.Slum[`sweets_${r}`])} / ${f1(Dd.Slum[`snacks_${r}`])}`]);
 }
-children.push(table([1900, 1250, 1250, 1250, 1250, 1250, 1250], ["Respondent type", "Education SII, high (pp)", "Education RII, high", "Wealth SII, high (pp)", "Wealth RII, high", "Education SII, low (pp)", "Wealth SII, low (pp)"], ed2));
-children.push(note("SII, slope index of inequality: absolute difference (percentage points, pp) in the predicted share of respondents in the highest (\"high\") or lowest (\"low\") knowledge tertile between the top and bottom of the education or wealth distribution. RII, relative index of inequality: ratio of predicted prevalence at the top to that at the bottom. Estimated by weighted least-squares regression of group prevalence on ridit scores (Methods). Negative SII for \"low\" indicates that low knowledge is concentrated at the bottom of the distribution."));
-// ED3 knowledge–diet
+e1.push(["Children 6–23 months: minimum dietary diversity, %", f1(Dd.RU.child_mdd), f1(Dd.Slum.child_mdd)]);
+children.push(tTitle("**Extended Data Table 1 | Sample characteristics, knowledge and diets (survey-weighted).**"));
+children.push(table([5200, 2200, 2200], ["Characteristic", "Rural–urban", "Slum"], e1, e1s));
+children.push(note("SSB, sugar-sweetened beverages (including sweetened tea). HFIAS, Household Food Insecurity Access Scale."));
+
+// ED2 knowledge correlates
 children.push(pageBreak());
-children.push(edTitle("**Extended Data Table 3 | Association between basic nutrition knowledge and diet (rural and urban samples).**"));
-const ed3 = [];
-for (const g of ["purchasers", "cooks", "adolescents"]) {
-  const k = SR.knowledge_diet_RD[g];
-  ed3.push([gl[g], `${k.n_adequate} / ${k.n_inadequate}`, fmtCI(k.RD_high_adequate_vs_inadequate), fmtCI(k.RD_low_adequate_vs_inadequate), fmtCI(k.RD_high_discretionary_vs_not),
-    `${SR.MDE_OR[g][0].toFixed(2)} / ${SR.MDE_OR[g][1].toFixed(2)}`]);
-}
-const po = SR.pooled_OR_dd;
-ed3.push(["Pooled adjusted OR (adequate dietary diversity)", "", `${po.OR.toFixed(2)} (${po.lo.toFixed(2)} to ${po.hi.toFixed(2)})`, `I² = ${po.I2}%; Q = ${po.Q}`, "", `${SR.MDE_pooled[0].toFixed(2)} / ${SR.MDE_pooled[1].toFixed(2)}`]);
-children.push(table([1900, 1250, 1600, 1600, 1600, 1450], ["Respondent type", "n adequate / inadequate diversity", "RD in high knowledge, adequate vs inadequate diversity (pp, 95% CI)", "RD in low knowledge, adequate vs inadequate diversity (pp, 95% CI)", "RD in high knowledge, discretionary vs none (pp, 95% CI)", "Minimum detectable OR (80% power)"], ed3));
-children.push(note("RD, risk difference in the percentage of respondents in the highest or lowest knowledge tertile. Confidence intervals inflate binomial variance by a design effect of 2.5. The pooled odds ratio combines the adjusted odds ratios for adequate dietary diversity (high versus low knowledge) from the three respondent-specific multinomial models by inverse-variance weighting (Methods). Minimum detectable odds ratios (lower / upper) are for two-sided α = 0.05 and 80% power given each model's standard error."));
-// ED4 handwashing
+const M1 = R.M1_knowledge_correlates_RU;
+const terms = [["C(wealth_q)[T.2.0]", "Wealth quintile 2 (ref. poorest)"], ["C(wealth_q)[T.3.0]", "Wealth quintile 3"], ["C(wealth_q)[T.4.0]", "Wealth quintile 4"], ["C(wealth_q)[T.5.0]", "Wealth quintile 5 (richest)"],
+  ["urban", "Urban (ref. rural)"], ["internet", "Household internet access"], ["msg30_{r}", "Saw nutrition/food-safety message, previous 30 days"],
+  ["C(hfias_cat)[T.Mild]", "Mild food insecurity (ref. secure)"], ["C(hfias_cat)[T.Moderate]", "Moderate food insecurity"], ["C(hfias_cat)[T.Severe]", "Severe food insecurity"],
+  ["C(division)[T.Chattogram]", "Chattogram (ref. Barishal)"], ["C(division)[T.Dhaka]", "Dhaka"], ["C(division)[T.Khulna]", "Khulna"], ["C(division)[T.Mymensingh]", "Mymensingh"],
+  ["C(division)[T.Rajshahi]", "Rajshahi"], ["C(division)[T.Rangpur]", "Rangpur"], ["C(division)[T.Sylhet]", "Sylhet"]];
+const e2 = terms.map(([t, lab]) => [lab, ...[["purch", "purch"], ["cook", "cook"], ["adol", "adol"], ["foodsafety", "cook"]].map(([k, r]) => ci(M1[k][t.replace("{r}", r)], 1))]);
+children.push(tTitle("**Extended Data Table 2 | Correlates of knowledge scores (rural–urban households).**"));
+children.push(table([2900, 1700, 1700, 1700, 1700], ["Characteristic", "Basic nutrition, purchasers", "Basic nutrition, cooks", "Basic nutrition, adolescents", "Food safety, cooks"], e2));
+children.push(note("Adjusted differences in knowledge score (points, 0–100) with 95% confidence intervals from survey-weighted linear regression including all variables shown. Standard errors clustered by primary sampling unit."));
+
+// ED3 effect modification
 children.push(pageBreak());
-children.push(edTitle("**Extended Data Table 4 | Handwashing with soap at critical times: COVID-19-attributed adoption and estimated pre- and post-pandemic prevalence (%).**"));
-const hwRaw = { rural_urban: { "After defecation": [92.6, 7.1, 99.6], "Before eating": [80.9, 18.8, 99.7], "After cleaning child's faeces": [86.8, 13.7, 93.1], "Before cooking": [81.1, 18.7, 98.1], "After returning home": [44.3, 54.3, 98.6], "Before feeding a child": [76.7, 29.7, 100.0] },
-  slum: { "After defecation": [90.4, 9.6, 97.9], "Before eating": [73.5, 26.1, 100.0], "After cleaning child's faeces": [82.9, 20.7, 100.0], "Before cooking": [79.0, 20.2, 100.0], "After returning home": [28.2, 70.1, 99.4], "Before feeding a child": [74.3, 30.8, 100.0] } };
-const ed4 = []; const ed4sec = new Set();
-for (const [st, lbl] of [["rural_urban", "Rural–urban (n = 3,989)"], ["slum", "Slum (n = 1,011)"]]) {
-  ed4sec.add(ed4.length); ed4.push([lbl, "", "", "", "", "", ""]);
-  for (const [k, v] of Object.entries(SR.handwashing[st])) {
-    const r = hwRaw[st][k];
-    ed4.push([k, v.current.toFixed(1), r[0].toFixed(1), r[1].toFixed(1), r[2].toFixed(1), v.pre.toFixed(1), `${v.gain_pp.toFixed(1)}`]);
+const e3 = []; const e3s = new Set();
+for (const [s, lab] of [["RU", "Rural–urban"], ["Slum", "Slum"]]) {
+  e3s.add(e3.length); e3.push([lab, "", "", "", "", "", ""]);
+  for (const [r, n] of roles) {
+    const x = M2[s][r];
+    e3.push([n, ci(x.slope_secure_mild), ci(x.slope_mod_severe), pv(x.interaction_p), f2(x.slope_nonpoor.est), ci(x.slope_poor), pv(x.poor_interaction_p)]);
   }
 }
-children.push(table([2300, 1100, 1300, 1300, 1300, 1200, 1100], ["Critical time", "Current", "Of practitioners: usual before pandemic", "Of practitioners: adopted due to COVID-19 messaging", "Of adopters: will continue", "Estimated pre-pandemic", "Change (pp)"], ed4, ed4sec));
-children.push(note("Current prevalence and the three conditional shares are as reported by respondents. Estimated pre-pandemic prevalence = current × share whose practice predated the pandemic; where the two conditional shares summed to more than 100% they were rescaled (Methods). Projected post-pandemic prevalence was within 1 percentage point of current prevalence for every item because almost all adopters intended to continue."));
-// ED5 slum vs RU
+children.push(tTitle("**Extended Data Table 3 | Association of knowledge with dietary diversity by food security and wealth.**"));
+children.push(table([1700, 1500, 1500, 900, 1100, 1500, 900], ["Respondent", "Food-secure or mild", "Moderate or severe insecurity", "P interaction", "Wealth Q3–Q5", "Wealth Q1–Q2", "P interaction"], e3, e3s));
+children.push(note("Difference in dietary diversity (food groups) per 10-point higher knowledge within each stratum, with 95% confidence intervals, from survey-weighted linear models with a knowledge × stratum interaction, adjusted for the covariates in Table 1."));
+
+// ED4 decomposition
 children.push(pageBreak());
-children.push(edTitle("**Extended Data Table 5 | Diets and hygiene in slum versus rural–urban households.**"));
-const ed5 = Object.entries(SR.slum_vs_ru).map(([k, v]) => [k, v.ru.toFixed(1), v.slum.toFixed(1), fmtCI(v.RD)]);
-children.push(table([4300, 1500, 1500, 2300], ["Indicator", "Rural–urban (%)", "Slum (%)", "Difference, slum − rural–urban (pp, 95% CI)"], ed5));
-children.push(note("Sample sizes: adults, rural–urban 3,989 and slum 1,011; adolescents, 2,044 and 429; children aged 6–23 months, 481 and 100. Confidence intervals inflate binomial variance by a design effect of 2.5. Discretionary foods: savoury or fried snacks, sweets or sugar-sweetened beverages in the previous 24 hours."));
-// ED6 IYCF
+const dec = R.decomposition_RU; const labs = ["Knowledge", "Food insecurity", "Food expenditure", "Internet access", "Urban residence"];
+const e4 = labs.map((l) => [l, `${f2(dec.cook.components[l])} (${f1(dec.cook.share_pct[l])}%)`, `${f2(dec.purch.components[l])} (${f1(dec.purch.share_pct[l])}%)`]);
+e4.push(["Unexplained (including division)", `${f2(dec.cook.unexplained)} (${f1(100 * dec.cook.unexplained / dec.cook.gap)}%)`, `${f2(dec.purch.unexplained)} (${f1(100 * dec.purch.unexplained / dec.purch.gap)}%)`]);
+e4.unshift(["Gap in dietary diversity, richest − poorest quintile", f2(dec.cook.gap), f2(dec.purch.gap)]);
+children.push(tTitle("**Extended Data Table 4 | Decomposition of the rich–poor gap in dietary diversity (rural–urban households).**"));
+children.push(table([4400, 2600, 2600], ["Component", "Cooks: food groups (% of gap)", "Purchasers: food groups (% of gap)"], e4));
+children.push(note("Contribution of each factor = pooled regression coefficient × difference in weighted means between the richest and poorest wealth quintiles. Model includes knowledge (per 10 points), HFIAS score, log food expenditure per person, internet access, urban residence and division."));
+
+// ED5 food safety practice & handwashing
 children.push(pageBreak());
-children.push(edTitle("**Extended Data Table 6 | Infant and young child feeding knowledge of caregivers and diets of children aged 6–23 months (%).**"));
-const ed6 = [
-  ["Caregiver knowledge (rural–urban, n = 481): answered incorrectly", "", ""],
-  ["How often should a baby breastfeed?", "42.0", "–"],
-  ["How long after birth should breastfeeding start?", "35.3", "–"],
-  ["Should infants <6 months be given water in hot weather?", "34.5", "–"],
-  ["What to do if breast milk seems insufficient? (incorrect / partially correct)", "20.8 / 76.9", "–"],
-  ["What to do with colostrum?", "2.3", "–"],
-  ["Up to what age should a child be breastfed?", "15.6", "–"],
-  ["Child food groups consumed in previous 24 h", "Rural–urban (n = 481)", "Slum (n = 100)"],
-  ["Breast milk", "87.9", "89.0"], ["Grains, white roots and tubers", "88.4", "90.0"], ["Legumes and nuts", "45.9", "46.0"],
-  ["Dairy", "23.1", "11.0"], ["Flesh foods", "44.3", "39.0"], ["Eggs", "40.9", "28.0"],
-  ["Vitamin A-rich fruits and vegetables", "33.3", "27.0"], ["Other fruits and vegetables", "33.5", "30.0"],
-  ["Minimum dietary diversity (≥5 of 8 groups)", "40.7", "31.0"],
+const FS = R.foodsafety_practice, HW = R.handwashing;
+const e5 = []; const e5s = new Set();
+e5s.add(e5.length); e5.push(["Observed practice", "", ""]);
+e5.push(["Handwashing place with water and soap, %", f1(FS.RU.station_ws_overall), f1(FS.Slum.station_ws_overall)]);
+e5.push(["  poorest / richest quintile, %", `${f1(FS.RU.station_ws_by_wealth["1"])} / ${f1(FS.RU.station_ws_by_wealth["5"])}`, `${f1(FS.Slum.station_ws_by_wealth["1"])} / ${f1(FS.Slum.station_ws_by_wealth["5"])}`]);
+e5.push(["  adjusted OR, richest vs poorest quintile", ci(FS.RU.station_wealthQ5_OR), ci(FS.Slum.station_wealthQ5_OR)]);
+e5.push(["  adjusted OR per 10-point food-safety knowledge", ci(FS.RU.station_OR_per10), ci(FS.Slum.station_OR_per10)]);
+e5.push(["Food stored near chemicals: cook knows / does not know it should be avoided, %", `${f1(FS.RU.near_chem_obs_if_knows)} / ${f1(FS.RU.near_chem_obs_if_not)}`, `${f1(FS.Slum.near_chem_obs_if_knows)} / ${f1(FS.Slum.near_chem_obs_if_not)}`]);
+e5s.add(e5.length); e5.push(["Handwashing with soap: knows the critical time / reports practice / estimated pre-pandemic, %", "", ""]);
+for (const [k, lab] of [["after_latrine", "After defecation"], ["before_eating", "Before eating"], ["before_cooking", "Before cooking"], ["after_returning_home", "After returning home"]]) {
+  const a = HW.RU[k], b = HW.Slum[k];
+  e5.push([lab, `${f1(a.know)} / ${f1(a.report)} / ${f1(a.report * a.pre_share / 100)}`, `${f1(b.know)} / ${f1(b.report)} / ${f1(b.report * b.pre_share / 100)}`]);
+}
+children.push(tTitle("**Extended Data Table 5 | Food-safety knowledge, observed practice and handwashing.**"));
+children.push(table([5200, 2200, 2200], ["Indicator", "Rural–urban", "Slum"], e5, e5s));
+children.push(note("Observed indicators were recorded by enumerators. Estimated pre-pandemic prevalence = reported prevalence × share of practitioners reporting the practice predated the COVID-19 pandemic. OR, odds ratio (95% confidence interval) from survey-weighted logistic regression adjusted for wealth quintile, residence, division and drinking-water source."));
+
+// ED6 item-level knowledge
+children.push(pageBreak());
+const IT = R.items_RU;
+const itemLabels = { foodgroups: "Food groups in a balanced diet", unhealthy_foods: "Unhealthy foods (categories)", harms_ncd: "NCD consequences of unhealthy foods", balanced_needed: "Problems if balanced diet not eaten", energy_foods: "Energy-giving foods", bodybuilding_foods: "Body-building foods", protective_foods: "Protective foods", vitC_foods: "Vitamin C-rich foods", heard_anaemia: "Heard of iron-deficiency anaemia", vitA_foods: "Vitamin A-rich foods", iron_foods: "Iron-rich foods", arsenic_source: "Source of arsenic", pregnancy_diet: "Diet in pregnancy", lactation_diet: "Diet in lactation", trans_fat: "Trans-fatty acids", healthy_diet: "Features of a healthy diet" };
+const e6 = Object.entries(itemLabels).map(([k, l]) => [l, ...roles.map(([r]) => `${f1(IT[r][k].mean_credit)} (${f1(IT[r][k].none)})`)]);
+children.push(tTitle("**Extended Data Table 6 | Item-level basic nutrition knowledge (rural–urban households).**"));
+children.push(table([3800, 1900, 1900, 1900], ["Item", "Food purchasers", "Cooks", "Adolescents"], e6));
+children.push(note("Mean credit (%) with the percentage receiving no credit in parentheses. Survey-weighted."));
+
+// ED7 scoring key
+children.push(pageBreak());
+const key = [
+  ["Basic nutrition (16 items)", ""],
+  ["Food groups in balanced diet", "Fraction of 8 groups named"],
+  ["Unhealthy foods", "Fraction of 3 categories (salty/fried; sweet; sugar-sweetened beverages) with ≥1 item named"],
+  ["NCD consequences of unhealthy foods", "Fraction of 4 (NCD/kidney failure, obesity, high blood pressure, diabetes)"],
+  ["Problems if balanced diet not eaten; heard of anaemia", "Yes = 1"],
+  ["Energy-giving / body-building / protective foods", "Fraction of correct groups: grains and potatoes, oils and fats / fish–meat–egg–pulses, milk / vegetables, fruits"],
+  ["Vitamin C-rich foods", "Amlaki, lemon or orange = 1"],
+  ["Vitamin A-rich foods", "Fraction of 3 correct options"],
+  ["Iron-rich foods", "Fraction of 3 correct options (flesh foods, pulses, leafy vegetables) minus 1/3 if potato named"],
+  ["Source of arsenic", "Shallow tubewell = 1"],
+  ["Diet in pregnancy; diet in lactation", "Fraction of 6 recommended practices"],
+  ["Trans-fatty acids", "'Bad for health' or 'should avoid' = 1; not heard = 0"],
+  ["Features of a healthy diet", "Fraction of 12 dietary-guideline features"],
+  ["Food safety (12 items, cooks)", ""],
+  ["Store food away from chemicals; clean hands before cooking; wash before eating; separate raw and cooked; clean utensils", "Correct answer = 1"],
+  ["Safety of vegetables; fruits", "Fraction of 3 correct practices"],
+  ["Safety of cooked food; prevent contamination", "Fraction of 5 correct practices"],
+  ["Utensil cleaning method", "Hot soapy water after each use, or soap and ash = 1"],
+  ["Disease transmission sources", "Fraction of 6"],
+  ["Reheating cooked food", "Once = 1"],
+  ["Cooking practices (8 items, cooks)", ""],
+  ["Keep rice gruel; wash vegetables whole; keep boiling water; lid on; eat within 1 h; cover food; avoid stale food; iodised salt", "Correct answer = 1"],
+  ["Infant feeding (11 items, caregivers)", ""],
+  ["Breastfeed after birth; initiate within 1 h; give colostrum; on demand; exclusive breastfeeding; increase breastfeeding if milk insufficient; no water <6 months; liquids and foods from 6 months; breastfeed ≥24 months; no other food in first days", "Correct answer = 1"],
 ];
-children.push(table([5200, 2200, 2200], ["Item", "Rural–urban", "Slum"], ed6, new Set([0, 7])));
-children.push(note("In slums, 48.0%, 36.0% and 46.0% of caregivers answered incorrectly on breastfeeding frequency, timing of initiation and water for young infants, respectively. Caregiver knowledge level was associated with division only (high knowledge in Chattogram versus Barisal, odds ratio 3.6)."));
+const keyS = new Set(key.map((r, i) => (r[1] === "" ? i : -1)).filter((i) => i >= 0));
+children.push(tTitle("**Extended Data Table 7 | Knowledge scoring key.**"));
+children.push(table([4800, 4800], ["Item", "Credit"], key, keyS));
+children.push(note("Domain score = mean item credit × 100. Basic nutrition scores required at least 14 of 16 items to be non-missing."));
+
+// ED8 comparison with published report
+children.push(pageBreak());
+const cmp = [
+  ["Cooks: reheat cooked food only once, %", "42.3", "42.1"],
+  ["Cooks: know not to store food near chemicals, %", "47.8", "54.2"],
+  ["Cooks: store raw and cooked food separately, %", "81.7", "85.1"],
+  ["Cooks: wash vegetables whole before cutting, %", "24.6", "20.2"],
+  ["Cooks: keep rice gruel, %", "75.1", "78.4"],
+  ["Reported handwashing with soap before eating, %", "96.5", "97.8"],
+  ["Food purchasers: inadequate dietary diversity, %", "57.3", "60.6"],
+  ["Children 6–23 months: minimum dietary diversity, %", "40.7", "37.2"],
+  ["Slum food purchasers: normal BMI, %", "11.3", "67.1"],
+];
+children.push(tTitle("**Extended Data Table 8 | Comparison with estimates published in the survey report.**"));
+children.push(table([5600, 2000, 2000], ["Indicator (rural–urban unless stated)", "Survey report", "This analysis"], cmp));
+children.push(note("Differences reflect the larger analytical sample (5,239 versus 5,000 households), harmonised indicator definitions (for example, WHO 2021 child dietary diversity including breast milk) and correction of a tabulation error in the report's slum anthropometry table."));
 
 const doc = new Document({
   creator: "Study team", title: C.title,
@@ -241,13 +266,10 @@ const doc = new Document({
     ],
   },
   sections: [{
-    properties: {
-      page: { size: { width: 11906, height: 16838 }, margin: { top: 1440, bottom: 1440, left: 1300, right: 1300 } },
-      lineNumbers: { countBy: 1, restart: LineNumberRestartFormat.CONTINUOUS },
-    },
+    properties: { page: { size: { width: 11906, height: 16838 }, margin: { top: 1440, bottom: 1440, left: 1300, right: 1300 } }, lineNumbers: { countBy: 1, restart: LineNumberRestartFormat.CONTINUOUS } },
     footers: { default: new Footer({ children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ children: [PageNumber.CURRENT], size: 18 })] })] }) },
     children,
   }],
 });
-const out = "/home/user/CSE366-4--2021-2-60-115/nature-food/NatureFood_Manuscript_Final_Draft.docx";
+const out = path.join(ROOT, "NatureFood_Manuscript_Final_Draft.docx");
 Packer.toBuffer(doc).then((b) => { fs.writeFileSync(out, b); console.log("wrote", out); });

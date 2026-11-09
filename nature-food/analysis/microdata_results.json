@@ -1,0 +1,1696 @@
+{
+ "descriptives": {
+  "RU": {
+   "bn_cook_mean": 44.6,
+   "bn_cook_n": 4136,
+   "bn_cook_ge60": 13.7,
+   "dds_cook_mean": 4.24,
+   "mdd_cook": 35.8,
+   "anydisc_cook": 70.8,
+   "snacks_cook": 11.2,
+   "sweets_cook": 32.3,
+   "ssb_cook": 56.3,
+   "bn_purch_mean": 42.7,
+   "bn_purch_n": 3021,
+   "bn_purch_ge60": 11.7,
+   "dds_purch_mean": 4.29,
+   "mdd_purch": 39.4,
+   "anydisc_purch": 84.0,
+   "snacks_purch": 27.0,
+   "sweets_purch": 39.3,
+   "ssb_purch": 73.6,
+   "bn_adol_mean": 40.4,
+   "bn_adol_n": 1862,
+   "bn_adol_ge60": 11.7,
+   "dds_adol_mean": 4.41,
+   "mdd_adol": 40.9,
+   "anydisc_adol": 79.1,
+   "snacks_adol": 36.2,
+   "sweets_adol": 49.8,
+   "ssb_adol": 44.5,
+   "foodsafety_know": 54.9,
+   "cooking_know": 77.3,
+   "iycf_know": 76.2,
+   "fs_ge60": 35.2,
+   "food_insecure_modsev": 22.3,
+   "internet": 37.9,
+   "hw_station_water_soap": 58.4,
+   "food_near_chem_obs": 11.2,
+   "child_mdd": 37.2,
+   "safety_net": 17.2,
+   "hfias": {
+    "Secure": 56.0,
+    "Mild": 21.7,
+    "Moderate": 12.5,
+    "Severe": 9.8
+   },
+   "purch_is_cook_share": 27.0,
+   "n_hh": 4136,
+   "n_psu": 198
+  },
+  "Slum": {
+   "bn_cook_mean": 41.8,
+   "bn_cook_n": 1103,
+   "bn_cook_ge60": 7.9,
+   "dds_cook_mean": 4.15,
+   "mdd_cook": 35.5,
+   "anydisc_cook": 78.8,
+   "snacks_cook": 13.5,
+   "sweets_cook": 31.1,
+   "ssb_cook": 71.6,
+   "bn_purch_mean": 38.5,
+   "bn_purch_n": 407,
+   "bn_purch_ge60": 3.2,
+   "dds_purch_mean": 4.37,
+   "mdd_purch": 37.9,
+   "anydisc_purch": 92.1,
+   "snacks_purch": 30.8,
+   "sweets_purch": 48.8,
+   "ssb_purch": 86.7,
+   "bn_adol_mean": 35.8,
+   "bn_adol_n": 419,
+   "bn_adol_ge60": 4.3,
+   "dds_adol_mean": 4.59,
+   "mdd_adol": 44.0,
+   "anydisc_adol": 82.6,
+   "snacks_adol": 42.3,
+   "sweets_adol": 48.3,
+   "ssb_adol": 56.0,
+   "foodsafety_know": 54.5,
+   "cooking_know": 77.6,
+   "iycf_know": 70.3,
+   "fs_ge60": 35.9,
+   "food_insecure_modsev": 34.5,
+   "internet": 32.0,
+   "hw_station_water_soap": 45.7,
+   "food_near_chem_obs": 14.2,
+   "child_mdd": 40.3,
+   "safety_net": 19.0,
+   "hfias": {
+    "Secure": 32.6,
+    "Mild": 32.9,
+    "Moderate": 17.6,
+    "Severe": 16.9
+   },
+   "purch_is_cook_share": 63.1,
+   "n_hh": 1103,
+   "n_psu": 50
+  }
+ },
+ "items_RU": {
+  "cook": {
+   "foodgroups": {
+    "mean_credit": 41.8,
+    "fully": 0.2,
+    "none": 0.8
+   },
+   "unhealthy_foods": {
+    "mean_credit": 39.2,
+    "fully": 3.2,
+    "none": 11.0
+   },
+   "harms_ncd": {
+    "mean_credit": 4.7,
+    "fully": 0.0,
+    "none": 84.0
+   },
+   "balanced_needed": {
+    "mean_credit": 96.8,
+    "fully": 96.8,
+    "none": 3.2
+   },
+   "energy_foods": {
+    "mean_credit": 18.9,
+    "fully": 1.0,
+    "none": 63.1
+   },
+   "bodybuilding_foods": {
+    "mean_credit": 78.6,
+    "fully": 63.0,
+    "none": 5.8
+   },
+   "protective_foods": {
+    "mean_credit": 66.2,
+    "fully": 45.5,
+    "none": 13.1
+   },
+   "vitC_foods": {
+    "mean_credit": 65.0,
+    "fully": 65.0,
+    "none": 35.0
+   },
+   "heard_anaemia": {
+    "mean_credit": 66.2,
+    "fully": 66.2,
+    "none": 33.8
+   },
+   "vitA_foods": {
+    "mean_credit": 23.6,
+    "fully": 4.1,
+    "none": 54.8
+   },
+   "iron_foods": {
+    "mean_credit": 30.9,
+    "fully": 4.8,
+    "none": 40.1
+   },
+   "arsenic_source": {
+    "mean_credit": 50.8,
+    "fully": 50.8,
+    "none": 49.2
+   },
+   "pregnancy_diet": {
+    "mean_credit": 38.4,
+    "fully": 0.2,
+    "none": 1.0
+   },
+   "lactation_diet": {
+    "mean_credit": 37.0,
+    "fully": 0.0,
+    "none": 0.7
+   },
+   "trans_fat": {
+    "mean_credit": 32.3,
+    "fully": 32.3,
+    "none": 67.7
+   },
+   "healthy_diet": {
+    "mean_credit": 23.0,
+    "fully": 0.0,
+    "none": 3.9
+   }
+  },
+  "purch": {
+   "foodgroups": {
+    "mean_credit": 40.9,
+    "fully": 0.1,
+    "none": 1.4
+   },
+   "unhealthy_foods": {
+    "mean_credit": 40.6,
+    "fully": 4.5,
+    "none": 10.1
+   },
+   "harms_ncd": {
+    "mean_credit": 6.4,
+    "fully": 0.0,
+    "none": 79.3
+   },
+   "balanced_needed": {
+    "mean_credit": 95.5,
+    "fully": 95.5,
+    "none": 4.5
+   },
+   "energy_foods": {
+    "mean_credit": 19.6,
+    "fully": 1.0,
+    "none": 61.9
+   },
+   "bodybuilding_foods": {
+    "mean_credit": 82.6,
+    "fully": 70.3,
+    "none": 5.0
+   },
+   "protective_foods": {
+    "mean_credit": 67.9,
+    "fully": 48.3,
+    "none": 12.6
+   },
+   "vitC_foods": {
+    "mean_credit": 61.8,
+    "fully": 61.8,
+    "none": 38.2
+   },
+   "heard_anaemia": {
+    "mean_credit": 56.4,
+    "fully": 56.4,
+    "none": 43.6
+   },
+   "vitA_foods": {
+    "mean_credit": 19.3,
+    "fully": 2.6,
+    "none": 59.9
+   },
+   "iron_foods": {
+    "mean_credit": 30.2,
+    "fully": 4.5,
+    "none": 41.8
+   },
+   "arsenic_source": {
+    "mean_credit": 47.9,
+    "fully": 47.9,
+    "none": 52.1
+   },
+   "pregnancy_diet": {
+    "mean_credit": 31.0,
+    "fully": 0.1,
+    "none": 4.2
+   },
+   "lactation_diet": {
+    "mean_credit": 30.8,
+    "fully": 0.0,
+    "none": 4.1
+   },
+   "trans_fat": {
+    "mean_credit": 30.2,
+    "fully": 30.2,
+    "none": 69.8
+   },
+   "healthy_diet": {
+    "mean_credit": 22.3,
+    "fully": 0.0,
+    "none": 6.2
+   }
+  },
+  "adol": {
+   "foodgroups": {
+    "mean_credit": 40.3,
+    "fully": 0.4,
+    "none": 1.4
+   },
+   "unhealthy_foods": {
+    "mean_credit": 40.1,
+    "fully": 3.7,
+    "none": 14.9
+   },
+   "harms_ncd": {
+    "mean_credit": 4.8,
+    "fully": 0.0,
+    "none": 83.9
+   },
+   "balanced_needed": {
+    "mean_credit": 94.5,
+    "fully": 94.5,
+    "none": 5.5
+   },
+   "energy_foods": {
+    "mean_credit": 17.5,
+    "fully": 1.0,
+    "none": 66.0
+   },
+   "bodybuilding_foods": {
+    "mean_credit": 80.7,
+    "fully": 66.4,
+    "none": 4.9
+   },
+   "protective_foods": {
+    "mean_credit": 65.6,
+    "fully": 45.4,
+    "none": 14.2
+   },
+   "vitC_foods": {
+    "mean_credit": 72.0,
+    "fully": 72.0,
+    "none": 28.0
+   },
+   "heard_anaemia": {
+    "mean_credit": 43.0,
+    "fully": 43.0,
+    "none": 57.0
+   },
+   "vitA_foods": {
+    "mean_credit": 18.7,
+    "fully": 5.6,
+    "none": 65.6
+   },
+   "iron_foods": {
+    "mean_credit": 27.2,
+    "fully": 5.8,
+    "none": 48.4
+   },
+   "arsenic_source": {
+    "mean_credit": 40.9,
+    "fully": 40.9,
+    "none": 59.1
+   },
+   "pregnancy_diet": {
+    "mean_credit": 24.8,
+    "fully": 0.1,
+    "none": 25.1
+   },
+   "lactation_diet": {
+    "mean_credit": 24.5,
+    "fully": 0.1,
+    "none": 24.9
+   },
+   "trans_fat": {
+    "mean_credit": 30.7,
+    "fully": 30.7,
+    "none": 69.3
+   },
+   "healthy_diet": {
+    "mean_credit": 21.3,
+    "fully": 0.0,
+    "none": 8.1
+   }
+  },
+  "foodsafety": {
+   "no_store_near_chem": {
+    "mean_credit": 54.2,
+    "none": 45.8
+   },
+   "clean_hands_cooking": {
+    "mean_credit": 97.2,
+    "none": 2.8
+   },
+   "wash_before_eating": {
+    "mean_credit": 94.2,
+    "none": 5.8
+   },
+   "separate_raw_cooked": {
+    "mean_credit": 85.1,
+    "none": 14.9
+   },
+   "veg_safety": {
+    "mean_credit": 23.4,
+    "none": 44.5
+   },
+   "fruit_safety": {
+    "mean_credit": 32.6,
+    "none": 25.7
+   },
+   "cooked_food_safety": {
+    "mean_credit": 31.5,
+    "none": 0.0
+   },
+   "clean_utensils": {
+    "mean_credit": 98.3,
+    "none": 1.7
+   },
+   "utensil_method": {
+    "mean_credit": 36.4,
+    "none": 63.6
+   },
+   "disease_sources": {
+    "mean_credit": 42.6,
+    "none": 0.6
+   },
+   "reheat_once": {
+    "mean_credit": 42.1,
+    "none": 57.9
+   },
+   "prevent_contamination": {
+    "mean_credit": 21.3,
+    "none": 18.3
+   }
+  },
+  "cooking": {
+   "gruel_keep": {
+    "mean_credit": 78.4,
+    "none": 21.6
+   },
+   "veg_wash_whole": {
+    "mean_credit": 20.2,
+    "none": 79.8
+   },
+   "boil_water_keep": {
+    "mean_credit": 81.3,
+    "none": 18.7
+   },
+   "lid_on": {
+    "mean_credit": 97.2,
+    "none": 2.8
+   },
+   "eat_within_1h": {
+    "mean_credit": 71.3,
+    "none": 28.7
+   },
+   "cover_food": {
+    "mean_credit": 98.4,
+    "none": 1.6
+   },
+   "no_stale_food": {
+    "mean_credit": 81.5,
+    "none": 18.5
+   },
+   "iodised_salt": {
+    "mean_credit": 90.4,
+    "none": 9.6
+   }
+  },
+  "iycf": {
+   "bf_after_birth": {
+    "mean_credit": 99.9,
+    "none": 0.1
+   },
+   "bf_initiation_1h": {
+    "mean_credit": 97.6,
+    "none": 2.4
+   },
+   "colostrum": {
+    "mean_credit": 97.2,
+    "none": 2.8
+   },
+   "bf_on_demand": {
+    "mean_credit": 79.3,
+    "none": 20.7
+   },
+   "exclusive_bf": {
+    "mean_credit": 91.7,
+    "none": 8.3
+   },
+   "insufficient_milk": {
+    "mean_credit": 56.1,
+    "none": 43.9
+   },
+   "no_water_lt6m": {
+    "mean_credit": 70.6,
+    "none": 29.4
+   },
+   "liquids_at_6m": {
+    "mean_credit": 38.7,
+    "none": 61.3
+   },
+   "foods_at_6m": {
+    "mean_credit": 31.4,
+    "none": 68.6
+   },
+   "bf_to_24m": {
+    "mean_credit": 83.4,
+    "none": 16.6
+   },
+   "no_food_3days": {
+    "mean_credit": 92.2,
+    "none": 7.8
+   }
+  }
+ },
+ "M1_knowledge_correlates_RU": {
+  "cook": {
+   "C(wealth_q)[T.2.0]": {
+    "est": 4.348,
+    "lo": 2.376,
+    "hi": 6.321,
+    "p": 1.5556828371561566e-05,
+    "n": 4136
+   },
+   "C(wealth_q)[T.3.0]": {
+    "est": 4.851,
+    "lo": 2.526,
+    "hi": 7.177,
+    "p": 4.3395873711561014e-05,
+    "n": 4136
+   },
+   "C(wealth_q)[T.4.0]": {
+    "est": 6.042,
+    "lo": 3.491,
+    "hi": 8.593,
+    "p": 3.449875033672112e-06,
+    "n": 4136
+   },
+   "C(wealth_q)[T.5.0]": {
+    "est": 6.172,
+    "lo": 3.335,
+    "hi": 9.008,
+    "p": 2.0021825808311528e-05,
+    "n": 4136
+   },
+   "C(division)[T.Chattogram]": {
+    "est": -1.648,
+    "lo": -4.963,
+    "hi": 1.667,
+    "p": 0.3298589365016221,
+    "n": 4136
+   },
+   "C(division)[T.Dhaka]": {
+    "est": 2.072,
+    "lo": -1.416,
+    "hi": 5.559,
+    "p": 0.24427146657064203,
+    "n": 4136
+   },
+   "C(division)[T.Khulna]": {
+    "est": 0.59,
+    "lo": -2.658,
+    "hi": 3.838,
+    "p": 0.7218127048829777,
+    "n": 4136
+   },
+   "C(division)[T.Mymensingh]": {
+    "est": -1.256,
+    "lo": -4.793,
+    "hi": 2.281,
+    "p": 0.48646730489551704,
+    "n": 4136
+   },
+   "C(division)[T.Rajshahi]": {
+    "est": -3.583,
+    "lo": -7.7,
+    "hi": 0.534,
+    "p": 0.08801921500661292,
+    "n": 4136
+   },
+   "C(division)[T.Rangpur]": {
+    "est": -1.627,
+    "lo": -5.008,
+    "hi": 1.755,
+    "p": 0.345837807412929,
+    "n": 4136
+   },
+   "C(division)[T.Sylhet]": {
+    "est": -1.298,
+    "lo": -5.796,
+    "hi": 3.2,
+    "p": 0.5717073765167144,
+    "n": 4136
+   },
+   "C(hfias_cat)[T.Mild]": {
+    "est": -3.864,
+    "lo": -5.791,
+    "hi": -1.937,
+    "p": 8.474293508259674e-05,
+    "n": 4136
+   },
+   "C(hfias_cat)[T.Moderate]": {
+    "est": -4.701,
+    "lo": -6.012,
+    "hi": -3.39,
+    "p": 2.116416036151265e-12,
+    "n": 4136
+   },
+   "C(hfias_cat)[T.Severe]": {
+    "est": -8.058,
+    "lo": -10.1,
+    "hi": -6.016,
+    "p": 1.0406063675653321e-14,
+    "n": 4136
+   },
+   "urban": {
+    "est": 4.164,
+    "lo": 2.395,
+    "hi": 5.933,
+    "p": 3.953261812529108e-06,
+    "n": 4136
+   },
+   "internet": {
+    "est": 4.016,
+    "lo": 3.044,
+    "hi": 4.987,
+    "p": 5.343484789722497e-16,
+    "n": 4136
+   },
+   "msg30_cook": {
+    "est": 4.953,
+    "lo": 3.164,
+    "hi": 6.743,
+    "p": 5.764133439195329e-08,
+    "n": 4136
+   },
+   "_r2": 0.182
+  },
+  "purch": {
+   "C(wealth_q)[T.2.0]": {
+    "est": 5.672,
+    "lo": 2.69,
+    "hi": 8.655,
+    "p": 0.00019316690508607462,
+    "n": 3021
+   },
+   "C(wealth_q)[T.3.0]": {
+    "est": 7.728,
+    "lo": 4.252,
+    "hi": 11.205,
+    "p": 1.3173791274123224e-05,
+    "n": 3021
+   },
+   "C(wealth_q)[T.4.0]": {
+    "est": 7.167,
+    "lo": 3.509,
+    "hi": 10.825,
+    "p": 0.00012303412548333797,
+    "n": 3021
+   },
+   "C(wealth_q)[T.5.0]": {
+    "est": 8.669,
+    "lo": 4.955,
+    "hi": 12.383,
+    "p": 4.7667265341672e-06,
+    "n": 3021
+   },
+   "C(division)[T.Chattogram]": {
+    "est": -1.933,
+    "lo": -6.074,
+    "hi": 2.209,
+    "p": 0.3604051918824487,
+    "n": 3021
+   },
+   "C(division)[T.Dhaka]": {
+    "est": 2.151,
+    "lo": -2.12,
+    "hi": 6.423,
+    "p": 0.3235521462133458,
+    "n": 3021
+   },
+   "C(division)[T.Khulna]": {
+    "est": 3.547,
+    "lo": -0.145,
+    "hi": 7.238,
+    "p": 0.05966946200153289,
+    "n": 3021
+   },
+   "C(division)[T.Mymensingh]": {
+    "est": 0.912,
+    "lo": -3.152,
+    "hi": 4.977,
+    "p": 0.6599657511370622,
+    "n": 3021
+   },
+   "C(division)[T.Rajshahi]": {
+    "est": -1.672,
+    "lo": -6.15,
+    "hi": 2.807,
+    "p": 0.4644243433772841,
+    "n": 3021
+   },
+   "C(division)[T.Rangpur]": {
+    "est": 1.459,
+    "lo": -2.391,
+    "hi": 5.31,
+    "p": 0.45762009425417416,
+    "n": 3021
+   },
+   "C(division)[T.Sylhet]": {
+    "est": 2.127,
+    "lo": -3.54,
+    "hi": 7.795,
+    "p": 0.4619179720525832,
+    "n": 3021
+   },
+   "C(hfias_cat)[T.Mild]": {
+    "est": -4.241,
+    "lo": -5.967,
+    "hi": -2.515,
+    "p": 1.4594193143838045e-06,
+    "n": 3021
+   },
+   "C(hfias_cat)[T.Moderate]": {
+    "est": -3.898,
+    "lo": -6.318,
+    "hi": -1.478,
+    "p": 0.001592924828029247,
+    "n": 3021
+   },
+   "C(hfias_cat)[T.Severe]": {
+    "est": -8.808,
+    "lo": -11.411,
+    "hi": -6.205,
+    "p": 3.316282250554096e-11,
+    "n": 3021
+   },
+   "urban": {
+    "est": 2.516,
+    "lo": 0.245,
+    "hi": 4.788,
+    "p": 0.0299053760603259,
+    "n": 3021
+   },
+   "internet": {
+    "est": 5.009,
+    "lo": 3.55,
+    "hi": 6.467,
+    "p": 1.6960515789848416e-11,
+    "n": 3021
+   },
+   "msg30_purch": {
+    "est": 7.605,
+    "lo": 6.011,
+    "hi": 9.199,
+    "p": 8.604526509697807e-21,
+    "n": 3021
+   },
+   "_r2": 0.217
+  },
+  "adol": {
+   "C(wealth_q)[T.2.0]": {
+    "est": 5.284,
+    "lo": 1.927,
+    "hi": 8.64,
+    "p": 0.002035478377152921,
+    "n": 1862
+   },
+   "C(wealth_q)[T.3.0]": {
+    "est": 7.597,
+    "lo": 4.085,
+    "hi": 11.109,
+    "p": 2.2354677099942483e-05,
+    "n": 1862
+   },
+   "C(wealth_q)[T.4.0]": {
+    "est": 10.152,
+    "lo": 6.194,
+    "hi": 14.11,
+    "p": 4.977156476555378e-07,
+    "n": 1862
+   },
+   "C(wealth_q)[T.5.0]": {
+    "est": 9.266,
+    "lo": 5.244,
+    "hi": 13.288,
+    "p": 6.310699930531569e-06,
+    "n": 1862
+   },
+   "C(division)[T.Chattogram]": {
+    "est": -4.593,
+    "lo": -8.879,
+    "hi": -0.306,
+    "p": 0.03575102507628182,
+    "n": 1862
+   },
+   "C(division)[T.Dhaka]": {
+    "est": 5.665,
+    "lo": 1.672,
+    "hi": 9.659,
+    "p": 0.00542413983584615,
+    "n": 1862
+   },
+   "C(division)[T.Khulna]": {
+    "est": -1.325,
+    "lo": -4.779,
+    "hi": 2.13,
+    "p": 0.4524174277403067,
+    "n": 1862
+   },
+   "C(division)[T.Mymensingh]": {
+    "est": 1.769,
+    "lo": -2.72,
+    "hi": 6.258,
+    "p": 0.4399413367122249,
+    "n": 1862
+   },
+   "C(division)[T.Rajshahi]": {
+    "est": -3.248,
+    "lo": -7.14,
+    "hi": 0.645,
+    "p": 0.10201256578428605,
+    "n": 1862
+   },
+   "C(division)[T.Rangpur]": {
+    "est": 0.78,
+    "lo": -3.222,
+    "hi": 4.782,
+    "p": 0.7024578533008214,
+    "n": 1862
+   },
+   "C(division)[T.Sylhet]": {
+    "est": -1.439,
+    "lo": -8.511,
+    "hi": 5.634,
+    "p": 0.6900634007475923,
+    "n": 1862
+   },
+   "C(hfias_cat)[T.Mild]": {
+    "est": -2.677,
+    "lo": -4.881,
+    "hi": -0.474,
+    "p": 0.017250698688748487,
+    "n": 1862
+   },
+   "C(hfias_cat)[T.Moderate]": {
+    "est": -7.083,
+    "lo": -9.613,
+    "hi": -4.552,
+    "p": 4.1158418987473344e-08,
+    "n": 1862
+   },
+   "C(hfias_cat)[T.Severe]": {
+    "est": -3.955,
+    "lo": -6.386,
+    "hi": -1.524,
+    "p": 0.001428038474705239,
+    "n": 1862
+   },
+   "urban": {
+    "est": 0.899,
+    "lo": -1.607,
+    "hi": 3.405,
+    "p": 0.48207328362870894,
+    "n": 1862
+   },
+   "internet": {
+    "est": 4.917,
+    "lo": 3.589,
+    "hi": 6.245,
+    "p": 3.9315779423278727e-13,
+    "n": 1862
+   },
+   "msg30_adol": {
+    "est": 6.699,
+    "lo": 4.832,
+    "hi": 8.566,
+    "p": 2.026739003117829e-12,
+    "n": 1862
+   },
+   "_r2": 0.224
+  },
+  "foodsafety": {
+   "C(wealth_q)[T.2.0]": {
+    "est": 4.261,
+    "lo": 0.639,
+    "hi": 7.884,
+    "p": 0.02112134416076164,
+    "n": 4136
+   },
+   "C(wealth_q)[T.3.0]": {
+    "est": 4.424,
+    "lo": 0.819,
+    "hi": 8.03,
+    "p": 0.01616456196552298,
+    "n": 4136
+   },
+   "C(wealth_q)[T.4.0]": {
+    "est": 4.367,
+    "lo": 0.645,
+    "hi": 8.089,
+    "p": 0.021476819482906254,
+    "n": 4136
+   },
+   "C(wealth_q)[T.5.0]": {
+    "est": 5.419,
+    "lo": 1.041,
+    "hi": 9.796,
+    "p": 0.015268016467335194,
+    "n": 4136
+   },
+   "C(division)[T.Chattogram]": {
+    "est": -1.299,
+    "lo": -3.009,
+    "hi": 0.411,
+    "p": 0.1364778334880233,
+    "n": 4136
+   },
+   "C(division)[T.Dhaka]": {
+    "est": 2.031,
+    "lo": 0.195,
+    "hi": 3.867,
+    "p": 0.03014200182636743,
+    "n": 4136
+   },
+   "C(division)[T.Khulna]": {
+    "est": -8.351,
+    "lo": -10.526,
+    "hi": -6.176,
+    "p": 5.264719897552754e-14,
+    "n": 4136
+   },
+   "C(division)[T.Mymensingh]": {
+    "est": -3.701,
+    "lo": -6.154,
+    "hi": -1.248,
+    "p": 0.0031090203950421627,
+    "n": 4136
+   },
+   "C(division)[T.Rajshahi]": {
+    "est": -6.849,
+    "lo": -9.886,
+    "hi": -3.812,
+    "p": 9.879039286052923e-06,
+    "n": 4136
+   },
+   "C(division)[T.Rangpur]": {
+    "est": -8.032,
+    "lo": -10.657,
+    "hi": -5.406,
+    "p": 2.022442751239624e-09,
+    "n": 4136
+   },
+   "C(division)[T.Sylhet]": {
+    "est": -3.323,
+    "lo": -5.236,
+    "hi": -1.411,
+    "p": 0.000660117466570451,
+    "n": 4136
+   },
+   "C(hfias_cat)[T.Mild]": {
+    "est": -2.006,
+    "lo": -4.278,
+    "hi": 0.266,
+    "p": 0.08351131874099418,
+    "n": 4136
+   },
+   "C(hfias_cat)[T.Moderate]": {
+    "est": -0.868,
+    "lo": -2.152,
+    "hi": 0.416,
+    "p": 0.1849859810928226,
+    "n": 4136
+   },
+   "C(hfias_cat)[T.Severe]": {
+    "est": -3.983,
+    "lo": -5.746,
+    "hi": -2.221,
+    "p": 9.4546252034257e-06,
+    "n": 4136
+   },
+   "urban": {
+    "est": 3.323,
+    "lo": 1.9,
+    "hi": 4.746,
+    "p": 4.713203021545486e-06,
+    "n": 4136
+   },
+   "internet": {
+    "est": 0.969,
+    "lo": -2.056,
+    "hi": 3.994,
+    "p": 0.5300731104933036,
+    "n": 4136
+   },
+   "msg30_cook": {
+    "est": 4.779,
+    "lo": 1.478,
+    "hi": 8.079,
+    "p": 0.004541210196274975,
+    "n": 4136
+   }
+  }
+ },
+ "wealth_gradient_bn": {
+  "cook": {
+   "1": 42.4,
+   "2": 46.3,
+   "3": 43.3,
+   "4": 44.7,
+   "5": 46.3
+  },
+  "purch": {
+   "1": 38.5,
+   "2": 41.1,
+   "3": 42.2,
+   "4": 42.0,
+   "5": 45.9
+  },
+  "adol": {
+   "1": 31.2,
+   "2": 38.3,
+   "3": 39.5,
+   "4": 43.4,
+   "5": 44.1
+  }
+ },
+ "M2_knowledge_diet": {
+  "RU": {
+   "cook": {
+    "dds_crude": {
+     "est": 0.052,
+     "lo": -0.019,
+     "hi": 0.123,
+     "p": 0.15463065153586958,
+     "n": 4136
+    },
+    "dds_adj": {
+     "est": -0.008,
+     "lo": -0.065,
+     "hi": 0.05,
+     "p": 0.7975767742434465,
+     "n": 4135
+    },
+    "dds_adj_wealthQ5": {
+     "est": 0.861,
+     "lo": 0.474,
+     "hi": 1.248,
+     "p": 1.2950737147475156e-05,
+     "n": 4135
+    },
+    "dds_adj_foodexp": {
+     "est": 0.651,
+     "lo": 0.453,
+     "hi": 0.849,
+     "p": 1.1965657737269609e-10,
+     "n": 4135
+    },
+    "dds_adj_severe": {
+     "est": 0.086,
+     "lo": -0.16,
+     "hi": 0.332,
+     "p": 0.4941517391000708,
+     "n": 4135
+    },
+    "mdd_adj_OR": {
+     "est": 1.008,
+     "lo": 0.932,
+     "hi": 1.091,
+     "p": 0.837434255391951,
+     "n": 4135
+    },
+    "disc_adj_OR": {
+     "est": 1.205,
+     "lo": 1.109,
+     "hi": 1.309,
+     "p": 1.0604762750277393e-05,
+     "n": 4135
+    },
+    "disc_count_adj": {
+     "est": 0.043,
+     "lo": 0.019,
+     "hi": 0.067,
+     "p": 0.0005001041443353059,
+     "n": 4135
+    },
+    "slope_secure_mild": {
+     "est": 0.041,
+     "lo": -0.021,
+     "hi": 0.102
+    },
+    "slope_mod_severe": {
+     "est": -0.145,
+     "lo": -0.222,
+     "hi": -0.068
+    },
+    "interaction_p": 7.687149174181883e-05,
+    "slope_nonpoor": {
+     "est": 0.048
+    },
+    "slope_poor": {
+     "est": -0.099,
+     "lo": -0.183,
+     "hi": -0.015
+    },
+    "poor_interaction_p": 0.0013566321364622545
+   },
+   "purch": {
+    "dds_crude": {
+     "est": 0.081,
+     "lo": 0.016,
+     "hi": 0.146,
+     "p": 0.015216664600057685,
+     "n": 3021
+    },
+    "dds_adj": {
+     "est": 0.024,
+     "lo": -0.034,
+     "hi": 0.082,
+     "p": 0.4242649354183474,
+     "n": 3020
+    },
+    "dds_adj_wealthQ5": {
+     "est": 1.136,
+     "lo": 0.765,
+     "hi": 1.507,
+     "p": 1.914120385052699e-09,
+     "n": 3020
+    },
+    "dds_adj_foodexp": {
+     "est": 0.402,
+     "lo": 0.104,
+     "hi": 0.699,
+     "p": 0.00815351601884156,
+     "n": 3020
+    },
+    "dds_adj_severe": {
+     "est": -0.072,
+     "lo": -0.345,
+     "hi": 0.201,
+     "p": 0.6061256751039724,
+     "n": 3020
+    },
+    "mdd_adj_OR": {
+     "est": 1.026,
+     "lo": 0.948,
+     "hi": 1.11,
+     "p": 0.5286308922623273,
+     "n": 3020
+    },
+    "disc_adj_OR": {
+     "est": 1.25,
+     "lo": 1.143,
+     "hi": 1.366,
+     "p": 1.0453622449267197e-06,
+     "n": 3020
+    },
+    "disc_count_adj": {
+     "est": 0.071,
+     "lo": 0.04,
+     "hi": 0.102,
+     "p": 6.0085004854336115e-06,
+     "n": 3020
+    },
+    "slope_secure_mild": {
+     "est": 0.056,
+     "lo": -0.008,
+     "hi": 0.12
+    },
+    "slope_mod_severe": {
+     "est": -0.092,
+     "lo": -0.197,
+     "hi": 0.013
+    },
+    "interaction_p": 0.008836936142164267,
+    "slope_nonpoor": {
+     "est": 0.061
+    },
+    "slope_poor": {
+     "est": -0.105,
+     "lo": -0.259,
+     "hi": 0.048
+    },
+    "poor_interaction_p": 0.04689312625785382
+   },
+   "adol": {
+    "dds_crude": {
+     "est": 0.061,
+     "lo": -0.027,
+     "hi": 0.149,
+     "p": 0.17456785534449526,
+     "n": 1862
+    },
+    "dds_adj": {
+     "est": 0.021,
+     "lo": -0.057,
+     "hi": 0.098,
+     "p": 0.6049807057807102,
+     "n": 1862
+    },
+    "dds_adj_wealthQ5": {
+     "est": 0.576,
+     "lo": 0.023,
+     "hi": 1.129,
+     "p": 0.041091126264025,
+     "n": 1862
+    },
+    "dds_adj_foodexp": {
+     "est": 0.716,
+     "lo": 0.401,
+     "hi": 1.031,
+     "p": 8.359326739097788e-06,
+     "n": 1862
+    },
+    "dds_adj_severe": {
+     "est": 0.341,
+     "lo": -0.028,
+     "hi": 0.71,
+     "p": 0.07041390974035007,
+     "n": 1862
+    },
+    "mdd_adj_OR": {
+     "est": 1.072,
+     "lo": 0.967,
+     "hi": 1.189,
+     "p": 0.18780596515978898,
+     "n": 1862
+    },
+    "disc_adj_OR": {
+     "est": 1.014,
+     "lo": 0.926,
+     "hi": 1.11,
+     "p": 0.7649192099242068,
+     "n": 1862
+    },
+    "disc_count_adj": {
+     "est": 0.005,
+     "lo": -0.029,
+     "hi": 0.039,
+     "p": 0.771342492414036,
+     "n": 1862
+    },
+    "slope_secure_mild": {
+     "est": 0.022,
+     "lo": -0.072,
+     "hi": 0.117
+    },
+    "slope_mod_severe": {
+     "est": 0.002,
+     "lo": -0.114,
+     "hi": 0.119
+    },
+    "interaction_p": 0.7840467662353977,
+    "slope_nonpoor": {
+     "est": 0.016
+    },
+    "slope_poor": {
+     "est": 0.045,
+     "lo": -0.095,
+     "hi": 0.184
+    },
+    "poor_interaction_p": 0.6956334471432002
+   }
+  },
+  "Slum": {
+   "cook": {
+    "dds_crude": {
+     "est": 0.012,
+     "lo": -0.082,
+     "hi": 0.107,
+     "p": 0.7974501721257373,
+     "n": 1103
+    },
+    "dds_adj": {
+     "est": 0.048,
+     "lo": -0.042,
+     "hi": 0.138,
+     "p": 0.296163237271301,
+     "n": 1103
+    },
+    "dds_adj_wealthQ5": {
+     "est": -0.271,
+     "lo": -0.676,
+     "hi": 0.133,
+     "p": 0.18796860544002036,
+     "n": 1103
+    },
+    "dds_adj_foodexp": {
+     "est": 0.444,
+     "lo": 0.187,
+     "hi": 0.701,
+     "p": 0.0007243551675990986,
+     "n": 1103
+    },
+    "dds_adj_severe": {
+     "est": -0.341,
+     "lo": -0.988,
+     "hi": 0.305,
+     "p": 0.30056749620204737,
+     "n": 1103
+    },
+    "mdd_adj_OR": {
+     "est": 1.153,
+     "lo": 0.934,
+     "hi": 1.424,
+     "p": 0.18561349076167455,
+     "n": 1103
+    },
+    "disc_adj_OR": {
+     "est": 1.229,
+     "lo": 0.993,
+     "hi": 1.52,
+     "p": 0.05796175946979231,
+     "n": 1103
+    },
+    "disc_count_adj": {
+     "est": 0.035,
+     "lo": -0.028,
+     "hi": 0.098,
+     "p": 0.27559136763362146,
+     "n": 1103
+    },
+    "slope_secure_mild": {
+     "est": 0.068,
+     "lo": -0.037,
+     "hi": 0.173
+    },
+    "slope_mod_severe": {
+     "est": 0.06,
+     "lo": -0.096,
+     "hi": 0.216
+    },
+    "interaction_p": 0.9277243136488438,
+    "slope_nonpoor": {
+     "est": 0.081
+    },
+    "slope_poor": {
+     "est": 0.004,
+     "lo": -0.089,
+     "hi": 0.096
+    },
+    "poor_interaction_p": 0.207926915862378
+   },
+   "purch": {
+    "dds_crude": {
+     "est": 0.07,
+     "lo": -0.059,
+     "hi": 0.199,
+     "p": 0.2882034969314129,
+     "n": 407
+    },
+    "dds_adj": {
+     "est": -0.045,
+     "lo": -0.157,
+     "hi": 0.068,
+     "p": 0.4345901005448679,
+     "n": 407
+    },
+    "dds_adj_wealthQ5": {
+     "est": 0.157,
+     "lo": -0.645,
+     "hi": 0.96,
+     "p": 0.7005283462199315,
+     "n": 407
+    },
+    "dds_adj_foodexp": {
+     "est": 0.722,
+     "lo": 0.272,
+     "hi": 1.171,
+     "p": 0.0016384185057994529,
+     "n": 407
+    },
+    "dds_adj_severe": {
+     "est": -0.952,
+     "lo": -1.529,
+     "hi": -0.375,
+     "p": 0.001212806185215874,
+     "n": 407
+    },
+    "mdd_adj_OR": {
+     "est": 0.914,
+     "lo": 0.677,
+     "hi": 1.232,
+     "p": 0.5531990353439061,
+     "n": 407
+    },
+    "disc_adj_OR": {
+     "est": 1.978,
+     "lo": 0.702,
+     "hi": 5.578,
+     "p": 0.19712775006471273,
+     "n": 407
+    },
+    "disc_count_adj": {
+     "est": 0.059,
+     "lo": -0.122,
+     "hi": 0.239,
+     "p": 0.5234148047832109,
+     "n": 407
+    },
+    "slope_secure_mild": {
+     "est": -0.085,
+     "lo": -0.265,
+     "hi": 0.096
+    },
+    "slope_mod_severe": {
+     "est": 0.036,
+     "lo": -0.162,
+     "hi": 0.233
+    },
+    "interaction_p": 0.45966137237683524,
+    "slope_nonpoor": {
+     "est": -0.078
+    },
+    "slope_poor": {
+     "est": 0.025,
+     "lo": -0.256,
+     "hi": 0.307
+    },
+    "poor_interaction_p": 0.5278285402695436
+   },
+   "adol": {
+    "dds_crude": {
+     "est": 0.027,
+     "lo": -0.148,
+     "hi": 0.203,
+     "p": 0.7592274669854727,
+     "n": 419
+    },
+    "dds_adj": {
+     "est": -0.129,
+     "lo": -0.274,
+     "hi": 0.017,
+     "p": 0.08389068188275556,
+     "n": 419
+    },
+    "dds_adj_wealthQ5": {
+     "est": -1.023,
+     "lo": -1.925,
+     "hi": -0.121,
+     "p": 0.026145317505166358,
+     "n": 419
+    },
+    "dds_adj_foodexp": {
+     "est": 1.226,
+     "lo": 0.434,
+     "hi": 2.019,
+     "p": 0.002429434125022137,
+     "n": 419
+    },
+    "dds_adj_severe": {
+     "est": -0.257,
+     "lo": -0.788,
+     "hi": 0.275,
+     "p": 0.34367680641100307,
+     "n": 419
+    },
+    "mdd_adj_OR": {
+     "est": 0.754,
+     "lo": 0.572,
+     "hi": 0.994,
+     "p": 0.04495904525704064,
+     "n": 419
+    },
+    "disc_adj_OR": {
+     "est": 0.977,
+     "lo": 0.627,
+     "hi": 1.523,
+     "p": 0.9181164885004636,
+     "n": 419
+    },
+    "disc_count_adj": {
+     "est": -0.017,
+     "lo": -0.083,
+     "hi": 0.049,
+     "p": 0.6140291999736227,
+     "n": 419
+    },
+    "slope_secure_mild": {
+     "est": -0.224,
+     "lo": -0.406,
+     "hi": -0.042
+    },
+    "slope_mod_severe": {
+     "est": 0.074,
+     "lo": -0.05,
+     "hi": 0.198
+    },
+    "interaction_p": 0.005505797611819278,
+    "slope_nonpoor": {
+     "est": -0.106
+    },
+    "slope_poor": {
+     "est": -0.181,
+     "lo": -0.36,
+     "hi": -0.002
+    },
+    "poor_interaction_p": 0.4045914182199376
+   }
+  }
+ },
+ "decomposition_RU": {
+  "cook": {
+   "gap": 0.808,
+   "components": {
+    "Knowledge": -0.002,
+    "Food insecurity": 0.031,
+    "Food expenditure": 0.046,
+    "Internet access": 0.093,
+    "Urban residence": 0.271
+   },
+   "share_pct": {
+    "Knowledge": -0.3,
+    "Food insecurity": 3.8,
+    "Food expenditure": 5.6,
+    "Internet access": 11.5,
+    "Urban residence": 33.6
+   },
+   "unexplained": 0.37
+  },
+  "purch": {
+   "gap": 0.874,
+   "components": {
+    "Knowledge": 0.02,
+    "Food insecurity": 0.022,
+    "Food expenditure": 0.0,
+    "Internet access": 0.029,
+    "Urban residence": 0.237
+   },
+   "share_pct": {
+    "Knowledge": 2.3,
+    "Food insecurity": 2.5,
+    "Food expenditure": 0.0,
+    "Internet access": 3.3,
+    "Urban residence": 27.1
+   },
+   "unexplained": 0.566
+  }
+ },
+ "foodsafety_practice": {
+  "RU": {
+   "station_OR_per10": {
+    "est": 1.256,
+    "lo": 0.82,
+    "hi": 1.924,
+    "p": 0.2954297472231806,
+    "n": 4136
+   },
+   "station_wealthQ5_OR": {
+    "est": 11.627,
+    "lo": 7.288,
+    "hi": 18.547,
+    "p": 7.376006686310139e-25,
+    "n": 4136
+   },
+   "nearchem_OR_per10": {
+    "est": 0.857,
+    "lo": 0.721,
+    "hi": 1.02,
+    "p": 0.08186348924117677,
+    "n": 4136
+   },
+   "near_chem_obs_if_knows": 13.8,
+   "near_chem_obs_if_not": 8.3,
+   "station_ws_if_reports_before_cooking": 66.9,
+   "station_ws_overall": 58.4,
+   "station_ws_by_wealth": {
+    "1": 40.1,
+    "2": 56.8,
+    "3": 56.5,
+    "4": 61.3,
+    "5": 77.1
+   }
+  },
+  "Slum": {
+   "station_OR_per10": {
+    "est": 1.147,
+    "lo": 0.864,
+    "hi": 1.523,
+    "p": 0.3420947985538033,
+    "n": 1103
+   },
+   "station_wealthQ5_OR": {
+    "est": 3.967,
+    "lo": 1.409,
+    "hi": 11.165,
+    "p": 0.009064191827551206,
+    "n": 1103
+   },
+   "nearchem_OR_per10": {
+    "est": 1.107,
+    "lo": 0.863,
+    "hi": 1.421,
+    "p": 0.4231272750035707,
+    "n": 1103
+   },
+   "near_chem_obs_if_knows": 19.5,
+   "near_chem_obs_if_not": 8.0,
+   "station_ws_if_reports_before_cooking": 59.0,
+   "station_ws_overall": 45.7,
+   "station_ws_by_wealth": {
+    "1": 32.7,
+    "2": 26.7,
+    "3": 45.2,
+    "4": 54.4,
+    "5": 69.2
+   }
+  }
+ },
+ "handwashing": {
+  "RU": {
+   "before_eating": {
+    "know": 96.4,
+    "report": 97.8,
+    "pre_share": 74.8,
+    "covid_share": 98.9
+   },
+   "after_latrine": {
+    "know": 96.2,
+    "report": 98.3,
+    "pre_share": 87.9,
+    "covid_share": 98.0
+   },
+   "before_feeding_baby": {
+    "know": 11.0,
+    "report": 12.0,
+    "pre_share": 73.3,
+    "covid_share": 96.1
+   },
+   "after_child_faeces": {
+    "know": 12.5,
+    "report": 12.9,
+    "pre_share": 90.7,
+    "covid_share": 87.9
+   },
+   "before_cooking": {
+    "know": 40.9,
+    "report": 42.8,
+    "pre_share": 75.6,
+    "covid_share": 98.6
+   },
+   "after_returning_home": {
+    "know": 33.6,
+    "report": 47.0,
+    "pre_share": 40.2,
+    "covid_share": 98.3
+   }
+  },
+  "Slum": {
+   "before_eating": {
+    "know": 91.8,
+    "report": 96.2,
+    "pre_share": 68.2,
+    "covid_share": 96.7
+   },
+   "after_latrine": {
+    "know": 95.5,
+    "report": 96.9,
+    "pre_share": 86.4,
+    "covid_share": 99.7
+   },
+   "before_feeding_baby": {
+    "know": 10.8,
+    "report": 11.1,
+    "pre_share": 55.9,
+    "covid_share": 91.9
+   },
+   "after_child_faeces": {
+    "know": 14.1,
+    "report": 13.7,
+    "pre_share": 88.1,
+    "covid_share": null
+   },
+   "before_cooking": {
+    "know": 29.8,
+    "report": 29.7,
+    "pre_share": 73.3,
+    "covid_share": 99.7
+   },
+   "after_returning_home": {
+    "know": 26.2,
+    "report": 41.2,
+    "pre_share": 26.8,
+    "covid_share": 97.7
+   }
+  }
+ },
+ "child": {
+  "RU": {
+   "n": 497,
+   "mdd": 37.2,
+   "iycf_know": 76.2,
+   "groups": {
+    "breastmilk": 95.7,
+    "grains_roots": 91.5,
+    "legumes_nuts": 44.1,
+    "dairy": 28.3,
+    "flesh": 49.7,
+    "eggs": 47.0,
+    "vitA_fv": 30.5,
+    "other_fv": 32.9
+   },
+   "mdd_OR_iycf10": {
+    "est": 1.132,
+    "lo": 0.964,
+    "hi": 1.33,
+    "p": 0.1296507484155204,
+    "n": 497
+   },
+   "mdd_OR_cookbn10": {
+    "est": 1.045,
+    "lo": 0.878,
+    "hi": 1.243,
+    "p": 0.6219907458322118,
+    "n": 497
+   }
+  },
+  "Slum": {
+   "n": 110,
+   "mdd": 40.3,
+   "iycf_know": 70.3,
+   "groups": {
+    "breastmilk": 99.7,
+    "grains_roots": 86.1,
+    "legumes_nuts": 47.8,
+    "dairy": 20.0,
+    "flesh": 50.5,
+    "eggs": 47.1,
+    "vitA_fv": 30.0,
+    "other_fv": 32.5
+   }
+  }
+ }
+}
