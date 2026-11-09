@@ -1,0 +1,409 @@
+{
+ "inequality": {
+  "purchasers": {
+   "edu_SII_high": [
+    56.5,
+    17.32
+   ],
+   "wealth_SII_high": [
+    39.9,
+    3.73
+   ],
+   "edu_SII_low": [
+    -57.1,
+    0.1
+   ],
+   "wealth_SII_low": [
+    -36.5,
+    0.28
+   ]
+  },
+  "cooks": {
+   "edu_SII_high": [
+    52.8,
+    9.15
+   ],
+   "wealth_SII_high": [
+    34.0,
+    2.8
+   ],
+   "edu_SII_low": [
+    -51.7,
+    0.13
+   ],
+   "wealth_SII_low": [
+    -34.5,
+    0.28
+   ]
+  },
+  "adolescents": {
+   "edu_SII_high": [
+    47.7,
+    5.9
+   ],
+   "wealth_SII_high": [
+    16.5,
+    1.61
+   ],
+   "edu_SII_low": [
+    -44.8,
+    0.19
+   ],
+   "wealth_SII_low": [
+    -16.9,
+    0.57
+   ]
+  }
+ },
+ "knowledge_diet_RD": {
+  "purchasers": {
+   "n_adequate": 1703,
+   "n_inadequate": 2286,
+   "RD_high_adequate_vs_inadequate": [
+    5.1,
+    0.4,
+    9.8
+   ],
+   "RD_low_adequate_vs_inadequate": [
+    -1.0,
+    -5.7,
+    3.7
+   ],
+   "RD_high_discretionary_vs_not": [
+    -1.8,
+    -6.5,
+    2.9
+   ]
+  },
+  "cooks": {
+   "n_adequate": 1731,
+   "n_inadequate": 2258,
+   "RD_high_adequate_vs_inadequate": [
+    5.7,
+    1.0,
+    10.4
+   ],
+   "RD_low_adequate_vs_inadequate": [
+    -1.9,
+    -6.5,
+    2.7
+   ],
+   "RD_high_discretionary_vs_not": [
+    11.2,
+    6.5,
+    15.9
+   ]
+  },
+  "adolescents": {
+   "n_adequate": 746,
+   "n_inadequate": 1298,
+   "RD_high_adequate_vs_inadequate": [
+    7.8,
+    1.0,
+    14.6
+   ],
+   "RD_low_adequate_vs_inadequate": [
+    -14.0,
+    -20.3,
+    -7.7
+   ],
+   "RD_high_discretionary_vs_not": [
+    3.8,
+    -4.2,
+    11.8
+   ]
+  }
+ },
+ "pooled_OR_dd": {
+  "OR": 0.92,
+  "lo": 0.8,
+  "hi": 1.06,
+  "Q": 0.76,
+  "I2": 0
+ },
+ "MDE_OR": {
+  "purchasers": [
+   0.72,
+   1.38
+  ],
+  "cooks": [
+   0.73,
+   1.37
+  ],
+  "adolescents": [
+   0.65,
+   1.55
+  ]
+ },
+ "MDE_pooled": [
+  0.82,
+  1.22
+ ],
+ "edu_vs_dd_ratio": {
+  "purchasers": null,
+  "cooks": null,
+  "adolescents": null
+ },
+ "handwashing": {
+  "rural_urban": {
+   "After defecation": {
+    "pre": 90.4,
+    "current": 97.6,
+    "post": 97.3,
+    "gain_pp": 7.2,
+    "shares_sum": 99.7
+   },
+   "Before eating": {
+    "pre": 78.1,
+    "current": 96.5,
+    "post": 96.2,
+    "gain_pp": 18.4,
+    "shares_sum": 99.7
+   },
+   "After cleaning child's faeces": {
+    "pre": 43.6,
+    "current": 50.5,
+    "post": 50.0,
+    "gain_pp": 6.9,
+    "shares_sum": 100.5
+   },
+   "Before cooking": {
+    "pre": 40.3,
+    "current": 49.7,
+    "post": 49.4,
+    "gain_pp": 9.4,
+    "shares_sum": 99.8
+   },
+   "After returning home": {
+    "pre": 20.2,
+    "current": 45.7,
+    "post": 44.7,
+    "gain_pp": 25.5,
+    "shares_sum": 98.6
+   },
+   "Before feeding a child": {
+    "pre": 30.3,
+    "current": 42.0,
+    "post": 42.0,
+    "gain_pp": 11.7,
+    "shares_sum": 106.4
+   }
+  },
+  "slum": {
+   "After defecation": {
+    "pre": 87.9,
+    "current": 97.2,
+    "post": 97.0,
+    "gain_pp": 9.3,
+    "shares_sum": 100.0
+   },
+   "Before eating": {
+    "pre": 71.0,
+    "current": 96.6,
+    "post": 96.2,
+    "gain_pp": 25.6,
+    "shares_sum": 99.6
+   },
+   "After cleaning child's faeces": {
+    "pre": 52.0,
+    "current": 65.0,
+    "post": 65.0,
+    "gain_pp": 13.0,
+    "shares_sum": 103.6
+   },
+   "Before cooking": {
+    "pre": 27.9,
+    "current": 35.3,
+    "post": 35.0,
+    "gain_pp": 7.4,
+    "shares_sum": 99.2
+   },
+   "After returning home": {
+    "pre": 13.0,
+    "current": 46.0,
+    "post": 45.0,
+    "gain_pp": 33.0,
+    "shares_sum": 98.3
+   },
+   "Before feeding a child": {
+    "pre": 46.0,
+    "current": 65.0,
+    "post": 65.0,
+    "gain_pp": 19.0,
+    "shares_sum": 105.1
+   }
+  }
+ },
+ "slum_vs_ru": {
+  "Inadequate dietary diversity, purchasers": {
+   "slum": 65.9,
+   "ru": 57.3,
+   "RD": [
+    8.6,
+    3.4,
+    13.8
+   ]
+  },
+  "Inadequate dietary diversity, cooks": {
+   "slum": 65.7,
+   "ru": 56.6,
+   "RD": [
+    9.1,
+    3.9,
+    14.3
+   ]
+  },
+  "Inadequate dietary diversity, adolescents": {
+   "slum": 70.2,
+   "ru": 63.5,
+   "RD": [
+    6.7,
+    -0.9,
+    14.3
+   ]
+  },
+  "Discretionary foods, purchasers": {
+   "slum": 66.4,
+   "ru": 60.8,
+   "RD": [
+    5.6,
+    0.4,
+    10.8
+   ]
+  },
+  "Discretionary foods, cooks": {
+   "slum": 76.2,
+   "ru": 64.0,
+   "RD": [
+    12.2,
+    7.4,
+    17.0
+   ]
+  },
+  "Discretionary foods, adolescents": {
+   "slum": 85.6,
+   "ru": 78.3,
+   "RD": [
+    7.3,
+    1.3,
+    13.3
+   ]
+  },
+  "Child minimum dietary diversity (6–23 mo)": {
+   "slum": 31.0,
+   "ru": 40.7,
+   "RD": [
+    -9.7,
+    -25.6,
+    6.2
+   ]
+  },
+  "Child consumed dairy (6–23 mo)": {
+   "slum": 11.0,
+   "ru": 23.1,
+   "RD": [
+    -12.1,
+    -23.5,
+    -0.7
+   ]
+  },
+  "Child consumed eggs (6–23 mo)": {
+   "slum": 28.0,
+   "ru": 40.9,
+   "RD": [
+    -12.9,
+    -28.5,
+    2.7
+   ]
+  },
+  "Handwashing with soap before cooking": {
+   "slum": 35.3,
+   "ru": 49.7,
+   "RD": [
+    -14.4,
+    -19.7,
+    -9.1
+   ]
+  },
+  "Handwashing with soap before feeding a child": {
+   "slum": 65.0,
+   "ru": 42.0,
+   "RD": [
+    23.0,
+    17.8,
+    28.2
+   ]
+  },
+  "Handwashing with soap after cleaning child's faeces": {
+   "slum": 65.0,
+   "ru": 50.5,
+   "RD": [
+    14.5,
+    9.2,
+    19.8
+   ]
+  }
+ },
+ "division_low": {
+  "divisions": [
+   "Barisal",
+   "Chattogram",
+   "Dhaka",
+   "Khulna",
+   "Mymensingh",
+   "Rajshahi",
+   "Rangpur",
+   "Sylhet"
+  ],
+  "Basic nutrition — purchasers": [
+   37.5,
+   32.6,
+   30.9,
+   31.3,
+   33.3,
+   36.4,
+   29.2,
+   46.1
+  ],
+  "Basic nutrition — cooks": [
+   34.4,
+   33.3,
+   28.9,
+   30.4,
+   28.3,
+   41.4,
+   23.5,
+   41.1
+  ],
+  "Basic nutrition — adolescents": [
+   36.1,
+   34.4,
+   33.8,
+   34.0,
+   26.2,
+   33.3,
+   12.7,
+   47.3
+  ],
+  "Food safety & hygiene — cooks": [
+   33.9,
+   16.4,
+   27.8,
+   51.9,
+   34.6,
+   34.2,
+   55.2,
+   31.4
+  ],
+  "Cooking practices — cooks": [
+   54.4,
+   49.4,
+   40.5,
+   56.3,
+   36.8,
+   19.2,
+   50.2,
+   41.1
+  ]
+ }
+}

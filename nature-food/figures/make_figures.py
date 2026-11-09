@@ -34,9 +34,11 @@ ax.set_yticks(np.arange(len(fs))); ax.set_yticklabels(fs); ax.set_xlim(0,85); ax
 ax.set_xlabel("Cooks answering incorrectly (%)"); ax.xaxis.grid(True,color=GRID,lw=0.5); ax.set_axisbelow(True); lab(ax,"b")
 fig.tight_layout(); fig.savefig(OUT+"Fig1_knowledge_gaps.png"); plt.close()
 
-# ---------- Fig 2: social gradient (ORs, high vs low knowledge) ----------
-fig,axs=plt.subplots(1,2,figsize=(7.2,2.8))
-ax=axs[0]
+# ---------- Fig 2: social gradient + division heatmap ----------
+import matplotlib.gridspec as gridspec
+from matplotlib.colors import LinearSegmentedColormap
+fig=plt.figure(figsize=(7.2,5.6)); gs=gridspec.GridSpec(2,2,height_ratios=[1,0.95],hspace=0.55,wspace=0.3)
+ax=fig.add_subplot(gs[0,0])
 edu=["Primary","Secondary","Higher\nsecondary+"]
 orp=[3.93,9.75,41.38]; orc=[3.04,5.74,23.22]; ora=[None,5.05,28.57]
 x=np.arange(3); w=0.26
@@ -47,14 +49,28 @@ for k,(v,c,n) in enumerate([(orp,B,"Food purchasers"),(orc,O,"Cooks"),(ora,A,"Ad
 ax.set_yscale("log"); ax.set_ylim(1,80); ax.set_yticks([1,2,5,10,20,50]); ax.set_yticklabels(["1","2","5","10","20","50"]); ax.minorticks_off(); ax.axhline(1,color=INK2,lw=0.6)
 ax.set_xticks(x); ax.set_xticklabels(edu); ax.set_ylabel("Adjusted OR, high vs low knowledge\n(ref. no education; log scale)")
 ax.legend(fontsize=6.5,loc="upper left"); lab(ax,"a")
-ax=axs[1]
+ax=fig.add_subplot(gs[0,1])
 wq=["Poorest","Poorer","Middle","Richer","Richest"]
 hp=[21.0,25.7,29.8,45.0,51.2]; hc=[21.2,31.8,33.3,44.7,48.8]; ha_=[28.8,32.2,34.9,38.0,42.4]
 for v,c,n,m in [(hp,B,"Food purchasers","o"),(hc,O,"Cooks","s"),(ha_,A,"Adolescents","^")]:
     ax.plot(range(5),v,color=c,lw=2,marker=m,ms=5,label=n)
 ax.set_xticks(range(5)); ax.set_xticklabels(wq); ax.set_ylim(0,60); ax.set_ylabel("High basic nutrition knowledge (%)")
 ax.yaxis.grid(True,color=GRID,lw=0.5); ax.set_axisbelow(True); ax.legend(fontsize=6.5,loc="upper left"); lab(ax,"b")
-fig.tight_layout(); fig.savefig(OUT+"Fig2_social_gradient.png"); plt.close()
+ax=fig.add_subplot(gs[1,:])
+import json
+D=json.load(open("/home/user/CSE366-4--2021-2-60-115/nature-food/analysis/secondary_results.json"))["division_low"]
+rows=[k for k in D if k!="divisions"]; M=np.array([D[r] for r in rows])
+cmap=LinearSegmentedColormap.from_list("seq",["#f4f8fd","#9fc3ee","#2a78d6","#0d3d7a"])
+im=ax.imshow(M,cmap=cmap,vmin=10,vmax=60,aspect="auto")
+for i in range(M.shape[0]):
+    for j in range(M.shape[1]):
+        ax.text(j,i,f"{M[i,j]:.1f}",ha="center",va="center",fontsize=6.5,color="white" if M[i,j]>40 else INK)
+ax.set_xticks(range(8)); ax.set_xticklabels(D["divisions"]); ax.set_yticks(range(len(rows))); ax.set_yticklabels(rows)
+for sp in ax.spines.values(): sp.set_visible(False)
+ax.tick_params(length=0)
+cb=fig.colorbar(im,ax=ax,fraction=0.025,pad=0.01); cb.set_label("In lowest national tertile (%)",fontsize=6.5); cb.ax.tick_params(labelsize=6); cb.outline.set_visible(False)
+lab(ax,"c"); ax.text(-0.14,1.04,"",transform=ax.transAxes)
+fig.savefig(OUT+"Fig2_social_gradient.png",bbox_inches="tight"); plt.close()
 
 # ---------- Fig 3: diets ----------
 fig,axs=plt.subplots(1,2,figsize=(7.2,2.9),gridspec_kw={"width_ratios":[1.15,1]})
@@ -103,16 +119,28 @@ ax.yaxis.grid(True,color=GRID,lw=0.5); ax.set_axisbelow(True); ax.legend(fontsiz
 fig.tight_layout(); fig.savefig(OUT+"Fig4_knowledge_vs_diet.png"); plt.close()
 
 # ---------- Fig 5: handwashing ----------
-fig,axs=plt.subplots(1,2,figsize=(7.2,2.9))
-ct=["After defecation","Before eating","After cleaning\nchild's faeces","Before cooking","After returning\nhome","Before feeding\na child"]
+import json
+H=json.load(open("/home/user/CSE366-4--2021-2-60-115/nature-food/analysis/secondary_results.json"))["handwashing"]
+fig,axs=plt.subplots(1,2,figsize=(7.2,3.2))
+ct=["After defecation","Before eating","After cleaning child's faeces","Before cooking","After returning home","Before feeding a child"]
+ctl=["After defecation","Before eating","After cleaning\nchild's faeces","Before cooking","After returning\nhome","Before feeding\na child"]
 ru=[97.6,96.5,50.5,49.7,45.7,42.0]; sl=[97.2,96.6,65.0,35.3,46.0,65.0]
-cov=[7.1,18.8,13.7,18.7,54.3,29.7]; covs=[9.6,26.1,20.7,20.2,70.1,30.8]
-yy=np.arange(len(ct))
-for ax,(a,b,xl,cols,t) in zip(axs,[(ru,sl,"Report washing hands with soap (%)",(B,A),"a"),
-                                  (cov,covs,"Practice attributed to COVID-19 messaging\n(% of those practising)",(B,A),"b")]):
-    ax.barh(yy-0.18,a,height=0.34,color=cols[0],label="Rural–urban")
-    ax.barh(yy+0.18,b,height=0.34,color=cols[1],label="Slum")
-    ax.set_yticks(yy); ax.set_yticklabels(ct if t=="a" else [""]*len(ct)); ax.invert_yaxis(); ax.set_xlim(0,105)
-    ax.set_xlabel(xl); ax.xaxis.grid(True,color=GRID,lw=0.5); ax.set_axisbelow(True); ax.legend(fontsize=6.5,loc="lower right"); lab(ax,t)
+yy=np.arange(len(ct)); ax=axs[0]
+ax.barh(yy-0.18,ru,height=0.34,color=B,label="Rural–urban"); ax.barh(yy+0.18,sl,height=0.34,color=A,label="Slum")
+ax.set_yticks(yy); ax.set_yticklabels(ctl); ax.invert_yaxis(); ax.set_xlim(0,105)
+ax.set_xlabel("Report washing hands with soap (%)"); ax.xaxis.grid(True,color=GRID,lw=0.5); ax.set_axisbelow(True); ax.legend(fontsize=6.5,loc="lower right"); lab(ax,"a")
+ax=axs[1]
+for off,key,c in [(-0.15,"rural_urban",B),(0.15,"slum",A)]:
+    for i,k in enumerate(ct):
+        pre=H[key][k]["pre"]; cur=H[key][k]["current"]
+        ax.plot([pre,cur],[i+off,i+off],color=c,lw=2,alpha=0.55)
+        ax.plot(pre,i+off,marker="o",ms=5,mfc="white",mec=c,mew=1.4)
+        ax.plot(cur,i+off,marker="o",ms=5,color=c)
+ax.plot([],[],marker="o",ms=5,mfc="white",mec=INK2,ls="",label="Estimated pre-pandemic")
+ax.plot([],[],marker="o",ms=5,color=INK2,ls="",label="Current (Oct–Nov 2020)")
+ax.plot([],[],color=B,lw=2,label="Rural–urban"); ax.plot([],[],color=A,lw=2,label="Slum")
+ax.set_yticks(yy); ax.set_yticklabels([""]*len(ct)); ax.invert_yaxis(); ax.set_xlim(0,105)
+ax.set_xlabel("Washing hands with soap (%)"); ax.xaxis.grid(True,color=GRID,lw=0.5); ax.set_axisbelow(True)
+ax.legend(fontsize=6,loc="lower center",bbox_to_anchor=(0.5,1.02),ncol=2); ax.text(-0.04,1.04,"b",transform=ax.transAxes,fontsize=9,fontweight="bold",va="bottom",ha="right")
 fig.tight_layout(); fig.savefig(OUT+"Fig5_handwashing.png"); plt.close()
 print("ok")

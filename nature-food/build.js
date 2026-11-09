@@ -109,7 +109,7 @@ children.push(P(C.authors));
 C.affiliations.forEach((a, i) => children.push(new Paragraph({ spacing: { after: 60 }, children: [new TextRun({ text: String(i + 1), superScript: true }), ...runs(" " + a, { size: 20 })] })));
 children.push(P("Correspondence: " + C.corresponding, { para: { spacing: { before: 120, after: 120 } } }));
 children.push(P("**Running title:** " + C.runningTitle));
-children.push(P(`**Word counts:** abstract ${absWords}; main text (introduction, results and discussion) ${mainWords}; display items: 5 figures and 2 tables.`));
+children.push(P(`**Word counts:** abstract ${absWords}; main text (introduction, results and discussion) ${mainWords}; display items: 5 figures and 1 table; Extended Data: 6 tables.`));
 children.push(pageBreak());
 
 children.push(H1("Abstract"));
@@ -140,11 +140,7 @@ children.push(H1("Inclusion and ethics statement")); children.push(P(C.inclusion
 
 // Tables
 children.push(pageBreak());
-children.push(new Paragraph({ spacing: { after: 120 }, children: runs("**Table 1 | Characteristics of respondents, by role (%).**") }));
-children.push(table1);
-children.push(P("Weighted percentages. One respondent per role per household; the same person could be both food purchaser and cook. Caregivers were the primary caregivers of children aged 6–23 months.", { run: { size: 18 }, para: { spacing: { before: 120, line: 276 } } }));
-children.push(pageBreak());
-children.push(new Paragraph({ spacing: { after: 120 }, children: runs("**Table 2 | Factors associated with high basic nutrition knowledge (rural and urban samples).**") }));
+children.push(new Paragraph({ spacing: { after: 120 }, children: runs("**Table 1 | Factors associated with high basic nutrition knowledge (rural and urban samples).**") }));
 children.push(table2);
 children.push(P("Adjusted odds ratios (95% confidence intervals) for being in the highest versus lowest tertile of basic nutrition knowledge, from multinomial logistic regression models fitted separately for food purchasers (n = 2,836 with complete data), cooks (n = 2,843) and adolescents (n = 2,042). Models also included age group and division, and, for purchasers and cooks, self-rated health. Confidence intervals were derived from reported standard errors. –, not estimated (variable not in model, or sparse data). Cooks were 99.3% female, so sex was not modelled.", { run: { size: 18 }, para: { spacing: { before: 120, line: 276 } } }));
 
@@ -155,6 +151,84 @@ C.figures.forEach((f) => {
   children.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ type: "png", data: fs.readFileSync(FIG + f.file), transformation: { width, height } })] }));
   children.push(new Paragraph({ spacing: { before: 160, after: 80, line: 360 }, children: runs("**" + f.title + "** " + f.legend) }));
 });
+
+
+// ================= Extended Data =================
+const SR = JSON.parse(fs.readFileSync("/home/user/CSE366-4--2021-2-60-115/nature-food/analysis/secondary_results.json", "utf8"));
+const note = (t) => P(t, { run: { size: 18 }, para: { spacing: { before: 120, line: 276 } } });
+const edTitle = (t) => new Paragraph({ spacing: { after: 120 }, children: runs(t) });
+const fmtCI = (a) => `${a[0].toFixed(1)} (${a[1].toFixed(1)} to ${a[2].toFixed(1)})`;
+children.push(pageBreak());
+children.push(H1("Extended Data"));
+// ED1
+children.push(edTitle("**Extended Data Table 1 | Characteristics of respondents, by role (%).**"));
+children.push(table1);
+children.push(note("Weighted percentages. One respondent per role per household; the same person could be both food purchaser and cook. Caregivers were the primary caregivers of children aged 6–23 months."));
+// ED2 inequality
+children.push(pageBreak());
+children.push(edTitle("**Extended Data Table 2 | Slope and relative indices of inequality in basic nutrition knowledge (rural and urban samples).**"));
+const gl = { purchasers: "Food purchasers", cooks: "Cooks", adolescents: "Adolescents" };
+const ed2 = [];
+for (const g of ["purchasers", "cooks", "adolescents"]) {
+  const q = SR.inequality[g];
+  ed2.push([gl[g], q.edu_SII_high[0].toFixed(1), q.edu_SII_high[1].toFixed(1), q.wealth_SII_high[0].toFixed(1), q.wealth_SII_high[1].toFixed(1),
+    q.edu_SII_low[0].toFixed(1), q.wealth_SII_low[0].toFixed(1)]);
+}
+children.push(table([1900, 1250, 1250, 1250, 1250, 1250, 1250], ["Respondent type", "Education SII, high (pp)", "Education RII, high", "Wealth SII, high (pp)", "Wealth RII, high", "Education SII, low (pp)", "Wealth SII, low (pp)"], ed2));
+children.push(note("SII, slope index of inequality: absolute difference (percentage points, pp) in the predicted share of respondents in the highest (\"high\") or lowest (\"low\") knowledge tertile between the top and bottom of the education or wealth distribution. RII, relative index of inequality: ratio of predicted prevalence at the top to that at the bottom. Estimated by weighted least-squares regression of group prevalence on ridit scores (Methods). Negative SII for \"low\" indicates that low knowledge is concentrated at the bottom of the distribution."));
+// ED3 knowledge–diet
+children.push(pageBreak());
+children.push(edTitle("**Extended Data Table 3 | Association between basic nutrition knowledge and diet (rural and urban samples).**"));
+const ed3 = [];
+for (const g of ["purchasers", "cooks", "adolescents"]) {
+  const k = SR.knowledge_diet_RD[g];
+  ed3.push([gl[g], `${k.n_adequate} / ${k.n_inadequate}`, fmtCI(k.RD_high_adequate_vs_inadequate), fmtCI(k.RD_low_adequate_vs_inadequate), fmtCI(k.RD_high_discretionary_vs_not),
+    `${SR.MDE_OR[g][0].toFixed(2)} / ${SR.MDE_OR[g][1].toFixed(2)}`]);
+}
+const po = SR.pooled_OR_dd;
+ed3.push(["Pooled adjusted OR (adequate dietary diversity)", "", `${po.OR.toFixed(2)} (${po.lo.toFixed(2)} to ${po.hi.toFixed(2)})`, `I² = ${po.I2}%; Q = ${po.Q}`, "", `${SR.MDE_pooled[0].toFixed(2)} / ${SR.MDE_pooled[1].toFixed(2)}`]);
+children.push(table([1900, 1250, 1600, 1600, 1600, 1450], ["Respondent type", "n adequate / inadequate diversity", "RD in high knowledge, adequate vs inadequate diversity (pp, 95% CI)", "RD in low knowledge, adequate vs inadequate diversity (pp, 95% CI)", "RD in high knowledge, discretionary vs none (pp, 95% CI)", "Minimum detectable OR (80% power)"], ed3));
+children.push(note("RD, risk difference in the percentage of respondents in the highest or lowest knowledge tertile. Confidence intervals inflate binomial variance by a design effect of 2.5. The pooled odds ratio combines the adjusted odds ratios for adequate dietary diversity (high versus low knowledge) from the three respondent-specific multinomial models by inverse-variance weighting (Methods). Minimum detectable odds ratios (lower / upper) are for two-sided α = 0.05 and 80% power given each model's standard error."));
+// ED4 handwashing
+children.push(pageBreak());
+children.push(edTitle("**Extended Data Table 4 | Handwashing with soap at critical times: COVID-19-attributed adoption and estimated pre- and post-pandemic prevalence (%).**"));
+const hwRaw = { rural_urban: { "After defecation": [92.6, 7.1, 99.6], "Before eating": [80.9, 18.8, 99.7], "After cleaning child's faeces": [86.8, 13.7, 93.1], "Before cooking": [81.1, 18.7, 98.1], "After returning home": [44.3, 54.3, 98.6], "Before feeding a child": [76.7, 29.7, 100.0] },
+  slum: { "After defecation": [90.4, 9.6, 97.9], "Before eating": [73.5, 26.1, 100.0], "After cleaning child's faeces": [82.9, 20.7, 100.0], "Before cooking": [79.0, 20.2, 100.0], "After returning home": [28.2, 70.1, 99.4], "Before feeding a child": [74.3, 30.8, 100.0] } };
+const ed4 = []; const ed4sec = new Set();
+for (const [st, lbl] of [["rural_urban", "Rural–urban (n = 3,989)"], ["slum", "Slum (n = 1,011)"]]) {
+  ed4sec.add(ed4.length); ed4.push([lbl, "", "", "", "", "", ""]);
+  for (const [k, v] of Object.entries(SR.handwashing[st])) {
+    const r = hwRaw[st][k];
+    ed4.push([k, v.current.toFixed(1), r[0].toFixed(1), r[1].toFixed(1), r[2].toFixed(1), v.pre.toFixed(1), `${v.gain_pp.toFixed(1)}`]);
+  }
+}
+children.push(table([2300, 1100, 1300, 1300, 1300, 1200, 1100], ["Critical time", "Current", "Of practitioners: usual before pandemic", "Of practitioners: adopted due to COVID-19 messaging", "Of adopters: will continue", "Estimated pre-pandemic", "Change (pp)"], ed4, ed4sec));
+children.push(note("Current prevalence and the three conditional shares are as reported by respondents. Estimated pre-pandemic prevalence = current × share whose practice predated the pandemic; where the two conditional shares summed to more than 100% they were rescaled (Methods). Projected post-pandemic prevalence was within 1 percentage point of current prevalence for every item because almost all adopters intended to continue."));
+// ED5 slum vs RU
+children.push(pageBreak());
+children.push(edTitle("**Extended Data Table 5 | Diets and hygiene in slum versus rural–urban households.**"));
+const ed5 = Object.entries(SR.slum_vs_ru).map(([k, v]) => [k, v.ru.toFixed(1), v.slum.toFixed(1), fmtCI(v.RD)]);
+children.push(table([4300, 1500, 1500, 2300], ["Indicator", "Rural–urban (%)", "Slum (%)", "Difference, slum − rural–urban (pp, 95% CI)"], ed5));
+children.push(note("Sample sizes: adults, rural–urban 3,989 and slum 1,011; adolescents, 2,044 and 429; children aged 6–23 months, 481 and 100. Confidence intervals inflate binomial variance by a design effect of 2.5. Discretionary foods: savoury or fried snacks, sweets or sugar-sweetened beverages in the previous 24 hours."));
+// ED6 IYCF
+children.push(pageBreak());
+children.push(edTitle("**Extended Data Table 6 | Infant and young child feeding knowledge of caregivers and diets of children aged 6–23 months (%).**"));
+const ed6 = [
+  ["Caregiver knowledge (rural–urban, n = 481): answered incorrectly", "", ""],
+  ["How often should a baby breastfeed?", "42.0", "–"],
+  ["How long after birth should breastfeeding start?", "35.3", "–"],
+  ["Should infants <6 months be given water in hot weather?", "34.5", "–"],
+  ["What to do if breast milk seems insufficient? (incorrect / partially correct)", "20.8 / 76.9", "–"],
+  ["What to do with colostrum?", "2.3", "–"],
+  ["Up to what age should a child be breastfed?", "15.6", "–"],
+  ["Child food groups consumed in previous 24 h", "Rural–urban (n = 481)", "Slum (n = 100)"],
+  ["Breast milk", "87.9", "89.0"], ["Grains, white roots and tubers", "88.4", "90.0"], ["Legumes and nuts", "45.9", "46.0"],
+  ["Dairy", "23.1", "11.0"], ["Flesh foods", "44.3", "39.0"], ["Eggs", "40.9", "28.0"],
+  ["Vitamin A-rich fruits and vegetables", "33.3", "27.0"], ["Other fruits and vegetables", "33.5", "30.0"],
+  ["Minimum dietary diversity (≥5 of 8 groups)", "40.7", "31.0"],
+];
+children.push(table([5200, 2200, 2200], ["Item", "Rural–urban", "Slum"], ed6, new Set([0, 7])));
+children.push(note("In slums, 48.0%, 36.0% and 46.0% of caregivers answered incorrectly on breastfeeding frequency, timing of initiation and water for young infants, respectively. Caregiver knowledge level was associated with division only (high knowledge in Chattogram versus Barisal, odds ratio 3.6)."));
 
 const doc = new Document({
   creator: "Study team", title: C.title,
