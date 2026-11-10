@@ -1,0 +1,4 @@
+protocol,n_test,leaked_test_cases,MLP_top1,MLP_top5,test_top1_ceiling
+"(A) random split, raw data",49239,0.4387,0.8602,0.9802,0.9681
+"(B) random split, de-duplicated",37882,0.1509,0.8242,0.9731,0.9684
+(C) grouped split (ours),37768,0.0,0.8402,0.977,0.8989

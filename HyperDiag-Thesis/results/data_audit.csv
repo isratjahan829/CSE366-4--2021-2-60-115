@@ -1,0 +1,17 @@
+property,value
+rows,246945
+diseases,773
+symptoms,377
+missing_values,0
+binary_only,True
+rows_with_zero_symptoms,0
+exact_duplicate_rows,57298
+unique_symptom_vectors,169888
+vectors_mapping_to_>1_disease,12634
+rows_with_ambiguous_vector,39728
+unused_symptoms,49
+max_class,1219
+median_class,168.0
+min_class,1
+imbalance_ratio,1219.0
+symptoms_per_case_mean,5.3328514446536674
