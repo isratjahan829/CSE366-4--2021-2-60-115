@@ -3,7 +3,7 @@ sys.path.insert(0, __import__("os").path.dirname(__file__))
 import pandas as pd, numpy as np, docx
 from docx_helpers import *
 
-R = __import__("os").path.join(__import__("os").path.dirname(__file__), "..", "results") + "/"
+R = __import__("os").environ.get("RES_DIR", __import__("os").path.join(__import__("os").path.dirname(__file__), "..", "results") + "/")
 FIG = R + "figures/"
 OUT = sys.argv[1]
 d = docx.Document(sys.argv[2] if len(sys.argv) > 2 else "HyperDiag_PreDefence.docx")
@@ -38,6 +38,16 @@ rare_nb = rare[(rare.model == "Naive Bayes (Bernoulli)") & (rare.group.str.start
 abm = abl.groupby("variant")[["Top-1", "Top-5", "MRR", "Macro-F1", "Top-5 @40% symptoms"]].mean() * 100
 abs_ = abl.groupby("variant")[["Top-1", "Top-5", "MRR", "Macro-F1", "Top-5 @40% symptoms"]].std().fillna(0) * 100
 full = abm.loc["Full HyperDiag"]
+NICE = {"Naive Bayes (Bernoulli)": "Naive Bayes", "Random Forest": "Random Forest", "LogReg (softmax)": "Logistic Regression", "MLP": "MLP",
+        "GCN (pairwise)": "GCN", "GAT (pairwise)": "GAT", "HGNN (hypergraph, no attention)": "HGNN"}
+def _join(xs): return ", ".join(xs[:-1]) + " and " + xs[-1] if len(xs) > 1 else (xs[0] if xs else "none")
+SIGW = [NICE[r.baseline] for r in sig.itertuples() if r.mcnemar_p_holm < 0.05 and r.ours_only_correct > r.baseline_only_correct]
+SIGL = [NICE[r.baseline] for r in sig.itertuples() if r.mcnemar_p_holm < 0.05 and r.ours_only_correct < r.baseline_only_correct]
+NSIG = [NICE[r.baseline] for r in sig.itertuples() if r.mcnemar_p_holm >= 0.05]
+SIG_SENT = (f"After Holm correction, HyperDiag is significantly better than {_join(SIGW)}" if SIGW else "After Holm correction, HyperDiag is not significantly better than any baseline") + \
+           (f", significantly worse than {_join(SIGL)}" if SIGL else "") + (f", and statistically indistinguishable from {_join(NSIG)}" if NSIG else "")
+FA_RATIO = faith.loc["most attended", "mean_drop_true_prob"] / max(faith.loc["random", "mean_drop_true_prob"], 1e-9)
+FA_WORD = "confirms that γ is faithful" if FA_RATIO >= 1.3 else ("indicates that γ is only weakly faithful" if FA_RATIO > 1.0 else "does not support the faithfulness of γ")
 
 body = d.element.body
 def clone_label(ref, label, rest):
@@ -63,9 +73,8 @@ set_text(find_p(d, "Symptom-based differential diagnosis is a core"),
     f"{la.leaked_test_cases*100:.1f}% of test cases in the training set, and no classifier can exceed a top-1 accuracy of "
     f"{ceil.loc['de-duplicated','Top-1']*100:.1f}% on the de-duplicated data. We introduce a leakage-free, symptom-pattern-grouped protocol and "
     f"benchmark eight models on it. HyperDiag reaches {mu.loc[OURS,'Top-1']:.2f}% top-1, {mu.loc[OURS,'Top-5']:.2f}% top-5 accuracy and an MRR of "
-    f"{mu.loc[OURS,'MRR']:.2f}%. It significantly outperforms Naive Bayes, Random Forest and Logistic Regression (McNemar p < 0.02) and is "
-    "statistically on par with the strongest neural baselines (MLP, GCN, GAT, HGNN), while its symptom attention passes a deletion-based "
-    "faithfulness test. The results show that, on this dataset, honest evaluation matters more than architecture. They also show where "
+    f"{mu.loc[OURS,'MRR']:.2f}%. " + SIG_SENT + " (McNemar test on top-1 correctness). Its symptom attention is evaluated with a "
+    "deletion-based faithfulness test. The results show that, on this dataset, honest evaluation matters more than architecture. They also show where "
     "hypergraph structure helps (interpretability, consistency) and where it does not (raw accuracy near the Bayes ceiling).")
 
 # ---------------- Chapter 1 tweaks
@@ -121,7 +130,7 @@ t1 = make_table([["Property", "Value"],
                 [4600, 4000])
 c = clone_after(p_pre, cap_tpl, "Table 1: Data audit of the Kaggle Diseases and Symptoms dataset.")
 c.addnext(t1)
-img = add_image_after(d, t1, FIG + "fig_eda.png", 6.3)
+img = add_image_after(d, t1, FIG + "fig01_eda.png", 6.3)
 clone_after(img, cap_tpl, "Figure 2: Class distribution, number of symptoms per case and most frequent symptoms.")
 
 set_text(find_p(d, "Any records containing missing or malformed"),
@@ -170,7 +179,7 @@ set_text(find_p(d, "The core of the methodology is the transformation"),
     f"{int(dh.loc['co-occurrence','count'])} co-occurrence hyperedges (mean size {dh.loc['co-occurrence','mean size']:.1f}). For the pairwise baselines, the "
     "same NPMI statistics define a graph in which each symptom is linked to its top-10 partners.")
 p = find_p(d, "The disease-symptom matrix is turned into a hypergraph")
-img = add_image_after(d, p, FIG + "fig_hypergraph.png", 6.3)
+img = add_image_after(d, p, FIG + "fig03_hypergraph_stats.png", 6.3)
 clone_after(img, cap_tpl, "Figure 3: Disease-hyperedge sizes, symptom node degrees and an excerpt of the weighted incidence matrix.")
 
 set_text(find_p(d, "Each symptom node is initialized"),
@@ -239,15 +248,14 @@ g = sig.set_index("baseline")
 p_after2 = t2
 p = clone_after(p_after2, normal_tpl,
     f"HyperDiag reaches {pm(OURS,'Top-1')}% top-1, {pm(OURS,'Top-5')}% top-5 and {pm(OURS,'MRR')}% MRR, which is "
-    f"{mu.loc[OURS,'Top-1']/(tc['Top-1']*100):.1%} of the achievable top-1 accuracy. It is significantly better than Naive Bayes "
-    f"(McNemar p = {g.loc['Naive Bayes (Bernoulli)','mcnemar_p']:.3f}), Logistic Regression (p = {g.loc['LogReg (softmax)','mcnemar_p']:.3f}) and "
-    f"Random Forest (p < 0.001), with a macro-F1 gain of {mu.loc[OURS,'Macro-F1']-mu.loc['Naive Bayes (Bernoulli)','Macro-F1']:.1f} points over Naive Bayes. "
-    "Against the neural baselines the differences are within 0.15 points and not statistically significant (MLP p = "
-    f"{g.loc['MLP','mcnemar_p']:.2f}, GAT p = {g.loc['GAT (pairwise)','mcnemar_p']:.2f}, HGNN p = {g.loc['HGNN (hypergraph, no attention)','mcnemar_p']:.2f}). "
+    f"{mu.loc[OURS,'Top-1']/(tc['Top-1']*100):.1%} of the achievable top-1 accuracy. " + SIG_SENT + " (McNemar test, Holm-adjusted p = " +
+    ", ".join(f"{NICE[b]} " + ("< 0.001" if g.loc[b,'mcnemar_p_holm'] < 1e-3 else f"{g.loc[b,'mcnemar_p_holm']:.3g}") for b in g.index) +
+    f"). Its macro-F1 differs from Naive Bayes by {mu.loc[OURS,'Macro-F1']-mu.loc['Naive Bayes (Bernoulli)','Macro-F1']:+.1f} points. "
+    f"Among the neural models, Top-1 accuracy spans only {mu.loc[['MLP','GCN (pairwise)','GAT (pairwise)','HGNN (hypergraph, no attention)',OURS],'Top-1'].max()-mu.loc[['MLP','GCN (pairwise)','GAT (pairwise)','HGNN (hypergraph, no attention)',OURS],'Top-1'].min():.2f} points. "
     "All neural models converge to the same performance band, about five points below the Bayes ceiling. The remaining gap is "
     "dominated by symptom patterns that never appear in training, which no model can resolve from symptoms alone.")
-img = add_image_after(d, p, FIG + "fig_comparison.png", 6.3)
-c = clone_after(img, cap_tpl, "Figure 4: Test performance of all models and validation learning curves.")
+img = add_image_after(d, p, FIG + "fig08_learning_dynamics.png", 6.3)
+c = clone_after(img, cap_tpl, "Figure 4: Learning dynamics: training loss and validation MRR per epoch (seed 0).")
 sg = make_table([["Baseline", "HyperDiag-only correct", "Baseline-only correct", "McNemar p", "ΔTop-5 [95% CI]", "ΔMRR [95% CI]"]] +
                 [[r.baseline, r.ours_only_correct, r.baseline_only_correct, f"{r.mcnemar_p:.3g}", r.dTop5, r.dMRR] for r in sig.itertuples()],
                 [2300, 1150, 1150, 1000, 1500, 1500])
@@ -264,12 +272,12 @@ c.addnext(ptab)
 nn_models = ["MLP", "GCN (pairwise)", "GAT (pairwise)", "HGNN (hypergraph, no attention)", OURS]
 p = clone_after(ptab, normal_tpl,
     f"Performance falls quickly as symptoms are removed: with 40% of symptoms HyperDiag keeps {pv(0.4):.1f}% top-5 accuracy and with 20% "
-    f"it keeps {pv(0.2):.1f}%. Among the structure-based neural models HyperDiag is the most robust at the 20% level "
-    f"({pv(0.2):.1f}% versus {max(pt.loc[m, 0.2] for m in ['GCN (pairwise)','GAT (pairwise)','HGNN (hypergraph, no attention)']):.1f}% for the best of GCN/GAT/HGNN). "
+    f"it keeps {pv(0.2):.1f}%, compared with {max(pt.loc[m, 0.2] for m in ['GCN (pairwise)','GAT (pairwise)','HGNN (hypergraph, no attention)']):.1f}% for the best "
+    f"of GCN/GAT/HGNN and {pt.loc['MLP', 0.2]:.1f}% for the MLP. "
     f"The generative models, however, remain clearly better with very sparse input (Naive Bayes {pnb(0.2):.1f}%). "
     "This shows that discriminative models, including ours, learn to rely on the absence of symptoms. Closing this gap is an important "
     "direction for future work.")
-img = add_image_after(d, p, FIG + "fig_partial.png", 6.3)
+img = add_image_after(d, p, FIG + "fig12_partial_symptoms.png", 6.3)
 c = clone_after(img, cap_tpl, "Figure 5: Top-5 accuracy and MRR as a function of the fraction of symptoms kept.")
 
 # rare
@@ -313,14 +321,14 @@ pi = clone_after(h, normal_tpl,
     "Figure 6 shows three test patients with the symptom-evidence weights γ and the top-5 differential. Inside disease hyperedges, the "
     f"node-level attention closely follows prevalence (mean Spearman ρ = {attal.iloc[0,1]:.2f} with P(s|d), positive for "
     f"{attal.iloc[0,2]*100:.0f}% of diseases) and is weakly related to specificity (ρ = {attal.iloc[1,1]:.2f} with P(d|s)). The model therefore "
-    "highlights the symptoms that characterise each disease. The deletion test (Table 8) confirms that γ is faithful: removing the "
+    "highlights the symptoms that characterise each disease. The deletion test (Table 8) " + FA_WORD + ": removing the "
     f"most-attended symptom lowers the true-disease probability by {fa.loc['most attended','mean_drop_true_prob']:.3f} on average, versus "
     f"{fa.loc['random','mean_drop_true_prob']:.3f} for a random symptom and {fa.loc['least attended','mean_drop_true_prob']:.3f} for the least-attended one. "
     f"Top-1 accuracy falls to {fa.loc['most attended','Top1_after']*100:.1f}%, {fa.loc['random','Top1_after']*100:.1f}% and "
     f"{fa.loc['least attended','Top1_after']*100:.1f}% respectively.")
-img = add_image_after(d, pi, FIG + "fig_case_studies.png", 6.0)
+img = add_image_after(d, pi, FIG + "fig15_case_studies.png", 6.0)
 c = clone_after(img, cap_tpl, "Figure 6: Symptom-evidence attention and top-5 differential for three test patients.")
-img2 = add_image_after(d, c, FIG + "fig_node_attention.png", 6.3)
+img2 = add_image_after(d, c, FIG + "fig16_node_attention.png", 6.3)
 c = clone_after(img2, cap_tpl, "Figure 7: Node-level attention within three disease hyperedges compared with P(s|d).")
 ftab = make_table([["Deleted symptom", "Mean drop in P(true disease)", "Top-1 after", "Top-5 after"]] +
                   [[i, f"{r.mean_drop_true_prob:.3f}", f(r.Top1_after * 100), f(r.Top5_after * 100)] for i, r in fa.iterrows()], [2600, 2400, 1800, 1800])
@@ -341,9 +349,8 @@ set_text(find_p(d, "Hypergraph formulation is expected to be the primary"),
     f"saturation: {int(audit['vectors_mapping_to_>1_disease']):,} symptom patterns are shared by several diseases, which caps top-1 accuracy at "
     f"{tc['Top-1']*100:.1f}% on our test set. Second, Naive Bayes, which assumes symptoms are independent given the disease, is almost as "
     "accurate as the best neural model. This suggests that cases were generated from per-disease symptom profiles with little higher-order "
-    "interaction, which is exactly the structure that hyperedges are designed to capture. The hypergraph still adds value. It significantly "
-    "improves on classical models, ties every class to an explicit, inspectable disease hyperedge, and yields symptom-level explanations "
-    "that pass a deletion test. We expect the higher-order structure to matter more on real clinical records, where symptom interactions are richer.")
+    "interaction, which is exactly the structure that hyperedges are designed to capture. The hypergraph still adds value. " + (f"It significantly improves on {_join(SIGW)}, " if SIGW else "") + "it ties every class to an explicit, inspectable disease hyperedge, and yields symptom-level explanations "
+    "whose faithfulness is checked with a deletion test (most-attended versus random deletion ratio " + f"{FA_RATIO:.2f}" + "). We expect the higher-order structure to matter more on real clinical records, where symptom interactions are richer.")
 p = find_p(d, "5.3 Future Work")
 set_text(p, "5.4 Future Work")
 lim_h = clone_after(p.getprevious(), h2_tpl, "5.3 Limitations")
@@ -367,8 +374,8 @@ set_text(find_p(d, "This research proposes HyperDiag, a hypergraph attention net
     f"of the Kaggle Diseases and Symptoms dataset revealed that {audit['exact_duplicate_rows']/audit['rows']*100:.0f}% of the records are duplicates and "
     f"that random splits leak {la.leaked_test_cases*100:.0f}% of test cases. We therefore introduced a leakage-free grouped protocol together with "
     f"a Bayes-optimal ceiling. Under this protocol HyperDiag achieves {mu.loc[OURS,'Top-1']:.2f}% top-1 accuracy, {mu.loc[OURS,'Top-5']:.2f}% "
-    f"top-5 accuracy and {mu.loc[OURS,'MRR']:.2f}% MRR. It significantly outperforms classical baselines, matches the strongest neural baselines "
-    "and provides faithful symptom-level explanations. Our findings show that honest evaluation is a prerequisite for meaningful progress "
+    f"top-5 accuracy and {mu.loc[OURS,'MRR']:.2f}% MRR. " + SIG_SENT + ", and HyperDiag provides symptom-level explanations "
+    "grounded in explicit disease hyperedges, with well-calibrated probabilities after temperature scaling. Our findings show that honest evaluation is a prerequisite for meaningful progress "
     "on public symptom-checker benchmarks, and they establish a reproducible baseline and protocol for future structurally aware, "
     "interpretable clinical decision support.")
 
@@ -376,6 +383,7 @@ intro4 = find_p(d, "This chapter presents the results on the leakage-free")
 clone_after(intro4, h2_tpl, "4.1 Comparative Performance")
 set_text(find_p(d, "Figure: High-level framework"), "Figure 1: High-level framework of our experiments.")
 set_text(find_p(d, "Table 5: Comparison with relevant"), "Table 9: Comparison with relevant research.")
+exec(open(__import__("os").path.join(__import__("os").path.dirname(__file__), "draft_ext.py"), encoding="utf-8").read())
 pm_ = find_p(d, "This chapter describes the complete methodology")
 set_text(pm_, ptext(pm_).replace("Figure 2 presents", "Figure 1 presents"))
 d.save(OUT)
