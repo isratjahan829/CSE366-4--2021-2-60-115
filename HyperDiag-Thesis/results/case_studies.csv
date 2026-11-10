@@ -1,4 +1,4 @@
 case,true,symptoms,top5
-29267,yeast infection,pelvic pain (0.70); frequent urination (0.20); vaginal pain (0.05); vaginal itching (0.04),yeast infection (0.81); chlamydia (0.06); cervical disorder (0.01); cervical cancer (0.01); vaginitis (0.01)
+29267,yeast infection,pelvic pain (0.71); frequent urination (0.21); vaginal pain (0.05); vaginal itching (0.04),yeast infection (0.82); chlamydia (0.06); cervical disorder (0.01); cervical cancer (0.01); vaginitis (0.01)
 3950,chronic sinusitis,sinus congestion (0.59); sore throat (0.14); frontal headache (0.13); fever (0.10); cough (0.03); headache (0.01),chronic sinusitis (0.79); acute sinusitis (0.04); nose disorder (0.03); aphthous ulcer (0.01); abscess of nose (0.00)
-1159,problem during pregnancy,cramps and spasms (0.33); back pain (0.32); problems during pregnancy (0.28); vomiting (0.05); headache (0.02),problem during pregnancy (0.84); pregnancy (0.00); poisoning due to analgesics (0.00); threatened pregnancy (0.00); hyperemesis gravidarum (0.00)
+1159,problem during pregnancy,cramps and spasms (0.33); back pain (0.32); problems during pregnancy (0.27); vomiting (0.05); headache (0.02),problem during pregnancy (0.85); pregnancy (0.00); poisoning due to analgesics (0.00); threatened pregnancy (0.00); hyperemesis gravidarum (0.00)

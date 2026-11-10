@@ -1,0 +1,13 @@
+true,pred,count,jaccard
+noninfectious gastroenteritis,infectious gastroenteritis,66,0.84615386
+acute bronchitis,chronic obstructive pulmonary disease (copd),56,0.7692308
+cholecystitis,gallstone,47,0.7692308
+marijuana abuse,personality disorder,42,0.7692308
+psychotic disorder,schizophrenia,39,0.8333333
+spontaneous abortion,vaginal cyst,38,0.71428573
+infectious gastroenteritis,noninfectious gastroenteritis,37,0.84615386
+temporary or benign blood in urine,bladder disorder,36,0.75
+spondylosis,degenerative disc disease,31,0.7692308
+depression,post-traumatic stress disorder (ptsd),31,0.90909094
+spinal stenosis,degenerative disc disease,30,0.7692308
+pyelonephritis,kidney stone,30,0.8333333

@@ -238,70 +238,70 @@
    "Weighted-F1 std": 0.00051
   },
   "HyperDiag (ours)": {
-   "Top-1 mean": 0.84594,
-   "Top-1 std": 9e-05,
-   "Top-3 mean": 0.95528,
-   "Top-3 std": 0.00056,
-   "Top-5 mean": 0.97825,
-   "Top-5 std": 0.00025,
-   "Top-10 mean": 0.99367,
-   "Top-10 std": 0.00031,
-   "MRR mean": 0.90363,
-   "MRR std": 0.00016,
-   "Macro-F1 mean": 0.81156,
-   "Macro-F1 std": 0.00092,
-   "Weighted-F1 mean": 0.84759,
-   "Weighted-F1 std": 0.0001
+   "Top-1 mean": 0.84574,
+   "Top-1 std": 0.00046,
+   "Top-3 mean": 0.95524,
+   "Top-3 std": 0.00041,
+   "Top-5 mean": 0.97822,
+   "Top-5 std": 0.00024,
+   "Top-10 mean": 0.99372,
+   "Top-10 std": 0.00033,
+   "MRR mean": 0.9036,
+   "MRR std": 0.00026,
+   "Macro-F1 mean": 0.81163,
+   "Macro-F1 std": 0.00131,
+   "Weighted-F1 mean": 0.84722,
+   "Weighted-F1 std": 0.00074
   }
  },
  "table3": {
   "Full HyperDiag": {
-   "Top-1 mean": 0.84594,
-   "Top-1 std": 9e-05,
-   "Top-5 mean": 0.97825,
-   "Top-5 std": 0.00025,
-   "MRR mean": 0.90363,
-   "MRR std": 0.00016,
-   "Macro-F1 mean": 0.81156,
-   "Macro-F1 std": 0.00092,
-   "Top-5 @40% symptoms mean": 0.79283,
-   "Top-5 @40% symptoms std": 0.00047
+   "Top-1 mean": 0.84574,
+   "Top-1 std": 0.00046,
+   "Top-5 mean": 0.97822,
+   "Top-5 std": 0.00024,
+   "MRR mean": 0.9036,
+   "MRR std": 0.00026,
+   "Macro-F1 mean": 0.81163,
+   "Macro-F1 std": 0.00131,
+   "Top-5 @40% symptoms mean": 0.79372,
+   "Top-5 @40% symptoms std": 0.00109
   },
   "w/o co-occurrence hyperedges": {
-   "Top-1 mean": 0.84641,
+   "Top-1 mean": 0.84639,
    "Top-1 std": 0.00085,
-   "Top-5 mean": 0.9781,
-   "Top-5 std": 9e-05,
-   "MRR mean": 0.90377,
-   "MRR std": 0.00046,
-   "Macro-F1 mean": 0.81036,
-   "Macro-F1 std": 0.00231,
-   "Top-5 @40% symptoms mean": 0.79378,
-   "Top-5 @40% symptoms std": 0.00125
+   "Top-5 mean": 0.97811,
+   "Top-5 std": 7e-05,
+   "MRR mean": 0.90376,
+   "MRR std": 0.00045,
+   "Macro-F1 mean": 0.81017,
+   "Macro-F1 std": 0.00206,
+   "Top-5 @40% symptoms mean": 0.7937,
+   "Top-5 @40% symptoms std": 0.00126
   },
   "w/o node-level attention": {
-   "Top-1 mean": 0.84591,
-   "Top-1 std": 0.00089,
+   "Top-1 mean": 0.8459,
+   "Top-1 std": 0.00092,
    "Top-5 mean": 0.97817,
    "Top-5 std": 0.00016,
    "MRR mean": 0.90358,
-   "MRR std": 0.0006,
+   "MRR std": 0.00062,
    "Macro-F1 mean": 0.81122,
-   "Macro-F1 std": 0.00237,
+   "Macro-F1 std": 0.00238,
    "Top-5 @40% symptoms mean": 0.79314,
    "Top-5 @40% symptoms std": 0.00027
   },
   "w/o hyperedge-level attention": {
-   "Top-1 mean": 0.84554,
-   "Top-1 std": 0.00044,
-   "Top-5 mean": 0.97822,
-   "Top-5 std": 0.00016,
-   "MRR mean": 0.90347,
-   "MRR std": 0.00027,
-   "Macro-F1 mean": 0.81073,
-   "Macro-F1 std": 0.00059,
-   "Top-5 @40% symptoms mean": 0.79356,
-   "Top-5 @40% symptoms std": 0.00125
+   "Top-1 mean": 0.84571,
+   "Top-1 std": 0.00028,
+   "Top-5 mean": 0.97813,
+   "Top-5 std": 0.00022,
+   "MRR mean": 0.9035,
+   "MRR std": 0.00013,
+   "Macro-F1 mean": 0.81115,
+   "Macro-F1 std": 0.00134,
+   "Top-5 @40% symptoms mean": 0.79263,
+   "Top-5 @40% symptoms std": 0.00038
   },
   "w/o both attentions": {
    "Top-1 mean": 0.84608,
@@ -317,39 +317,39 @@
   },
   "w/o query-aware hyperedge attention": {
    "Top-1 mean": 0.84655,
-   "Top-1 std": 0.00031,
-   "Top-5 mean": 0.97815,
-   "Top-5 std": 0.00052,
-   "MRR mean": 0.90393,
-   "MRR std": 0.00026,
-   "Macro-F1 mean": 0.81351,
-   "Macro-F1 std": 0.00096,
-   "Top-5 @40% symptoms mean": 0.79275,
-   "Top-5 @40% symptoms std": 0.00092
+   "Top-1 std": 0.00032,
+   "Top-5 mean": 0.97817,
+   "Top-5 std": 0.0005,
+   "MRR mean": 0.90394,
+   "MRR std": 0.00028,
+   "Macro-F1 mean": 0.81347,
+   "Macro-F1 std": 0.00106,
+   "Top-5 @40% symptoms mean": 0.79264,
+   "Top-5 @40% symptoms std": 0.001
   },
   "w/o prototype scoring (MLP head)": {
-   "Top-1 mean": 0.84408,
-   "Top-1 std": 0.00146,
-   "Top-5 mean": 0.97754,
-   "Top-5 std": 0.00072,
+   "Top-1 mean": 0.84395,
+   "Top-1 std": 0.00159,
+   "Top-5 mean": 0.97789,
+   "Top-5 std": 0.00067,
    "MRR mean": 0.90227,
    "MRR std": 0.00096,
-   "Macro-F1 mean": 0.79239,
-   "Macro-F1 std": 0.0105,
-   "Top-5 @40% symptoms mean": 0.79908,
-   "Top-5 @40% symptoms std": 0.00712
+   "Macro-F1 mean": 0.79252,
+   "Macro-F1 std": 0.01068,
+   "Top-5 @40% symptoms mean": 0.79978,
+   "Top-5 @40% symptoms std": 0.00596
   },
   "w/o hyperedge-likelihood evidence": {
-   "Top-1 mean": 0.84494,
-   "Top-1 std": 0.00042,
-   "Top-5 mean": 0.97833,
-   "Top-5 std": 0.0004,
+   "Top-1 mean": 0.84499,
+   "Top-1 std": 0.00052,
+   "Top-5 mean": 0.97829,
+   "Top-5 std": 0.00039,
    "MRR mean": 0.90292,
-   "MRR std": 0.00016,
-   "Macro-F1 mean": 0.81135,
-   "Macro-F1 std": 0.00157,
-   "Top-5 @40% symptoms mean": 0.79382,
-   "Top-5 @40% symptoms std": 0.00174
+   "MRR std": 0.0002,
+   "Macro-F1 mean": 0.81149,
+   "Macro-F1 std": 0.00095,
+   "Top-5 @40% symptoms mean": 0.79363,
+   "Top-5 @40% symptoms std": 0.00159
   }
  },
  "partial": [
@@ -403,11 +403,11 @@
   },
   {
    "model": "HyperDiag (ours)",
-   "keep 100%": 97.825,
-   "keep 80%": 97.236,
-   "keep 60%": 92.114,
-   "keep 40%": 79.283,
-   "keep 20%": 43.391
+   "keep 100%": 97.822,
+   "keep 80%": 97.219,
+   "keep 60%": 92.124,
+   "keep 40%": 79.372,
+   "keep 20%": 43.572
   }
  ],
  "rare": [
@@ -440,6 +440,62 @@
    "recall5": 0.982
   },
   {
+   "model": "Random Forest",
+   "group": "rare (\u226420)",
+   "n_diseases": 158,
+   "recall1": 0.3683,
+   "recall5": 0.7414
+  },
+  {
+   "model": "Random Forest",
+   "group": "low (21\u2013100)",
+   "n_diseases": 153,
+   "recall1": 0.6811,
+   "recall5": 0.9073
+  },
+  {
+   "model": "Random Forest",
+   "group": "mid (101\u2013400)",
+   "n_diseases": 217,
+   "recall1": 0.8077,
+   "recall5": 0.9629
+  },
+  {
+   "model": "Random Forest",
+   "group": "frequent (>400)",
+   "n_diseases": 114,
+   "recall1": 0.8481,
+   "recall5": 0.986
+  },
+  {
+   "model": "LogReg (softmax)",
+   "group": "rare (\u226420)",
+   "n_diseases": 158,
+   "recall1": 0.4845,
+   "recall5": 0.8091
+  },
+  {
+   "model": "LogReg (softmax)",
+   "group": "low (21\u2013100)",
+   "n_diseases": 153,
+   "recall1": 0.742,
+   "recall5": 0.9251
+  },
+  {
+   "model": "LogReg (softmax)",
+   "group": "mid (101\u2013400)",
+   "n_diseases": 217,
+   "recall1": 0.8928,
+   "recall5": 0.9847
+  },
+  {
+   "model": "LogReg (softmax)",
+   "group": "frequent (>400)",
+   "n_diseases": 114,
+   "recall1": 0.8221,
+   "recall5": 0.9773
+  },
+  {
    "model": "MLP",
    "group": "rare (\u226420)",
    "n_diseases": 158,
@@ -466,6 +522,34 @@
    "n_diseases": 114,
    "recall1": 0.8261,
    "recall5": 0.9779
+  },
+  {
+   "model": "GCN (pairwise)",
+   "group": "rare (\u226420)",
+   "n_diseases": 158,
+   "recall1": 0.7484,
+   "recall5": 0.9563
+  },
+  {
+   "model": "GCN (pairwise)",
+   "group": "low (21\u2013100)",
+   "n_diseases": 153,
+   "recall1": 0.8396,
+   "recall5": 0.968
+  },
+  {
+   "model": "GCN (pairwise)",
+   "group": "mid (101\u2013400)",
+   "n_diseases": 217,
+   "recall1": 0.8682,
+   "recall5": 0.9788
+  },
+  {
+   "model": "GCN (pairwise)",
+   "group": "frequent (>400)",
+   "n_diseases": 114,
+   "recall1": 0.829,
+   "recall5": 0.9786
   },
   {
    "model": "GAT (pairwise)",
@@ -527,135 +611,156 @@
    "model": "HyperDiag (ours)",
    "group": "rare (\u226420)",
    "n_diseases": 158,
-   "recall1": 0.7335,
+   "recall1": 0.7324,
    "recall5": 0.9316
   },
   {
    "model": "HyperDiag (ours)",
    "group": "low (21\u2013100)",
    "n_diseases": 153,
-   "recall1": 0.8461,
-   "recall5": 0.9793
+   "recall1": 0.8473,
+   "recall5": 0.9785
   },
   {
    "model": "HyperDiag (ours)",
    "group": "mid (101\u2013400)",
    "n_diseases": 217,
-   "recall1": 0.8783,
-   "recall5": 0.98
+   "recall1": 0.8782,
+   "recall5": 0.9798
   },
   {
    "model": "HyperDiag (ours)",
    "group": "frequent (>400)",
    "n_diseases": 114,
    "recall1": 0.8263,
-   "recall5": 0.9778
+   "recall5": 0.9777
   }
  ],
  "significance": [
   {
    "baseline": "Naive Bayes (Bernoulli)",
    "ours_only_correct": 1033,
-   "baseline_only_correct": 926,
-   "mcnemar_p": 0.016624582886346162,
-   "dTop5": "+0.16 [+0.02, +0.28]",
-   "dMRR": "+0.22 [+0.10, +0.36]"
+   "baseline_only_correct": 923,
+   "mcnemar_p": 0.013717577803662229,
+   "dTop5": "+0.14 [+0.01, +0.25]",
+   "dMRR": "+0.23 [+0.10, +0.36]",
+   "mcnemar_p_holm": 0.06858788901831114,
+   "cohens_h_top1": 0.008037775835600502,
+   "significant (\u03b1=0.05, Holm)": "no"
   },
   {
    "baseline": "Random Forest",
-   "ours_only_correct": 2289,
+   "ours_only_correct": 2292,
    "baseline_only_correct": 1612,
    "mcnemar_p": 0.0,
-   "dTop5": "+0.47 [+0.33, +0.62]",
-   "dMRR": "+1.26 [+1.07, +1.46]"
+   "dTop5": "+0.45 [+0.30, +0.60]",
+   "dMRR": "+1.27 [+1.07, +1.45]",
+   "mcnemar_p_holm": 0.0,
+   "cohens_h_top1": 0.04875910455769539,
+   "significant (\u03b1=0.05, Holm)": "yes"
   },
   {
    "baseline": "LogReg (softmax)",
    "ours_only_correct": 972,
-   "baseline_only_correct": 840,
-   "mcnemar_p": 0.002087739368388686,
-   "dTop5": "+0.21 [+0.09, +0.32]",
-   "dMRR": "+0.30 [+0.17, +0.42]"
+   "baseline_only_correct": 837,
+   "mcnemar_p": 0.0016296684660461747,
+   "dTop5": "+0.19 [+0.08, +0.29]",
+   "dMRR": "+0.30 [+0.17, +0.43]",
+   "mcnemar_p_holm": 0.009778010796277048,
+   "cohens_h_top1": 0.009856040916363273,
+   "significant (\u03b1=0.05, Holm)": "yes"
   },
   {
    "baseline": "MLP",
-   "ours_only_correct": 977,
-   "baseline_only_correct": 1002,
-   "mcnemar_p": 0.5895445572222482,
-   "dTop5": "-0.01 [-0.13, +0.10]",
-   "dMRR": "+0.01 [-0.12, +0.14]"
+   "ours_only_correct": 978,
+   "baseline_only_correct": 1000,
+   "mcnemar_p": 0.6367994288898488,
+   "dTop5": "-0.03 [-0.14, +0.07]",
+   "dMRR": "+0.01 [-0.12, +0.15]",
+   "mcnemar_p_holm": 1.0,
+   "cohens_h_top1": -0.0016149808211092243,
+   "significant (\u03b1=0.05, Holm)": "no"
   },
   {
    "baseline": "GCN (pairwise)",
-   "ours_only_correct": 1104,
-   "baseline_only_correct": 1061,
-   "mcnemar_p": 0.36671062870424953,
-   "dTop5": "+0.02 [-0.09, +0.13]",
-   "dMRR": "+0.11 [-0.03, +0.25]"
+   "ours_only_correct": 1105,
+   "baseline_only_correct": 1059,
+   "mcnemar_p": 0.3333688184921284,
+   "dTop5": "+0.00 [-0.11, +0.11]",
+   "dMRR": "+0.11 [-0.02, +0.25]",
+   "mcnemar_p_holm": 1.0,
+   "cohens_h_top1": 0.003368730885112914,
+   "significant (\u03b1=0.05, Holm)": "no"
   },
   {
    "baseline": "GAT (pairwise)",
-   "ours_only_correct": 1141,
-   "baseline_only_correct": 1116,
-   "mcnemar_p": 0.6134329769881677,
-   "dTop5": "-0.02 [-0.14, +0.09]",
-   "dMRR": "+0.05 [-0.09, +0.19]"
+   "ours_only_correct": 1135,
+   "baseline_only_correct": 1107,
+   "mcnemar_p": 0.5685253635874985,
+   "dTop5": "-0.04 [-0.16, +0.07]",
+   "dMRR": "+0.06 [-0.09, +0.20]",
+   "mcnemar_p_holm": 1.0,
+   "cohens_h_top1": 0.0020518222583385537,
+   "significant (\u03b1=0.05, Holm)": "no"
   },
   {
    "baseline": "HGNN (hypergraph, no attention)",
-   "ours_only_correct": 1098,
+   "ours_only_correct": 1101,
    "baseline_only_correct": 1058,
-   "mcnemar_p": 0.40095074226636107,
-   "dTop5": "-0.02 [-0.13, +0.09]",
-   "dMRR": "+0.09 [-0.05, +0.23]"
+   "mcnemar_p": 0.36604557844173113,
+   "dTop5": "-0.03 [-0.15, +0.07]",
+   "dMRR": "+0.09 [-0.04, +0.23]",
+   "mcnemar_p_holm": 1.0,
+   "cohens_h_top1": 0.0031493608574693077,
+   "significant (\u03b1=0.05, Holm)": "no"
   }
  ],
  "attention_alignment": [
   {
    "comparison": "\u03b1 vs prevalence P(s|d)",
-   "mean Spearman \u03c1": 0.864,
+   "mean Spearman \u03c1": 0.869,
    "share of diseases with \u03c1>0": 0.994,
    "#diseases": 654
   },
   {
    "comparison": "\u03b1 vs specificity P(d|s)",
-   "mean Spearman \u03c1": 0.294,
-   "share of diseases with \u03c1>0": 0.754,
+   "mean Spearman \u03c1": 0.291,
+   "share of diseases with \u03c1>0": 0.757,
    "#diseases": 654
   }
  ],
  "faithfulness": [
   {
    "index": "most attended",
-   "mean_drop_true_prob": 0.1553,
-   "Top1_after": 0.684,
+   "mean_drop_true_prob": 0.1552,
+   "Top1_after": 0.6823,
    "Top5_after": 0.9173
   },
   {
    "index": "random",
-   "mean_drop_true_prob": 0.0951,
-   "Top1_after": 0.754,
-   "Top5_after": 0.9493
+   "mean_drop_true_prob": 0.0952,
+   "Top1_after": 0.755,
+   "Top5_after": 0.949
   },
   {
    "index": "least attended",
-   "mean_drop_true_prob": 0.0617,
-   "Top1_after": 0.796,
-   "Top5_after": 0.9687
+   "mean_drop_true_prob": 0.0615,
+   "Top1_after": 0.7967,
+   "Top5_after": 0.968
   },
   {
    "index": "no deletion",
    "mean_drop_true_prob": 0.0,
-   "Top1_after": 0.8713,
-   "Top5_after": 0.985
+   "Top1_after": 0.8727,
+   "Top5_after": 0.9853
   }
  ],
  "case_studies": [
   {
    "case": 29267,
    "true": "yeast infection",
-   "symptoms": "pelvic pain (0.70); frequent urination (0.20); vaginal pain (0.05); vaginal itching (0.04)",
-   "top5": "yeast infection (0.81); chlamydia (0.06); cervical disorder (0.01); cervical cancer (0.01); vaginitis (0.01)"
+   "symptoms": "pelvic pain (0.71); frequent urination (0.21); vaginal pain (0.05); vaginal itching (0.04)",
+   "top5": "yeast infection (0.82); chlamydia (0.06); cervical disorder (0.01); cervical cancer (0.01); vaginitis (0.01)"
   },
   {
    "case": 3950,
@@ -666,8 +771,342 @@
   {
    "case": 1159,
    "true": "problem during pregnancy",
-   "symptoms": "cramps and spasms (0.33); back pain (0.32); problems during pregnancy (0.28); vomiting (0.05); headache (0.02)",
-   "top5": "problem during pregnancy (0.84); pregnancy (0.00); poisoning due to analgesics (0.00); threatened pregnancy (0.00); hyperemesis gravidarum (0.00)"
+   "symptoms": "cramps and spasms (0.33); back pain (0.32); problems during pregnancy (0.27); vomiting (0.05); headache (0.02)",
+   "top5": "problem during pregnancy (0.85); pregnancy (0.00); poisoning due to analgesics (0.00); threatened pregnancy (0.00); hyperemesis gravidarum (0.00)"
   }
- ]
+ ],
+ "comprehensive": [
+  {
+   "model": "Naive Bayes (Bernoulli)",
+   "Top-1": 0.84307,
+   "Top-3": 0.95353,
+   "Top-5": 0.9767,
+   "Top-10": 0.99243,
+   "MRR": 0.90155,
+   "NDCG@10": 0.92378,
+   "Mean rank": 1.55041,
+   "Median rank": 1.0,
+   "Macro-P": 0.8126,
+   "Macro-R": 0.74779,
+   "Macro-F1": 0.76431,
+   "Weighted-F1": 0.843,
+   "Cohen-kappa": 0.8425,
+   "MCC": 0.84254,
+   "Log-loss": 0.34361,
+   "Brier": 0.17273,
+   "ECE": 0.00615,
+   "Set size@90%": 1.8844
+  },
+  {
+   "model": "Random Forest",
+   "Top-1": 0.82798,
+   "Top-3": 0.94705,
+   "Top-5": 0.97358,
+   "Top-10": 0.99137,
+   "MRR": 0.89115,
+   "NDCG@10": 0.91559,
+   "Mean rank": 1.50588,
+   "Median rank": 1.0,
+   "Macro-P": 0.79142,
+   "Macro-R": 0.67658,
+   "Macro-F1": 0.71022,
+   "Weighted-F1": 0.82322,
+   "Cohen-kappa": 0.82731,
+   "MCC": 0.82738,
+   "Log-loss": 0.81432,
+   "Brier": 0.31905,
+   "ECE": 0.27739,
+   "Set size@90%": 13.01462
+  },
+  {
+   "model": "LogReg (softmax)",
+   "Top-1": 0.84235,
+   "Top-3": 0.95266,
+   "Top-5": 0.97618,
+   "Top-10": 0.99258,
+   "MRR": 0.90077,
+   "NDCG@10": 0.9232,
+   "Mean rank": 1.43789,
+   "Median rank": 1.0,
+   "Macro-P": 0.79888,
+   "Macro-R": 0.74337,
+   "Macro-F1": 0.75109,
+   "Weighted-F1": 0.84068,
+   "Cohen-kappa": 0.84179,
+   "MCC": 0.84185,
+   "Log-loss": 0.64332,
+   "Brier": 0.24582,
+   "ECE": 0.164,
+   "Set size@90%": 71.68471
+  },
+  {
+   "model": "MLP",
+   "Top-1": 0.84631,
+   "Top-3": 0.95491,
+   "Top-5": 0.9784,
+   "Top-10": 0.99378,
+   "MRR": 0.90379,
+   "NDCG@10": 0.92584,
+   "Mean rank": 1.41078,
+   "Median rank": 1.0,
+   "Macro-P": 0.82693,
+   "Macro-R": 0.84206,
+   "Macro-F1": 0.81707,
+   "Weighted-F1": 0.851,
+   "Cohen-kappa": 0.84576,
+   "MCC": 0.84581,
+   "Log-loss": 0.45072,
+   "Brier": 0.18356,
+   "ECE": 0.09263,
+   "Set size@90%": 15.15487
+  },
+  {
+   "model": "GCN (pairwise)",
+   "Top-1": 0.84477,
+   "Top-3": 0.95487,
+   "Top-5": 0.97803,
+   "Top-10": 0.9935,
+   "MRR": 0.90275,
+   "NDCG@10": 0.92498,
+   "Mean rank": 1.41805,
+   "Median rank": 1.0,
+   "Macro-P": 0.8319,
+   "Macro-R": 0.8262,
+   "Macro-F1": 0.81116,
+   "Weighted-F1": 0.84971,
+   "Cohen-kappa": 0.84422,
+   "MCC": 0.84427,
+   "Log-loss": 0.53422,
+   "Brier": 0.20559,
+   "ECE": 0.1486,
+   "Set size@90%": 40.45521
+  },
+  {
+   "model": "GAT (pairwise)",
+   "Top-1": 0.84497,
+   "Top-3": 0.95476,
+   "Top-5": 0.97842,
+   "Top-10": 0.99356,
+   "MRR": 0.90305,
+   "NDCG@10": 0.92523,
+   "Mean rank": 1.41497,
+   "Median rank": 1.0,
+   "Macro-P": 0.83274,
+   "Macro-R": 0.82817,
+   "Macro-F1": 0.81348,
+   "Weighted-F1": 0.85014,
+   "Cohen-kappa": 0.84442,
+   "MCC": 0.84448,
+   "Log-loss": 0.53233,
+   "Brier": 0.20516,
+   "ECE": 0.14762,
+   "Set size@90%": 39.18629
+  },
+  {
+   "model": "HGNN (hypergraph, no attention)",
+   "Top-1": 0.84513,
+   "Top-3": 0.95477,
+   "Top-5": 0.97824,
+   "Top-10": 0.99358,
+   "MRR": 0.90298,
+   "NDCG@10": 0.92518,
+   "Mean rank": 1.41649,
+   "Median rank": 1.0,
+   "Macro-P": 0.83324,
+   "Macro-R": 0.82902,
+   "Macro-F1": 0.81284,
+   "Weighted-F1": 0.85023,
+   "Cohen-kappa": 0.84458,
+   "MCC": 0.84464,
+   "Log-loss": 0.53372,
+   "Brier": 0.20536,
+   "ECE": 0.14896,
+   "Set size@90%": 40.50365
+  },
+  {
+   "model": "HyperDiag (ours)",
+   "Top-1": 0.84574,
+   "Top-3": 0.95524,
+   "Top-5": 0.97822,
+   "Top-10": 0.99372,
+   "MRR": 0.9036,
+   "NDCG@10": 0.92569,
+   "Mean rank": 1.41193,
+   "Median rank": 1.0,
+   "Macro-P": 0.83017,
+   "Macro-R": 0.82399,
+   "Macro-F1": 0.81163,
+   "Weighted-F1": 0.84722,
+   "Cohen-kappa": 0.84519,
+   "MCC": 0.84525,
+   "Log-loss": 0.53785,
+   "Brier": 0.20785,
+   "ECE": 0.16279,
+   "Set size@90%": 39.94121
+  }
+ ],
+ "cost": [
+  {
+   "index": "Naive Bayes (Bernoulli)",
+   "Params": 216482.0,
+   "Train time (s)": 1.2867491245269775,
+   "Infer (ms/1k)": 20.051218397257266
+  },
+  {
+   "index": "Random Forest",
+   "Params": 479940.0,
+   "Train time (s)": 12.561551809310913,
+   "Infer (ms/1k)": 69.3479210005754
+  },
+  {
+   "index": "LogReg (softmax)",
+   "Params": 216482.0,
+   "Train time (s)": 21.86674928665161,
+   "Infer (ms/1k)": 1.7098175017315056
+  },
+  {
+   "index": "MLP",
+   "Params": 770706.0,
+   "Train time (s)": 85.20679640769958,
+   "Infer (ms/1k)": 4.76136446958678
+  },
+  {
+   "index": "GCN (pairwise)",
+   "Params": 385426.0,
+   "Train time (s)": 57.95927023887634,
+   "Infer (ms/1k)": 3.978019800006371
+  },
+  {
+   "index": "GAT (pairwise)",
+   "Params": 385682.0,
+   "Train time (s)": 85.06625652313232,
+   "Infer (ms/1k)": 6.552571791810672
+  },
+  {
+   "index": "HGNN (hypergraph, no attention)",
+   "Params": 385426.0,
+   "Train time (s)": 59.86420130729675,
+   "Infer (ms/1k)": 3.6551244833085073
+  },
+  {
+   "index": "HyperDiag (ours)",
+   "Params": 416407.0,
+   "Train time (s)": 259.169278383255,
+   "Infer (ms/1k)": 15.470321793042105
+  }
+ ],
+ "friedman": {
+  "chi2": 383.95102981091526,
+  "p": 6.581038512778187e-79,
+  "iman_davenport": 59.880700179948015,
+  "cd": 0.41438978896235085,
+  "avg_rank": {
+   "Naive Bayes (Bernoulli)": 4.783,
+   "Random Forest": 5.755,
+   "LogReg (softmax)": 5.068,
+   "MLP": 3.982,
+   "GCN (pairwise)": 4.164,
+   "GAT (pairwise)": 3.942,
+   "HGNN (hypergraph, no attention)": 4.093,
+   "HyperDiag (ours)": 4.213
+  }
+ },
+ "wilcoxon": [
+  {
+   "baseline": "NB",
+   "wins": 276,
+   "ties": 153,
+   "losses": 213,
+   "median_dF1": 0.0,
+   "mean_dF1": 4.6588,
+   "W": 45676.0,
+   "p": 0.0,
+   "r_rb": 0.2375,
+   "effect": "small",
+   "p_holm": 0.0
+  },
+  {
+   "baseline": "RF",
+   "wins": 388,
+   "ties": 94,
+   "losses": 160,
+   "median_dF1": 1.5957,
+   "mean_dF1": 10.0671,
+   "W": 33350.5,
+   "p": 0.0,
+   "r_rb": 0.5566,
+   "effect": "large",
+   "p_holm": 0.0
+  },
+  {
+   "baseline": "LogReg",
+   "wins": 342,
+   "ties": 128,
+   "losses": 172,
+   "median_dF1": 0.2981,
+   "mean_dF1": 5.9308,
+   "W": 38670.0,
+   "p": 0.0,
+   "r_rb": 0.4157,
+   "effect": "medium",
+   "p_holm": 0.0
+  },
+  {
+   "baseline": "MLP",
+   "wins": 208,
+   "ties": 194,
+   "losses": 240,
+   "median_dF1": 0.0,
+   "mean_dF1": -0.4644,
+   "W": 46659.5,
+   "p": 0.1857,
+   "r_rb": -0.0722,
+   "effect": "negligible",
+   "p_holm": 0.5572
+  },
+  {
+   "baseline": "GCN",
+   "wins": 227,
+   "ties": 178,
+   "losses": 237,
+   "median_dF1": 0.0,
+   "mean_dF1": 0.0183,
+   "W": 51990.0,
+   "p": 0.4998,
+   "r_rb": -0.0362,
+   "effect": "negligible",
+   "p_holm": 0.9429
+  },
+  {
+   "baseline": "GAT",
+   "wins": 209,
+   "ties": 177,
+   "losses": 256,
+   "median_dF1": 0.0,
+   "mean_dF1": -0.7281,
+   "W": 47899.0,
+   "p": 0.0305,
+   "r_rb": -0.1158,
+   "effect": "small",
+   "p_holm": 0.1219
+  },
+  {
+   "baseline": "HGNN",
+   "wins": 230,
+   "ties": 179,
+   "losses": 233,
+   "median_dF1": 0.0,
+   "mean_dF1": -0.2468,
+   "W": 51633.5,
+   "p": 0.4714,
+   "r_rb": -0.0386,
+   "effect": "negligible",
+   "p_holm": 0.9429
+  }
+ ],
+ "error_overlap": {
+  "confused_mean_jaccard": 0.529258280450077,
+  "random_mean_jaccard": 0.03213195130228996,
+  "p": 0.0
+ }
 }

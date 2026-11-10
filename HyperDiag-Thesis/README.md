@@ -28,30 +28,47 @@ same notebook also runs on Colab or a laptop.
 Locally: `pip install torch scikit-learn pandas scipy matplotlib seaborn kagglehub` and run the notebook
 (about 80 minutes on a 4-core CPU).
 
-## Key findings
+## Notebook structure (scientific-report format)
 
-**Data audit and leakage (new contribution)**
-* 57,298 of 246,945 rows (23.2%) are exact duplicates, and 12,634 symptom vectors map to more than one disease.
-* With a random split on the raw data, **43.9% of test cases also appear in training**. A random split after de-duplication still leaks 15.1%.
-  We use a **symptom-vector-grouped stratified split** with 0% leakage.
-* Bayes-optimal ceiling (de-duplicated data): Top-1 89.6%, Top-5 99.4%. On our test set: Top-1 89.89%, Top-5 99.55%.
+Abstract → 1 Environment → 2 Materials → 3 Data audit → 4 Leakage-free protocol → 5 Hypergraph construction (**Algorithm 1**)
+→ 6 Models (**Algorithm 2**) and training/evaluation (**Algorithm 3**) → 7 Experiments → 8 Results (20 metrics, bootstrap CIs,
+calibration and temperature scaling) → 9 Statistical analysis (McNemar–Holm, Friedman–Nemenyi CD diagram, Wilcoxon with effect sizes,
+bootstrap forest plot) → 10 Partial symptoms → 11 Rare diseases → 12 Ablation → 13 Interpretability, t-SNE, error analysis
+→ 14 Auto-generated findings → 15 Discussion → 16 Conclusion → References.
 
-**Main comparison (leakage-free test set, 37,768 cases, 658 diseases, mean ± std over 3 seeds)**
+19 publication-style figures in `results/figures/` (300 dpi, one fixed colour per model).
 
-| Model | Top-1 | Top-5 | MRR | Macro-F1 |
-|---|---|---|---|---|
-| Naive Bayes | 84.31 | 97.67 | 90.15 | 76.43 |
-| Random Forest | 82.80 | 97.36 | 89.11 | 71.02 |
-| Logistic Regression | 84.24 ± 0.02 | 97.62 ± 0.00 | 90.08 ± 0.01 | 75.11 ± 0.21 |
-| MLP | 84.63 ± 0.03 | 97.84 ± 0.01 | 90.38 ± 0.01 | 81.71 ± 0.32 |
-| GCN (pairwise) | 84.48 ± 0.01 | 97.80 ± 0.00 | 90.28 ± 0.01 | 81.12 ± 0.04 |
-| GAT (pairwise) | 84.50 ± 0.03 | 97.84 ± 0.04 | 90.31 ± 0.02 | 81.35 ± 0.52 |
-| HGNN | 84.51 ± 0.04 | 97.82 ± 0.02 | 90.30 ± 0.02 | 81.28 ± 0.05 |
-| **HyperDiag (ours)** | **84.59 ± 0.01** | **97.83 ± 0.03** | **90.36 ± 0.02** | **81.16 ± 0.09** |
-| Bayes ceiling | 89.89 | 99.55 | – | – |
+## Key findings (leakage-free test set: 37,768 cases, 658 diseases; neural models: mean over 3 seeds)
 
-* HyperDiag is significantly better than Naive Bayes, Random Forest and Logistic Regression (McNemar p < 0.02).
-  It is **statistically tied** with MLP, GCN, GAT and HGNN (p > 0.36).
-* Ablation: only **prototype scoring** clearly matters (macro-F1 81.16 → 79.24 without it). The other components change results by less than the variation across seeds.
-* Attention-faithfulness: deleting the most-attended symptom lowers the true-disease probability 1.6× more than deleting a random symptom and 2.5× more than deleting the least-attended one.
-* Limitation: with only 20% of symptoms reported, Naive Bayes (52.9% Top-5) beats every neural model (about 43–45%).
+**Data audit**
+* 57,298 duplicate rows (23.2%) and 12,634 symptom vectors that map to more than one disease.
+* A random split leaks **43.9%** of test cases into training; our grouped split leaks 0%.
+* Bayes-optimal ceiling on the test set: Top-1 89.89%, Top-5 99.55%.
+
+**Main comparison (%; extract of the 20-metric Table 3)**
+
+| Model | Top-1 | Top-5 | MRR | NDCG@10 | Macro-F1 | MCC | Log-loss* | ECE* |
+|---|---|---|---|---|---|---|---|---|
+| Naive Bayes | 84.31 | 97.67 | 90.15 | 92.38 | 76.43 | 84.25 | 0.343 | 0.44 |
+| Random Forest | 82.80 | 97.36 | 89.11 | 91.56 | 71.02 | 82.74 | – | – |
+| LogReg | 84.24 | 97.62 | 90.08 | 92.32 | 75.11 | 84.19 | 0.362 | 2.36 |
+| MLP | 84.63 | 97.84 | 90.38 | 92.58 | 81.71 | 84.58 | 0.337 | 2.32 |
+| GCN | 84.48 | 97.80 | 90.28 | 92.50 | 81.12 | 84.43 | 0.345 | 2.38 |
+| GAT | 84.50 | 97.84 | 90.31 | 92.52 | 81.35 | 84.45 | 0.343 | 2.27 |
+| HGNN | 84.51 | 97.82 | 90.30 | 92.52 | 81.28 | 84.46 | 0.342 | 2.33 |
+| **HyperDiag** | **84.57** | **97.82** | **90.36** | **92.57** | **81.16** | **84.52** | **0.332** | **1.57** |
+
+\* After temperature scaling fitted on the validation set. Among the discriminative models, HyperDiag has the best log-loss and ECE.
+
+**Statistics**
+* McNemar (Holm-corrected): HyperDiag is significantly better than Random Forest and Logistic Regression. It is statistically
+  indistinguishable from Naive Bayes (p = 0.069), MLP, GCN, GAT and HGNN.
+* Friedman χ² = 384.0 (p = 6.6e-79) over 642 diseases; Nemenyi CD = 0.41.
+* Wilcoxon on per-disease F1: large effect over RF (r = 0.56), medium over LogReg (r = 0.42), small over NB (r = 0.24);
+  negligible versus the neural baselines.
+
+**Analysis**
+* Errors follow hyperedge overlap: confused disease pairs have mean Jaccard 0.529, versus 0.032 for random pairs.
+* Attention faithfulness: deleting the most-attended symptom lowers P(true disease) by 0.155, versus 0.095 for a random symptom.
+* Ablation: prototype scoring is the component with the clearest effect on macro-F1.
+* Limitation: with only 20% of symptoms reported, Naive Bayes is more robust than every neural model.

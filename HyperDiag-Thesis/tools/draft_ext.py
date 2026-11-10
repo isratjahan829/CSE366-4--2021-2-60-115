@@ -198,7 +198,7 @@ h = clone_after(c, h2_tpl, "4.7 Error Analysis: Confusions Follow Hyperedge Over
 pe = clone_after(h, normal_tpl,
     f"HyperDiag's errors are not random. Weighted by the number of errors, confused disease pairs have a mean hyperedge Jaccard overlap of "
     f"{errov['confused_mean_jaccard']:.3f}, compared with {errov['random_mean_jaccard']:.3f} for random disease pairs (one-sided Mann–Whitney "
-    f"p = {errov['p']:.1e}). The remaining errors are therefore largely the irreducible cases in which two diseases share most of their "
+    f"p {'< 1e-300' if errov['p'] < 1e-300 else '= ' + format(errov['p'], '.1e')}). The remaining errors are therefore largely the irreducible cases in which two diseases share most of their "
     "symptoms. This is consistent with the Bayes-ceiling analysis, and the overlap is directly visible in the hypergraph (Figure 111).")
 img = add_image_after(d, pe, FIG + "fig19_error_analysis.png", 6.4)
 clone_after(img, cap_tpl, "Figure 111: Error analysis: (a) network of the 30 most frequent confusions; (b) hyperedge overlap of confused versus random disease pairs.")
