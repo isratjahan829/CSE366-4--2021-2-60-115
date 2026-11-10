@@ -13,3 +13,7 @@ addresses) are dropped on load.
 
 `microdata_results.json` holds aggregate results only. `legacy_report_tables/` contains the earlier
 analysis based on the report's published tables (superseded), plus the first figure script.
+6. `07_screening_model.py <data_dir>` — portable logistic screening models (exports `screening_model.json` for the app, `screening_results.json` for the paper).
+7. `08_ed_screening_figure.py` — Extended Data Fig. 1.
+
+The offline web tool is in `../app/index.html` (single file; no data stored or sent).

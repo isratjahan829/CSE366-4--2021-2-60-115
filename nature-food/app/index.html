@@ -1,0 +1,482 @@
+<title>Nirapod Khabar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@500;650;750&family=Hind+Siliguri:wght@400;500;600&display=swap">
+<style>
+/* Layout: a field-worker tool — slim header with language switch, four tabbed tools; the plate is the signature visual. */
+:root{
+  --bg:#f5f6fa; --surface:#ffffff; --ink:#1c2230; --ink2:#4a5060; --muted:#7c8293; --rule:#e2e4ec; --track:#eef0f5;
+  --indigo:#3366b0; --vermilion:#dd5a2f; --teal:#1f9e89; --saffron:#c98a0b;
+  --good:#1f8a5b; --warn:#b7791f; --bad:#c2461f;
+  --indigo-soft:#e6edf8; --vermilion-soft:#fbe9e2; --teal-soft:#e2f3f0;
+  --f-display:"Anek Bangla","Hind Siliguri","Noto Sans Bengali",system-ui,sans-serif;
+  --f-body:"Hind Siliguri","Noto Sans Bengali",system-ui,sans-serif;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12151d; --surface:#1a1e29; --ink:#eef0f6; --ink2:#c3c7d3; --muted:#8d93a3; --rule:#2b3040; --track:#232837;
+  --indigo:#6f9ae0; --vermilion:#ef7a52; --teal:#3cc0a8; --saffron:#e3a630;
+  --good:#47b884; --warn:#e0a33a; --bad:#ef7a52;
+  --indigo-soft:#1f2a42; --vermilion-soft:#3a2219; --teal-soft:#16302c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151d; --surface:#1a1e29; --ink:#eef0f6; --ink2:#c3c7d3; --muted:#8d93a3; --rule:#2b3040; --track:#232837;
+  --indigo:#6f9ae0; --vermilion:#ef7a52; --teal:#3cc0a8; --saffron:#e3a630;
+  --good:#47b884; --warn:#e0a33a; --bad:#ef7a52;
+  --indigo-soft:#1f2a42; --vermilion-soft:#3a2219; --teal-soft:#16302c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+.wrap{max-width:980px;margin:0 auto}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;padding-block:22px 14px;border-bottom:1px solid var(--rule)}
+.brand h1{font-family:var(--f-display);font-weight:750;font-size:clamp(28px,5vw,40px);line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.brand h1 span{color:var(--vermilion)}
+.brand p{margin:4px 0 0;color:var(--ink2);font-size:15px;max-width:58ch}
+.lang{display:flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden;background:var(--surface)}
+.lang button{border:0;background:none;color:var(--ink2);font:600 14px var(--f-body);padding:6px 14px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+nav{display:flex;gap:6px;overflow-x:auto;padding-block:14px 4px;scrollbar-width:none}
+nav a{flex:0 0 auto;text-decoration:none;color:var(--ink2);font:600 15px var(--f-body);padding:8px 14px;border-radius:999px;border:1px solid var(--rule);background:var(--surface)}
+nav a[aria-current="page"]{color:#fff;background:var(--indigo);border-color:var(--indigo)}
+:focus-visible{outline:3px solid var(--saffron);outline-offset:2px}
+section.view{padding-top:18px}
+.lede{font-family:var(--f-display);font-weight:650;font-size:clamp(20px,3.2vw,26px);line-height:1.25;margin:0 0 6px;text-wrap:balance}
+.sub{color:var(--ink2);margin:0 0 18px;max-width:68ch}
+.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:760px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:18px}
+fieldset{border:0;padding:0;margin:0 0 16px;min-width:0}
+legend{font:600 13px var(--f-body);letter-spacing:.04em;color:var(--muted);text-transform:uppercase;margin-bottom:8px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+label.field{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--ink2)}
+select,input[type=number]{font:500 15px var(--f-body);color:var(--ink);background:var(--bg);border:1px solid var(--rule);border-radius:8px;padding:8px 10px;width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.chip span{display:inline-block;padding:6px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--bg);font-size:14px;color:var(--ink2);cursor:pointer;user-select:none}
+.chip input:checked+span{background:var(--indigo-soft);border-color:var(--indigo);color:var(--ink);font-weight:600}
+.chip input:focus-visible+span{outline:3px solid var(--saffron);outline-offset:2px}
+.example{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--saffron);font-weight:600;margin-bottom:12px}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+button.ghost{font:600 14px var(--f-body);border:1px solid var(--rule);background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 12px;cursor:pointer}
+.result{display:flex;flex-direction:column;gap:14px;position:sticky;top:12px}
+.risk{border-radius:var(--r);padding:16px;background:var(--surface);border:1px solid var(--rule)}
+.risk h3{margin:0 0 2px;font:650 17px var(--f-display)}
+.risk .meta{font-size:13px;color:var(--muted)}
+.meter{position:relative;height:12px;border-radius:999px;background:linear-gradient(90deg,var(--teal-soft),var(--vermilion-soft));margin:16px 0 8px}
+.meter i{position:absolute;top:-5px;width:4px;height:22px;border-radius:2px;background:var(--ink);transform:translateX(-2px)}
+.meter b{position:absolute;top:-4px;width:2px;height:20px;background:var(--muted);opacity:.7}
+.riskline{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pct{font:750 34px var(--f-display);font-variant-numeric:tabular-nums;line-height:1}
+.pill{font:600 13px var(--f-body);padding:3px 10px;border-radius:999px}
+.pill.low{background:var(--teal-soft);color:var(--good)} .pill.mid{background:#f8efd9;color:var(--warn)} .pill.high{background:var(--vermilion-soft);color:var(--bad)}
+:root[data-theme="dark"] .pill.mid{background:#3a2f17}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pill.mid{background:#3a2f17}}
+.actions{margin:10px 0 0;padding-left:18px;font-size:14.5px;color:var(--ink2)} .actions li+li{margin-top:4px}
+.note{font-size:13px;color:var(--muted);max-width:70ch}
+/* quiz */
+.q{padding:16px 0;border-top:1px solid var(--rule)} .q:first-of-type{border-top:0}
+.q h3{margin:0 0 10px;font:650 18px var(--f-display);text-wrap:balance}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font:500 15px var(--f-body);border:1px solid var(--rule);background:var(--bg);color:var(--ink);padding:8px 14px;border-radius:10px;cursor:pointer;text-align:left}
+.opts button.right{border-color:var(--good);background:var(--teal-soft)} .opts button.wrong{border-color:var(--bad);background:var(--vermilion-soft)}
+.feedback{margin-top:10px;font-size:15px;color:var(--ink2)} .feedback strong{color:var(--ink)}
+.stat{display:inline-block;margin-top:6px;font-size:13px;color:var(--muted)}
+.score{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.score .pct{color:var(--teal)}
+/* plate */
+.plate-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:center}
+@media (max-width:760px){.plate-wrap{grid-template-columns:1fr}}
+svg.plate{width:100%;max-width:380px;height:auto;display:block;margin:0 auto}
+.groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.grp{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--bg);cursor:pointer}
+.grp input{margin-top:5px;width:18px;height:18px;accent-color:var(--indigo)}
+.grp strong{display:block;font-size:15px} .grp small{color:var(--muted);font-size:13px;line-height:1.35}
+.tip{margin-top:12px;padding:12px 14px;border-left:3px solid var(--teal);background:var(--teal-soft);border-radius:0 10px 10px 0;font-size:15px}
+.tip.alert{border-color:var(--vermilion);background:var(--vermilion-soft)}
+/* evidence */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.fact{padding:16px;border:1px solid var(--rule);border-radius:var(--r);background:var(--surface)}
+.fact .num{font:750 32px var(--f-display);font-variant-numeric:tabular-nums;color:var(--indigo);line-height:1}
+.fact p{margin:6px 0 0;font-size:14.5px;color:var(--ink2)}
+footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){.meter i{transition:left .45s ease}.wedge{transition:fill .3s ease}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1 data-i18n="title">নিরাপদ <span>খাবার</span></h1>
+      <p data-i18n="tagline">মাঠকর্মী ও পরিবারের জন্য খাদ্য নিরাপত্তা ও পুষ্টির সহায়ক — ৫,২৩৯টি খানার জাতীয় জরিপের তথ্যের ভিত্তিতে তৈরি।</p>
+    </div>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" id="lang-bn" aria-pressed="true">বাংলা</button>
+      <button type="button" id="lang-en" aria-pressed="false">English</button>
+    </div>
+  </header>
+
+  <nav aria-label="Tools">
+    <a href="#screen" data-view="screen" data-i18n="nav_screen">খানার ঝুঁকি যাচাই</a>
+    <a href="#safety" data-view="safety" data-i18n="nav_safety">নিরাপদ রান্নাঘর</a>
+    <a href="#plate" data-view="plate" data-i18n="nav_plate">আমার থালা</a>
+    <a href="#evidence" data-view="evidence" data-i18n="nav_evidence">গবেষণার তথ্য</a>
+  </nav>
+
+  <!-- ============ SCREEN ============ -->
+  <section class="view" id="view-screen">
+    <p class="lede" data-i18n="screen_lede">দুই মিনিটে জানুন, কোন খানার সহায়তা আগে দরকার</p>
+    <p class="sub" data-i18n="screen_sub">খানার কয়েকটি সহজ তথ্য দিন। মডেলটি জরিপের তথ্য থেকে খাদ্য নিরাপত্তাহীনতা এবং সাবান-পানিসহ হাত ধোয়ার জায়গা না থাকার সম্ভাবনা হিসাব করে।</p>
+    <div class="grid">
+      <form class="panel" id="screen-form" autocomplete="off">
+        <div class="example" id="example-flag" data-i18n="example">● উদাহরণ খানা — আপনার খানার তথ্য দিয়ে বদলে নিন</div>
+        <fieldset>
+          <legend data-i18n="lg_where">এলাকা</legend>
+          <div class="row">
+            <label class="field"><span data-i18n="division">বিভাগ</span>
+              <select id="f-division">
+                <option value="Barishal">বরিশাল</option><option value="Chattogram">চট্টগ্রাম</option><option value="Dhaka">ঢাকা</option>
+                <option value="Khulna">খুলনা</option><option value="Mymensingh">ময়মনসিংহ</option><option value="Rajshahi">রাজশাহী</option>
+                <option value="Rangpur">রংপুর</option><option value="Sylhet">সিলেট</option>
+              </select></label>
+            <label class="field"><span data-i18n="area">এলাকার ধরন</span>
+              <select id="f-area"><option value="rural" data-i18n="rural">গ্রাম</option><option value="urban" data-i18n="urban">শহর</option><option value="slum" data-i18n="slum">বস্তি</option></select></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="lg_house">খানা ও ঘর</legend>
+          <div class="row">
+            <label class="field"><span data-i18n="hh_size">খানার সদস্য সংখ্যা</span><input id="f-hh" type="number" min="1" max="15" value="5"></label>
+            <label class="field"><span data-i18n="rooms">থাকার ঘরের সংখ্যা</span><input id="f-rooms" type="number" min="1" max="10" value="2"></label>
+            <label class="field"><span data-i18n="land">নিজের চাষের জমি (শতাংশ)</span><input id="f-land" type="number" min="0" max="2000" value="10"></label>
+          </div>
+          <div class="chips" style="margin-top:10px">
+            <label class="chip"><input type="checkbox" id="x-finished_floor"><span data-i18n="finished_floor">পাকা/টাইলস মেঝে</span></label>
+            <label class="chip"><input type="checkbox" id="x-finished_wall" checked><span data-i18n="finished_wall">টিন/ইট/সিমেন্টের দেয়াল</span></label>
+            <label class="chip"><input type="checkbox" id="x-clean_fuel"><span data-i18n="clean_fuel">গ্যাস/এলপিজি/বিদ্যুতে রান্না</span></label>
+            <label class="chip"><input type="checkbox" id="x-piped_water"><span data-i18n="piped_water">পাইপের পানি</span></label>
+            <label class="chip"><input type="checkbox" id="x-improved_toilet"><span data-i18n="improved_toilet">স্যানিটারি পায়খানা</span></label>
+            <label class="chip"><input type="checkbox" id="x-shared_toilet" checked><span data-i18n="shared_toilet">পায়খানা অন্যদের সাথে ভাগ করা</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="lg_assets">খানায় যা আছে</legend>
+          <div class="chips" id="assets"></div>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="lg_support">আয় ও সহায়তা</legend>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" id="x-internet"><span data-i18n="internet">ইন্টারনেট ব্যবহার করেন কেউ</span></label>
+            <label class="chip"><input type="checkbox" id="x-cattle"><span data-i18n="cattle">গরু/মহিষ</span></label>
+            <label class="chip"><input type="checkbox" id="x-poultry" checked><span data-i18n="poultry">হাঁস-মুরগি</span></label>
+            <label class="chip"><input type="checkbox" id="x-safety_net"><span data-i18n="safety_net">সরকারি ভাতা/সহায়তা পান</span></label>
+            <label class="chip"><input type="checkbox" id="x-remittance"><span data-i18n="remittance">বাইরে থেকে টাকা আসে</span></label>
+          </div>
+        </fieldset>
+        <div class="btnrow"><button type="button" class="ghost" id="reset-example" data-i18n="reset">উদাহরণে ফিরে যান</button></div>
+      </form>
+
+      <div class="result" aria-live="polite">
+        <div class="risk" id="risk-fi"></div>
+        <div class="risk" id="risk-hw"></div>
+        <p class="note" data-i18n="screen_note">এটি অগ্রাধিকার ঠিক করার একটি সহায়ক, রোগনির্ণয় নয়। মডেলের নির্ভুলতা মাঝারি (AUC ০.৭৬–০.৭৮); চূড়ান্ত সিদ্ধান্ত খানার সাথে কথা বলে নিন। কোনো তথ্য সংরক্ষণ বা পাঠানো হয় না।</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SAFETY QUIZ ============ -->
+  <section class="view" id="view-safety" hidden>
+    <p class="lede" data-i18n="safety_lede">আপনার রান্নাঘর কতটা নিরাপদ?</p>
+    <p class="sub" data-i18n="safety_sub">জরিপে যেসব জায়গায় রাঁধুনিরা সবচেয়ে বেশি ভুল করেছেন, সেগুলো নিয়ে আটটি প্রশ্ন। প্রতিটির পরে সঠিক নিয়ম আর দেশের কত রাঁধুনি তা জানেন না, দেখানো হবে।</p>
+    <div class="grid">
+      <div class="panel" id="quiz"></div>
+      <div class="result">
+        <div class="risk">
+          <h3 data-i18n="your_score">আপনার ফল</h3>
+          <div class="score"><span class="pct" id="quiz-score">০/৮</span><span class="meta" id="quiz-hint" data-i18n="quiz_hint">প্রশ্নের উত্তর দিলে এখানে ফল দেখাবে</span></div>
+          <div class="btnrow" style="margin-top:12px"><button type="button" class="ghost" id="quiz-reset" data-i18n="again">আবার শুরু করুন</button></div>
+        </div>
+        <div class="tip" data-i18n="five_keys"><strong>WHO-র নিরাপদ খাবারের পাঁচ চাবি:</strong> পরিষ্কার রাখুন · কাঁচা ও রান্না করা খাবার আলাদা রাখুন · ভালোভাবে রান্না করুন · নিরাপদ তাপমাত্রায় রাখুন · নিরাপদ পানি ও কাঁচামাল ব্যবহার করুন।</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PLATE ============ -->
+  <section class="view" id="view-plate" hidden>
+    <p class="lede" data-i18n="plate_lede">গতকাল আপনার থালায় কী কী ছিল?</p>
+    <p class="sub" data-i18n="plate_sub">গতকাল যে খাদ্যগুচ্ছগুলো খেয়েছেন, সেগুলোতে টিক দিন। দিনে অন্তত ৫টি গুচ্ছ খেলে খাবার বৈচিত্র্যময় ধরা হয় — দেশের প্রায় ৬০% মানুষ এর কম খান।</p>
+    <div class="plate-wrap">
+      <div class="panel">
+        <svg class="plate" id="plate" viewBox="-120 -120 240 240" role="img" aria-labelledby="plate-title"><title id="plate-title">Food group plate</title></svg>
+      </div>
+      <div>
+        <div class="groups" id="groups"></div>
+        <fieldset style="margin-top:14px">
+          <legend data-i18n="lg_disc">গতকাল এগুলোও খেয়েছেন?</legend>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" id="d-ssb" checked><span data-i18n="d_ssb">চিনি দেওয়া চা/কোমল পানীয়</span></label>
+            <label class="chip"><input type="checkbox" id="d-sweet"><span data-i18n="d_sweet">মিষ্টি, বিস্কুট, কেক</span></label>
+            <label class="chip"><input type="checkbox" id="d-fried"><span data-i18n="d_fried">চিপস, চানাচুর, ভাজাপোড়া</span></label>
+          </div>
+        </fieldset>
+        <div id="plate-tips"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EVIDENCE ============ -->
+  <section class="view" id="view-evidence" hidden>
+    <p class="lede" data-i18n="ev_lede">জানা আর খাওয়া এক জিনিস নয়</p>
+    <p class="sub" data-i18n="ev_sub">২০২০ সালের অক্টোবর–নভেম্বরে আটটি বিভাগের ৫,২৩৯টি খানার জাতীয় জরিপের বিশ্লেষণ থেকে মূল তথ্য।</p>
+    <div class="facts" id="facts"></div>
+    <p class="note" style="margin-top:16px" data-i18n="ev_note">তথ্যসূত্র: খাদ্য পরিকল্পনা ও পরিধারণ ইউনিট (FPMU), খাদ্য মন্ত্রণালয় এবং FAO-র Meeting the Undernutrition Challenge প্রকল্পের অধীনে ব্র্যাক জেমস পি গ্রান্ট স্কুল অব পাবলিক হেলথ ও বাংলাদেশ কৃষি বিশ্ববিদ্যালয় পরিচালিত ভোক্তা সচেতনতা জরিপ। নৈতিক অনুমোদন: IRB-1 September 2020-039।</p>
+  </section>
+
+  <footer data-i18n="footer">গবেষণা প্রোটোটাইপ। কোনো তথ্য সংরক্ষণ বা অনলাইনে পাঠানো হয় না। মডেল একটি জরিপ থেকে তৈরি; মাঠে ব্যবহারের আগে যাচাই প্রয়োজন।</footer>
+</div>
+
+<script>
+(() => {
+const MODEL = {"features":["electricity","radio_tv","mobile","fan","wardrobe","fridge","table_chair","clock","bicycle","motorcycle","rickshaw_van","ips_generator","finished_floor","finished_wall","rooms","hh_size","clean_fuel","piped_water","improved_toilet","shared_toilet","internet","urban","slum","cattle","poultry","log_land_cult","safety_net","remittance","div_Chattogram","div_Dhaka","div_Khulna","div_Mymensingh","div_Rajshahi","div_Rangpur","div_Sylhet"],"models":{"food_insecurity":{"b0":-0.35931,"coef":{"electricity":0.66225,"radio_tv":-0.20445,"mobile":-0.65388,"fan":0.5543,"wardrobe":-0.8599,"fridge":0.25198,"table_chair":-0.33993,"clock":-0.83068,"bicycle":-0.37516,"motorcycle":-0.86918,"rickshaw_van":-0.64542,"ips_generator":-2.68201,"finished_floor":-0.03418,"finished_wall":-0.2626,"rooms":-0.17182,"hh_size":-0.01358,"clean_fuel":-0.71126,"piped_water":0.45829,"improved_toilet":0.03649,"shared_toilet":-0.22036,"internet":-0.45745,"urban":-0.05896,"slum":0.0734,"cattle":-0.34009,"poultry":0.31526,"log_land_cult":-0.22409,"safety_net":0.6363,"remittance":0.25913,"div_Chattogram":0.34278,"div_Dhaka":-0.50306,"div_Khulna":1.63383,"div_Mymensingh":0.67512,"div_Rajshahi":0.13055,"div_Rangpur":1.55699,"div_Sylhet":0.6851},"bands":[0.0963,0.2856],"prev":0.2486},"no_handwash_facility":{"b0":0.11172,"coef":{"electricity":-0.232,"radio_tv":-0.17128,"mobile":0.26543,"fan":0.12134,"wardrobe":-0.49949,"fridge":-0.1942,"table_chair":-0.22393,"clock":0.07863,"bicycle":-0.12943,"motorcycle":-0.21486,"rickshaw_van":0.71096,"ips_generator":-0.15122,"finished_floor":-0.65397,"finished_wall":0.44953,"rooms":-0.15936,"hh_size":0.07779,"clean_fuel":-0.18119,"piped_water":-0.42906,"improved_toilet":-0.519,"shared_toilet":1.39707,"internet":-0.69258,"urban":-0.09441,"slum":0.00388,"cattle":-0.25457,"poultry":0.18097,"log_land_cult":-0.0495,"safety_net":0.22483,"remittance":-0.1008,"div_Chattogram":0.8112,"div_Dhaka":0.43205,"div_Khulna":-0.14544,"div_Mymensingh":0.76153,"div_Rajshahi":0.33495,"div_Rangpur":-1.87017,"div_Sylhet":1.06395},"bands":[0.2252,0.5486],"prev":0.443}}};
+
+let LANG = "bn";
+const T = {
+ bn:{}, // filled from data-i18n defaults on load
+ en:{
+  title:'Nirapod <span>Khabar</span>', tagline:'A food-safety and nutrition helper for field workers and families, built on a national survey of 5,239 households in Bangladesh.',
+  nav_screen:'Household risk check', nav_safety:'Safe kitchen', nav_plate:'My plate', nav_evidence:'The evidence',
+  screen_lede:'Find out in two minutes which household needs support first', screen_sub:'Enter a few simple facts about the household. A model trained on the survey estimates the chance of food insecurity and of having no handwashing place with water and soap.',
+  example:'● Example household — replace with the household you are visiting', lg_where:'Location', division:'Division', area:'Area type', rural:'Rural', urban:'Urban', slum:'Slum',
+  lg_house:'Household and housing', hh_size:'Household members', rooms:'Living rooms', land:'Own cultivable land (decimals)',
+  finished_floor:'Cement or tiled floor', finished_wall:'Tin, brick or cement walls', clean_fuel:'Cooks with gas, LPG or electricity', piped_water:'Piped water',
+  improved_toilet:'Sanitary latrine', shared_toilet:'Latrine shared with others', lg_assets:'Household owns', lg_support:'Income and support',
+  internet:'Someone uses the internet', cattle:'Cattle or buffalo', poultry:'Chickens or ducks', safety_net:'Receives a government allowance', remittance:'Receives money from outside',
+  reset:'Back to example', screen_note:'This helps set priorities; it is not a diagnosis. Accuracy is moderate (AUC 0.76–0.78), so confirm by talking with the household. Nothing is stored or sent.',
+  safety_lede:'How safe is your kitchen?', safety_sub:'Eight questions on the practices cooks most often got wrong in the survey. After each answer you will see the safe practice and how many cooks nationally did not know it.',
+  your_score:'Your result', quiz_hint:'Your result appears here as you answer', again:'Start again',
+  five_keys:'<strong>WHO Five Keys to Safer Food:</strong> keep clean · separate raw and cooked · cook thoroughly · keep food at safe temperatures · use safe water and raw materials.',
+  plate_lede:'What was on your plate yesterday?', plate_sub:'Tick the food groups you ate yesterday. Eating at least 5 groups a day counts as a diverse diet; about 60% of people in Bangladesh eat fewer.',
+  lg_disc:'Did you also have these yesterday?', d_ssb:'Sweetened tea or soft drinks', d_sweet:'Sweets, biscuits or cake', d_fried:'Chips, chanachur or fried snacks',
+  ev_lede:'Knowing is not eating', ev_sub:'Key findings from an analysis of a national survey of 5,239 households in eight divisions, October–November 2020.',
+  ev_note:'Source: Consumer awareness survey conducted by BRAC James P Grant School of Public Health and Bangladesh Agricultural University for the Food Planning and Monitoring Unit (FPMU), Ministry of Food, and FAO (Meeting the Undernutrition Challenge project). Ethics approval: IRB-1 September 2020-039.',
+  footer:'Research prototype. Nothing is stored or sent online. The models come from one survey and need field validation before programme use.'
+ }
+};
+const bnNum = s => String(s).replace(/[0-9]/g, d => "০১২৩৪৫৬৭৮৯"[d]);
+const num = s => LANG === "bn" ? bnNum(s) : String(s);
+
+// ---------- i18n ----------
+document.querySelectorAll("[data-i18n]").forEach(el => { T.bn[el.dataset.i18n] = el.innerHTML; });
+function applyLang(){
+  document.documentElement.lang = LANG === "bn" ? "bn" : "en";
+  document.querySelectorAll("[data-i18n]").forEach(el => { const v = T[LANG][el.dataset.i18n]; if (v != null) el.innerHTML = v; });
+  document.getElementById("lang-bn").setAttribute("aria-pressed", LANG === "bn");
+  document.getElementById("lang-en").setAttribute("aria-pressed", LANG === "en");
+  const divNames = {Barishal:["বরিশাল","Barishal"],Chattogram:["চট্টগ্রাম","Chattogram"],Dhaka:["ঢাকা","Dhaka"],Khulna:["খুলনা","Khulna"],Mymensingh:["ময়মনসিংহ","Mymensingh"],Rajshahi:["রাজশাহী","Rajshahi"],Rangpur:["রংপুর","Rangpur"],Sylhet:["সিলেট","Sylhet"]};
+  [...document.getElementById("f-division").options].forEach(o => o.textContent = divNames[o.value][LANG === "bn" ? 0 : 1]);
+  renderAssets(); renderScreen(); renderQuiz(); renderPlate(); renderFacts();
+}
+document.getElementById("lang-bn").onclick = () => { LANG = "bn"; save(); applyLang(); };
+document.getElementById("lang-en").onclick = () => { LANG = "en"; save(); applyLang(); };
+function save(){ try { localStorage.setItem("nk-lang", LANG); } catch(e){} }
+try { const l = localStorage.getItem("nk-lang"); if (l === "en" || l === "bn") LANG = l; } catch(e){}
+
+// ---------- routing ----------
+const VIEWS = ["screen","safety","plate","evidence"];
+function route(){
+  const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "screen";
+  VIEWS.forEach(n => { document.getElementById("view-" + n).hidden = n !== v; });
+  document.querySelectorAll("nav a").forEach(a => a.setAttribute("aria-current", a.dataset.view === v ? "page" : "false"));
+}
+addEventListener("hashchange", route);
+
+// ---------- screening ----------
+const ASSETS = [["electricity","বিদ্যুৎ","Electricity",true],["mobile","মোবাইল ফোন","Mobile phone",true],["fan","ফ্যান","Fan",true],["radio_tv","রেডিও/টিভি","Radio or TV",false],
+ ["wardrobe","আলমারি","Wardrobe",false],["fridge","ফ্রিজ","Fridge",false],["table_chair","টেবিল-চেয়ার","Table and chair",true],["clock","ঘড়ি","Clock",false],
+ ["bicycle","সাইকেল","Bicycle",false],["motorcycle","মোটরসাইকেল","Motorcycle",false],["rickshaw_van","রিকশা/ভ্যান","Rickshaw or van",false],["ips_generator","আইপিএস/জেনারেটর","IPS or generator",false]];
+const assetState = Object.fromEntries(ASSETS.map(a => [a[0], a[3]]));
+function renderAssets(){
+  const box = document.getElementById("assets"); box.innerHTML = "";
+  ASSETS.forEach(([k,bn,en]) => {
+    const l = document.createElement("label"); l.className = "chip";
+    l.innerHTML = `<input type="checkbox" id="x-${k}" ${assetState[k] ? "checked" : ""}><span>${LANG === "bn" ? bn : en}</span>`;
+    l.querySelector("input").addEventListener("change", e => { assetState[k] = e.target.checked; dirty(); renderScreen(); });
+    box.appendChild(l);
+  });
+}
+const EXAMPLE = {division:"Rangpur", area:"rural", hh:5, rooms:2, land:10, finished_floor:false, finished_wall:true, clean_fuel:false, piped_water:false,
+  improved_toilet:false, shared_toilet:true, internet:false, cattle:false, poultry:true, safety_net:false, remittance:false};
+const TOG = ["finished_floor","finished_wall","clean_fuel","piped_water","improved_toilet","shared_toilet","internet","cattle","poultry","safety_net","remittance"];
+function loadExample(){
+  document.getElementById("f-division").value = EXAMPLE.division; document.getElementById("f-area").value = EXAMPLE.area;
+  document.getElementById("f-hh").value = EXAMPLE.hh; document.getElementById("f-rooms").value = EXAMPLE.rooms; document.getElementById("f-land").value = EXAMPLE.land;
+  TOG.forEach(k => document.getElementById("x-" + k).checked = EXAMPLE[k]);
+  ASSETS.forEach(a => assetState[a[0]] = a[3]); renderAssets();
+  document.getElementById("example-flag").hidden = false; renderScreen();
+}
+function dirty(){ document.getElementById("example-flag").hidden = true; }
+function features(){
+  const v = id => document.getElementById(id);
+  const clamp = (x, a, b) => Math.min(b, Math.max(a, isFinite(x) ? x : a));
+  const x = {};
+  ASSETS.forEach(([k]) => x[k] = assetState[k] ? 1 : 0);
+  TOG.forEach(k => x[k] = v("x-" + k).checked ? 1 : 0);
+  x.rooms = clamp(+v("f-rooms").value, 1, 10); x.hh_size = clamp(+v("f-hh").value, 1, 15);
+  x.log_land_cult = Math.log1p(clamp(+v("f-land").value, 0, 5000));
+  const area = v("f-area").value; x.urban = area === "urban" ? 1 : 0; x.slum = area === "slum" ? 1 : 0;
+  ["Chattogram","Dhaka","Khulna","Mymensingh","Rajshahi","Rangpur","Sylhet"].forEach(d => x["div_" + d] = v("f-division").value === d ? 1 : 0);
+  return x;
+}
+function predict(m, x){ let z = m.b0; for (const f of MODEL.features) z += (m.coef[f] || 0) * (x[f] || 0); return 1 / (1 + Math.exp(-z)); }
+const RISK_TEXT = {
+ food_insecurity:{
+  bn:{t:"খাদ্য নিরাপত্তাহীনতার ঝুঁকি", m:"মাঝারি বা তীব্র (HFIAS), গত ৪ সপ্তাহ", avg:"দেশের গড়",
+      act:{high:["সামাজিক সুরক্ষা কর্মসূচিতে (ভিজিডি, ভিজিএফ, বয়স্ক/বিধবা ভাতা) নাম আছে কিনা দেখুন এবং প্রয়োজনে রেফার করুন","কম খরচে পুষ্টিকর খাবার নিয়ে কথা বলুন — ডাল, ডিম, ছোট মাছ, শাক (‘আমার থালা’ দেখুন)","১–২ মাস পর আবার খোঁজ নিন"],
+           mid:["কম খরচে বৈচিত্র্যময় খাবার নিয়ে কথা বলুন","আয় কমে গেলে কোথায় সহায়তা পাওয়া যায় জানিয়ে দিন"],
+           low:["নিয়মিত পুষ্টি পরামর্শ যথেষ্ট"]}},
+  en:{t:"Risk of food insecurity", m:"moderate or severe (HFIAS), past 4 weeks", avg:"national average",
+      act:{high:["Check enrolment in safety-net programmes (VGD, VGF, old-age or widow allowance) and refer if needed","Discuss low-cost nutritious foods — pulses, eggs, small fish, leafy greens (see My plate)","Follow up in 1–2 months"],
+           mid:["Discuss low-cost ways to diversify meals","Share where to get support if income falls"],
+           low:["Routine nutrition advice is enough"]}}},
+ no_handwash_facility:{
+  bn:{t:"সাবান-পানিসহ হাত ধোয়ার জায়গা না থাকার ঝুঁকি", m:"জরিপে তথ্যসংগ্রহকারী নিজে দেখে লিখেছেন", avg:"দেশের গড়",
+      act:{high:["রান্নাঘরের কাছে একটি স্থায়ী হাত ধোয়ার জায়গা বানাতে সাহায্য করুন (টিপি-ট্যাপ বা ঢাকনাওয়ালা বালতি)","সাবান বা সাবান-পানির বোতল সবসময় সেখানে রাখার কথা বলুন","রান্নার আগে ও শিশুকে খাওয়ানোর আগে হাত ধোয়ার অভ্যাস নিয়ে কথা বলুন"],
+           mid:["হাত ধোয়ার জায়গায় সাবান আর পানি আছে কিনা দেখে নিন","রান্নার আগে হাত ধোয়ার কথা মনে করিয়ে দিন"],
+           low:["রান্নার আগে হাত ধোয়ার অভ্যাস ঠিক আছে কিনা জিজ্ঞেস করুন"]}},
+  en:{t:"Risk of no handwashing place with water and soap", m:"as observed by survey enumerators", avg:"national average",
+      act:{high:["Help set up a fixed handwashing place near the kitchen (tippy-tap or a bucket with a tap and lid)","Keep soap or a bottle of soapy water there at all times","Discuss handwashing before cooking and before feeding a child"],
+           mid:["Check that soap and water are at the handwashing place","Remind about handwashing before cooking"],
+           low:["Ask whether hands are washed before cooking"]}}}};
+function renderScreen(){
+  const x = features();
+  [["food_insecurity","risk-fi"],["no_handwash_facility","risk-hw"]].forEach(([k,id]) => {
+    const m = MODEL.models[k], p = predict(m, x), tx = RISK_TEXT[k][LANG];
+    const band = p < m.bands[0] ? "low" : p < m.bands[1] ? "mid" : "high";
+    const bandTxt = {low:LANG==="bn"?"কম":"Low", mid:LANG==="bn"?"মাঝারি":"Medium", high:LANG==="bn"?"বেশি":"High"}[band];
+    const pct = Math.round(p * 100), avg = Math.round(m.prev * 100);
+    document.getElementById(id).innerHTML = `
+      <h3>${tx.t}</h3><div class="meta">${tx.m}</div>
+      <div class="meter" aria-hidden="true"><b style="left:${avg}%"></b><i style="left:${pct}%"></i></div>
+      <div class="riskline"><span class="pct">${num(pct)}%</span><span class="pill ${band}">${bandTxt}</span></div>
+      <div class="meta">${tx.avg}: ${num(avg)}% · ${LANG==="bn"?"ধূসর দাগ":"grey mark"}</div>
+      <ul class="actions">${tx.act[band].map(a => `<li>${a}</li>`).join("")}</ul>`;
+  });
+}
+document.getElementById("screen-form").addEventListener("input", e => { if (e.target.id !== "reset-example") { dirty(); renderScreen(); } });
+document.getElementById("reset-example").onclick = loadExample;
+
+// ---------- quiz ----------
+const QUIZ = [
+ {q:["রান্না করা খাবার কয়বার গরম করে খাওয়া নিরাপদ?","How many times can cooked food be safely reheated?"], o:[["একবার","Once"],["দুইবার","Twice"],["যতবার দরকার","As often as needed"]], a:0, miss:58,
+  e:["একবারই। বারবার ঠান্ডা-গরম করলে জীবাণু বাড়ে। যতটুকু খাবেন ততটুকুই গরম করুন, আর ভালোভাবে ফুটিয়ে নিন।","Only once. Repeated cooling and reheating lets germs multiply. Reheat only what you will eat, until steaming hot."]},
+ {q:["শাকসবজি কীভাবে ধোয়া উচিত?","How should vegetables be washed?"], o:[["আগে কেটে, তারপর ধুয়ে","Cut first, then wash"],["আগে আস্ত ধুয়ে, তারপর কেটে","Wash whole first, then cut"]], a:1, miss:80,
+  e:["আস্ত অবস্থায় পরিষ্কার পানিতে ধুয়ে তারপর কাটুন। কেটে ধুলে ভিটামিন পানিতে চলে যায় আর ময়লা কাটা অংশে ঢোকে।","Wash whole in clean water, then cut. Washing after cutting washes vitamins away and lets dirt into cut surfaces."]},
+ {q:["রান্নার হাঁড়ি-পাতিল কীভাবে পরিষ্কার করবেন?","How should cooking pots be cleaned?"], o:[["প্রতিবার ব্যবহারের পর সাবান বা গরম পানি দিয়ে","With soap or hot water after every use"],["দিনের শেষে একবার শুধু পানি দিয়ে","Once a day with plain water"]], a:0, miss:64,
+  e:["প্রতিবার ব্যবহারের পর সাবান বা গরম পানি দিয়ে ধুয়ে শুকিয়ে রাখুন। লেগে থাকা খাবারে জীবাণু জন্মায়।","After every use, with soap or hot water, then let them dry. Leftover food grows germs."]},
+ {q:["খাবার কি কীটনাশক, ব্লিচ বা পরিষ্কারক দ্রব্যের কাছে রাখা যায়?","Can food be stored near pesticides, bleach or cleaning products?"], o:[["হ্যাঁ, ঢাকা থাকলে","Yes, if covered"],["না, কখনোই না","No, never"]], a:1, miss:46,
+  e:["কখনোই না। রাসায়নিক আলাদা জায়গায়, শিশুদের নাগালের বাইরে রাখুন।","Never. Keep chemicals in a separate place, out of children's reach."]},
+ {q:["রান্নার পর খাবার কখন খাওয়া সবচেয়ে ভালো?","When is cooked food best eaten?"], o:[["১ ঘণ্টার মধ্যে","Within an hour"],["২ ঘণ্টা বা পরে","After two hours or later"]], a:0, miss:29,
+  e:["রান্নার পর তাড়াতাড়ি খান। ঘরের তাপমাত্রায় দুই ঘণ্টার বেশি রাখলে জীবাণু দ্রুত বাড়ে।","Eat soon after cooking. At room temperature, germs multiply quickly after two hours."]},
+ {q:["ভাত রান্নার সময় মাড় কি ফেলে দেওয়া উচিত?","Should the starchy water be poured off when cooking rice?"], o:[["হ্যাঁ","Yes"],["না","No"]], a:1, miss:22,
+  e:["না। মাড়ে ভিটামিন ও খনিজ থাকে। মেপে পানি দিয়ে বসা ভাত রাঁধুন।","No. The starchy water holds vitamins and minerals. Cook rice with measured water so it is absorbed."]},
+ {q:["কাঁচা মাছ-মাংস আর রান্না করা খাবার কি একসাথে রাখা যায়?","Can raw fish or meat be kept with cooked food?"], o:[["হ্যাঁ","Yes"],["না, আলাদা রাখতে হবে","No, keep them apart"]], a:1, miss:15,
+  e:["আলাদা রাখুন, আলাদা পাত্র ও বঁটি/ছুরি ব্যবহার করুন। কাঁচা খাবারের জীবাণু রান্না করা খাবারে যেতে পারে।","Keep them apart and use separate containers and knives. Germs from raw food can spread to cooked food."]},
+ {q:["কোন সময়ে সাবান দিয়ে হাত ধোয়া সবচেয়ে জরুরি?","When is washing hands with soap most important?"], o:[["রান্না ও শিশুকে খাওয়ানোর আগে","Before cooking and before feeding a child"],["শুধু খাওয়ার পরে","Only after eating"]], a:0, miss:59,
+  e:["রান্নার আগে, খাওয়ার আগে, শিশুকে খাওয়ানোর আগে আর পায়খানার পরে। জরিপে মাত্র ৪১% রাঁধুনি রান্নার আগে হাত ধোয়ার কথা বলেছেন।","Before cooking, before eating, before feeding a child and after using the latrine. Only 41% of cooks in the survey named before cooking."]}
+];
+let answers = new Array(QUIZ.length).fill(null);
+function renderQuiz(){
+  const box = document.getElementById("quiz"); box.innerHTML = "";
+  QUIZ.forEach((item, i) => {
+    const L = LANG === "bn" ? 0 : 1, d = document.createElement("div"); d.className = "q";
+    const ans = answers[i];
+    d.innerHTML = `<h3>${num(i+1)}. ${item.q[L]}</h3><div class="opts">${item.o.map((o,j) => `<button type="button" data-j="${j}" class="${ans==null?"":(j===item.a?"right":(j===ans?"wrong":""))}" ${ans!=null?"aria-disabled=\"true\"":""}>${o[L]}</button>`).join("")}</div>
+      ${ans==null?"":`<div class="feedback"><strong>${ans===item.a?(L?"Correct.":"ঠিক।"):(L?"Not quite.":"ঠিক নয়।")}</strong> ${item.e[L]}<br><span class="stat">${L?`${item.miss}% of cooks nationally did not know this`:`দেশের ${bnNum(item.miss)}% রাঁধুনি এটি জানেন না`}</span></div>`}`;
+    d.querySelectorAll("button").forEach(b => b.onclick = () => { if (answers[i] != null) return; answers[i] = +b.dataset.j; renderQuiz(); });
+    box.appendChild(d);
+  });
+  const done = answers.filter(a => a != null).length, right = answers.filter((a,i) => a === QUIZ[i].a).length;
+  document.getElementById("quiz-score").textContent = `${num(right)}/${num(QUIZ.length)}`;
+  const hint = document.getElementById("quiz-hint");
+  if (done === QUIZ.length) hint.textContent = LANG==="bn" ? (right >= 7 ? "চমৎকার! পরিবারের অন্যদেরও শেখান।" : "যেগুলো ভুল হয়েছে, সেগুলো আজ থেকে চর্চা শুরু করুন।") : (right >= 7 ? "Excellent. Share these with your family." : "Start practising the ones you missed today.");
+  else hint.textContent = LANG==="bn" ? `${bnNum(done)}টি উত্তর দেওয়া হয়েছে` : `${done} answered`;
+}
+document.getElementById("quiz-reset").onclick = () => { answers = new Array(QUIZ.length).fill(null); renderQuiz(); };
+
+// ---------- plate ----------
+const GROUPS = [
+ ["grains","ভাত, রুটি, আলু","Rice, bread, potato","শস্য ও শিকড়জাত","Grains, roots, tubers","#c9a227",true],
+ ["pulses","ডাল","Pulses","মসুর, মুগ, ছোলা","Lentils, mung, chickpea","#b5651d",false],
+ ["nuts","বাদাম ও বীজ","Nuts and seeds","চিনাবাদাম, তিল, মিষ্টিকুমড়ার বিচি","Peanuts, sesame, pumpkin seeds","#8d6e63",false],
+ ["dairy","দুধ ও দই","Milk and yogurt","দুধ, দই, পনির","Milk, yogurt, cheese","#90a4c8",false],
+ ["fish","মাছ, মাংস","Fish, meat","ছোট মাছ, ডিমওয়ালা মাছ, মুরগি, কলিজা","Small fish, chicken, liver","#3366b0",true],
+ ["eggs","ডিম","Eggs","হাঁস বা মুরগির ডিম","Duck or chicken eggs","#e3a630",false],
+ ["dglv","সবুজ শাক","Dark green leafy veg.","লালশাক, পুঁইশাক, কলমি, ডাঁটা","Red amaranth, Malabar spinach, water spinach","#1f9e89",false],
+ ["vita","হলুদ/কমলা ফল ও সবজি","Yellow/orange fruit & veg.","মিষ্টিকুমড়া, গাজর, পাকা আম, পেঁপে","Pumpkin, carrot, ripe mango, papaya","#dd5a2f",false],
+ ["veg","অন্যান্য সবজি","Other vegetables","বেগুন, লাউ, ঢেঁড়স, টমেটো","Aubergine, bottle gourd, okra, tomato","#5f9e5a",true],
+ ["fruit","অন্যান্য ফল","Other fruits","পেয়ারা, কলা, আমড়া, জাম্বুরা","Guava, banana, hog plum, pomelo","#a0447d",false]];
+const plateState = Object.fromEntries(GROUPS.map(g => [g[0], g[6]]));
+const CHEAP = {pulses:["ডাল সবচেয়ে সস্তা প্রোটিন — প্রতিদিন এক বাটি","Pulses are the cheapest protein — a bowl a day"], eggs:["একটি ডিম — সহজে পাওয়া যায়, শিশুদের জন্য বিশেষ উপকারী","One egg — easy to find and especially good for children"],
+  dglv:["বাড়ির আঙিনায় লালশাক বা পুঁইশাক লাগান — প্রায় বিনা খরচে আয়রন ও ভিটামিন এ","Grow red amaranth or Malabar spinach at home — iron and vitamin A almost for free"],
+  vita:["মিষ্টিকুমড়া বা পাকা পেঁপে — কম দামে ভিটামিন এ","Pumpkin or ripe papaya — cheap vitamin A"], fruit:["মৌসুমি দেশি ফল — পেয়ারা, আমড়া, কলা","Seasonal local fruit — guava, hog plum, banana"],
+  fish:["কাঁটাসহ ছোট মাছ (মলা, ঢেলা) — ক্যালসিয়াম আর আয়রনে ভরপুর","Small whole fish (mola, dhela) — rich in calcium and iron"], dairy:["সম্ভব হলে এক গ্লাস দুধ বা এক বাটি দই","If possible, a glass of milk or a bowl of yogurt"],
+  nuts:["এক মুঠো চিনাবাদাম বা তিল","A handful of peanuts or sesame"], veg:["যেকোনো মৌসুমি সবজি","Any seasonal vegetable"], grains:["ভাতের সাথে আটার রুটি বা আলু","Add flour bread or potato to rice"]};
+function renderPlate(){
+  const L = LANG === "bn" ? 0 : 1;
+  const gbox = document.getElementById("groups"); gbox.innerHTML = "";
+  GROUPS.forEach(g => {
+    const lab = document.createElement("label"); lab.className = "grp";
+    lab.innerHTML = `<input type="checkbox" id="g-${g[0]}" ${plateState[g[0]]?"checked":""}><span><strong>${L?g[2]:g[1]}</strong><small>${L?g[4]:g[3]}</small></span>`;
+    lab.querySelector("input").onchange = e => { plateState[g[0]] = e.target.checked; renderPlate(); };
+    gbox.appendChild(lab);
+  });
+  // SVG plate: 10 wedges
+  const svg = document.getElementById("plate"); const ns = "http://www.w3.org/2000/svg";
+  svg.querySelectorAll(":scope > :not(title)").forEach(n => n.remove());
+  const cs = getComputedStyle(document.documentElement);
+  const track = cs.getPropertyValue("--track").trim(), ink = cs.getPropertyValue("--ink").trim(), surf = cs.getPropertyValue("--surface").trim(), rule = cs.getPropertyValue("--rule").trim();
+  const rim = document.createElementNS(ns, "circle"); rim.setAttribute("r", 116); rim.setAttribute("fill", surf); rim.setAttribute("stroke", rule); rim.setAttribute("stroke-width", 2); svg.appendChild(rim);
+  const R1 = 104, R0 = 46, n = GROUPS.length;
+  GROUPS.forEach((g, i) => {
+    const a0 = (i / n) * 2 * Math.PI - Math.PI / 2 + 0.012, a1 = ((i + 1) / n) * 2 * Math.PI - Math.PI / 2 - 0.012;
+    const p = (r, a) => `${(r * Math.cos(a)).toFixed(2)} ${(r * Math.sin(a)).toFixed(2)}`;
+    const path = document.createElementNS(ns, "path");
+    path.setAttribute("d", `M ${p(R0,a0)} L ${p(R1,a0)} A ${R1} ${R1} 0 0 1 ${p(R1,a1)} L ${p(R0,a1)} A ${R0} ${R0} 0 0 0 ${p(R0,a0)} Z`);
+    path.setAttribute("fill", plateState[g[0]] ? g[5] : track); path.setAttribute("class", "wedge");
+    const t = document.createElementNS(ns, "title"); t.textContent = L ? g[2] : g[1]; path.appendChild(t);
+    svg.appendChild(path);
+  });
+  const k = Object.values(plateState).filter(Boolean).length;
+  const c = document.createElementNS(ns, "circle"); c.setAttribute("r", R0 - 4); c.setAttribute("fill", surf); svg.appendChild(c);
+  const tx = document.createElementNS(ns, "text"); tx.setAttribute("text-anchor", "middle"); tx.setAttribute("y", 6); tx.setAttribute("fill", ink);
+  tx.setAttribute("style", "font: 750 30px 'Anek Bangla', 'Hind Siliguri', sans-serif"); tx.textContent = `${num(k)}/${num(10)}`; svg.appendChild(tx);
+  const tx2 = document.createElementNS(ns, "text"); tx2.setAttribute("text-anchor", "middle"); tx2.setAttribute("y", 24); tx2.setAttribute("fill", cs.getPropertyValue("--muted").trim());
+  tx2.setAttribute("style", "font: 500 10px 'Hind Siliguri', sans-serif"); tx2.textContent = L ? "food groups" : "খাদ্যগুচ্ছ"; svg.appendChild(tx2);
+  // tips
+  const tips = document.getElementById("plate-tips"); const missing = GROUPS.filter(g => !plateState[g[0]]);
+  const order = ["pulses","eggs","dglv","fish","vita","fruit","dairy","nuts","veg","grains"];
+  const sugg = order.filter(o => missing.some(m => m[0] === o)).slice(0, 3);
+  let html = k >= 5 ? `<div class="tip"><strong>${L?"Diverse diet.":"বৈচিত্র্যময় খাবার।"}</strong> ${L?`You ate ${k} of 10 food groups — at least 5 is the goal.`:`১০টির মধ্যে ${bnNum(k)}টি খাদ্যগুচ্ছ খেয়েছেন — লক্ষ্য অন্তত ৫টি।`}</div>`
+                    : `<div class="tip alert"><strong>${L?`${5-k} more group${5-k>1?"s":""} needed.`:`আরও ${bnNum(5-k)}টি গুচ্ছ দরকার।`}</strong> ${L?"Low-cost ways to add them:":"কম খরচে যোগ করার উপায়:"}<ul class="actions">${sugg.map(s => `<li>${CHEAP[s][L]}</li>`).join("")}</ul></div>`;
+  const disc = ["d-ssb","d-sweet","d-fried"].filter(id => document.getElementById(id).checked).length;
+  if (disc) html += `<div class="tip alert" style="margin-top:10px">${L?"Sweetened drinks, sweets and fried snacks fill you up without nutrients. In the survey, people who knew more about nutrition ate them <em>more</em> often — knowing is not enough; try swapping one for fruit or a boiled egg.":"চিনি দেওয়া পানীয়, মিষ্টি আর ভাজাপোড়া পেট ভরায়, পুষ্টি দেয় না। জরিপে যাঁরা পুষ্টি নিয়ে বেশি জানেন, তাঁরাও এগুলো <em>বেশি</em> খেয়েছেন — শুধু জানলেই হবে না; একটির বদলে ফল বা সেদ্ধ ডিম খেয়ে দেখুন।"}</div>`;
+  tips.innerHTML = html;
+}
+["d-ssb","d-sweet","d-fried"].forEach(id => document.getElementById(id).addEventListener("change", renderPlate));
+
+// ---------- evidence ----------
+const FACTS = [
+ ["<14%",["উত্তরদাতা পুষ্টি-জ্ঞানের প্রশ্নের ৬০% বা বেশি ঠিক বলেছেন","of respondents answered 60% or more nutrition questions correctly"]],
+ ["≈0",["খাদ্য-বৈচিত্র্যে পরিবর্তন, জ্ঞান ১০ পয়েন্ট বাড়লে (সম্পদ ও খরচ বিবেচনার পর)","change in food groups per 10-point higher knowledge, after accounting for resources"]],
+ ["1.21×",["জ্ঞান ১০ পয়েন্ট বেশি হলে রাঁধুনিদের মিষ্টি/কোমল পানীয়/ভাজাপোড়া খাওয়ার সম্ভাবনা","higher odds that cooks ate sweets, sweet drinks or fried snacks per 10 knowledge points"]],
+ ["40% → 77%",["সবচেয়ে গরিব থেকে সবচেয়ে ধনী খানায় সাবান-পানিসহ হাত ধোয়ার জায়গা","handwashing place with water and soap, poorest to richest households"]],
+ ["58%",["রাঁধুনি জানেন না যে রান্না করা খাবার একবারই গরম করা উচিত","of cooks did not know cooked food should be reheated only once"]],
+ ["+10 pp",["মহামারির সময় রান্নার আগে হাত ধোয়া বেড়েছে মাত্র এটুকু, অথচ বাইরে থেকে ফিরে +২৮","rise in handwashing before cooking during the pandemic, versus +28 after returning home"]]];
+function renderFacts(){
+  const L = LANG === "bn" ? 0 : 1;
+  document.getElementById("facts").innerHTML = FACTS.map(([n,t]) => `<div class="fact"><div class="num">${L?n:bnNum(n).replace("pp","পয়েন্ট")}</div><p>${t[L]}</p></div>`).join("");
+}
+
+// ---------- boot ----------
+route(); applyLang(); loadExample();
+})();
+</script>

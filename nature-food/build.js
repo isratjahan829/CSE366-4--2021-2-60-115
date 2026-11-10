@@ -81,7 +81,7 @@ children.push(P(C.authors));
 C.affiliations.forEach((a, i) => children.push(new Paragraph({ spacing: { after: 60 }, children: [new TextRun({ text: String(i + 1), superScript: true }), ...runs(" " + a, { size: 20 })] })));
 children.push(P("Correspondence: " + C.corresponding, { para: { spacing: { before: 120, after: 120 } } }));
 children.push(P("**Running title:** " + C.runningTitle));
-children.push(P(`**Word counts:** abstract ${absWords}; main text (introduction, results and discussion) ${mainWords}; display items: 5 figures and 1 table (placed in the text at first citation); Extended Data: 8 tables.`));
+children.push(P(`**Word counts:** abstract ${absWords}; main text (introduction, results and discussion) ${mainWords}; display items: 5 figures and 1 table (placed in the text at first citation); Extended Data: 8 tables and 1 figure.`));
 children.push(pageBreak());
 children.push(H1("Abstract")); children.push(P(C.abstract)); children.push(pageBreak());
 // figures and Table 1 are placed immediately after the paragraph that first cites them
@@ -268,6 +268,12 @@ children.push(tTitle("**Extended Data Table 8 | Comparison with estimates publis
 children.push(table([5600, 2000, 2000], ["Indicator (rural–urban unless stated)", "Survey report", "This analysis"], cmp));
 children.push(note("Differences reflect the larger analytical sample (5,239 versus 5,000 households), harmonised indicator definitions (for example, WHO 2021 child dietary diversity including breast milk) and correction of a tabulation error in the report's slum anthropometry table."));
 
+// ED Fig 1
+children.push(pageBreak());
+{ const f = "EDFig1_screening.png"; const b = fs.readFileSync(FIG + f); const w = b.readUInt32BE(16), h = b.readUInt32BE(20);
+  children.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ type: "png", data: b, transformation: { width: 615, height: Math.round(615 * h / w) } })] }));
+  children.push(new Paragraph({ spacing: { before: 120, line: 300 }, children: runs("**Extended Data Fig. 1 | Performance of brief household screening models.** **a**, Cumulative share of affected households identified when households are screened in order of predicted risk, from penalised logistic regression with five-fold cross-validation grouped by primary sampling unit; the dashed line shows random selection and the vertical line the top 30%. AUC, area under the receiver operating characteristic curve. **b**, Calibration: weighted mean predicted risk against observed prevalence by decile of predicted risk. Predictors: 28 household characteristics recordable in about two minutes (Methods). Survey weights normalised within sample; rural–urban and slum households combined.", { size: 18 }) }));
+}
 const doc = new Document({
   creator: "Study team", title: C.title,
   styles: {
