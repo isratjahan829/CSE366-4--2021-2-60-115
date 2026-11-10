@@ -4,19 +4,29 @@ Thesis pre-defence code and results.
 
 | File | What it is |
 |---|---|
+| `HyperDiag_Kaggle.ipynb` | **Kaggle-ready notebook**: set the dataset link in the first cell, then Run All |
 | `HyperDiag_PreDefence.ipynb` | **Executed notebook**: every step from data audit to interpretability, with all outputs and figures |
 | `HyperDiag_PreDefence_Draft_v2.docx` | Updated thesis draft with every placeholder table filled from the results below |
 | `hyperdiag_notebook_src.py` | Notebook source (percent-cell format); `python build_notebook.py` regenerates the `.ipynb` |
 | `results/` | All result tables (CSV), `summary.json` and figures |
 | `tools/build_draft.py` | Regenerates the draft from `results/` and the original draft `.docx` |
 
-## Running it
+## Running it on Kaggle (Run All)
 
-1. Download `Final_Augmented_dataset_Diseases_and_Symptoms.csv` from
-   <https://www.kaggle.com/datasets/dhivyeshrk/diseases-and-symptoms-dataset> into `data/`. On Kaggle the input folder is detected automatically.
-2. `pip install torch scikit-learn pandas scipy matplotlib seaborn nbformat nbconvert ipykernel`
-3. `jupyter nbconvert --to notebook --execute HyperDiag_PreDefence.ipynb --output HyperDiag_PreDefence.ipynb --ExecutePreprocessor.timeout=-1`
-   (about 80 minutes on a 4-core CPU; set `HYPERDIAG_FAST=1` for a short smoke test).
+1. Upload `HyperDiag_Kaggle.ipynb` to Kaggle (**Create → New Notebook → File → Import Notebook**).
+2. In the first code cell, set `DATASET` to the dataset link. It already defaults to
+   `https://www.kaggle.com/datasets/dhivyeshrk/diseases-and-symptoms-dataset`. Then choose either:
+   * **+ Add Input** and attach that dataset (works without internet), or
+   * turn **Internet on** in the notebook settings; the notebook then downloads the data itself with `kagglehub`.
+3. Optional: **Accelerator → GPU** makes training much faster. `FAST = True` gives a roughly 10-minute check run.
+4. **Run All**. Results and figures are written to `results/` (on Kaggle: `/kaggle/working/results`).
+
+`DATASET` also accepts a slug (`owner/dataset`), a direct `.csv`/`.zip` link, or a local file or folder path, so the
+same notebook also runs on Colab or a laptop.
+`HyperDiag_PreDefence.ipynb` is the same pipeline with all outputs already executed (for presenting).
+
+Locally: `pip install torch scikit-learn pandas scipy matplotlib seaborn kagglehub` and run the notebook
+(about 80 minutes on a 4-core CPU).
 
 ## Key findings
 

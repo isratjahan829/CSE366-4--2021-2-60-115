@@ -18,6 +18,22 @@
 # Every number in the result tables is produced by this notebook. The draft's placeholder tables are filled from `results/*.csv`.
 
 # %% [markdown]
+# ## ⚙️ User settings: the only cell you need to edit
+# Set `DATASET` to **any one** of the following, then choose **Run All**:
+# * a Kaggle dataset link, e.g. `https://www.kaggle.com/datasets/dhivyeshrk/diseases-and-symptoms-dataset`
+#   (on Kaggle you can also attach it via **+ Add Input**; the notebook finds it under `/kaggle/input` automatically)
+# * a Kaggle slug, e.g. `dhivyeshrk/diseases-and-symptoms-dataset`
+# * a direct link to a `.csv` or `.zip` file
+# * a local path to the CSV file or to the folder that contains it
+#
+# `FAST = True` runs a quick check (4 epochs, 1 seed, about 10 min). `FAST = False` runs the full experiment
+# (20 epochs, 3 seeds; about 80 min on CPU, much faster on a Kaggle GPU).
+
+# %%
+DATASET = "https://www.kaggle.com/datasets/dhivyeshrk/diseases-and-symptoms-dataset"
+FAST = False
+
+# %% [markdown]
 # ## 0. Setup and configuration
 
 # %%
@@ -43,7 +59,7 @@ pd.set_option("display.width", 200, "display.max_columns", 30)
 sns.set_theme(style="whitegrid", context="notebook")
 plt.rcParams.update({"figure.dpi": 110, "savefig.dpi": 200, "savefig.bbox": "tight"})
 
-FAST = os.environ.get("HYPERDIAG_FAST", "0") == "1"   # quick smoke-test mode
+FAST = os.environ.get("HYPERDIAG_FAST", "1" if FAST else "0") == "1"   # set in the user-settings cell
 CFG = dict(
     min_cases=5,          # diseases with fewer unique cases cannot be split train/val/test reliably
     test_frac=0.20, val_frac=0.10,
@@ -77,16 +93,56 @@ print("FAST mode" if FAST else "FULL mode", json.dumps(CFG))
 
 # %% [markdown]
 # ## 1. Dataset collection
-# The notebook looks for the CSV in the usual places (Kaggle input folder, `./data/`, or `$HYPERDIAG_DATA`).
+# `DATASET` (from the user-settings cell) is resolved automatically: local path, then `/kaggle/input`, then a download
+# (with `kagglehub` for Kaggle links, or a plain HTTP download for direct links).
 
 # %%
-CANDIDATES = [
-    os.environ.get("HYPERDIAG_DATA", ""),
-    "/kaggle/input/diseases-and-symptoms-dataset/Final_Augmented_dataset_Diseases_and_Symptoms.csv",
-    "data/Final_Augmented_dataset_Diseases_and_Symptoms.csv",
-    "Final_Augmented_dataset_Diseases_and_Symptoms.csv",
-]
-DATA_PATH = next(p for p in CANDIDATES if p and os.path.exists(p))
+import glob, re, zipfile, shutil, urllib.request
+DATASET = os.environ.get("HYPERDIAG_DATA", DATASET)
+CSV_NAME = "Final_Augmented_dataset_Diseases_and_Symptoms.csv"
+
+def pick_csv(folder):
+    """Return the dataset CSV inside a folder (prefers the known file name, else the largest CSV)."""
+    files = glob.glob(os.path.join(folder, "**", "*.csv"), recursive=True)
+    if not files: return None
+    named = [f for f in files if os.path.basename(f) == CSV_NAME]
+    return named[0] if named else max(files, key=os.path.getsize)
+
+def resolve_dataset(spec):
+    spec = str(spec).strip()
+    if os.path.isfile(spec): return spec
+    if os.path.isdir(spec):
+        f = pick_csv(spec)
+        if f: return f
+    # Kaggle notebook with the dataset attached as input
+    if os.path.isdir("/kaggle/input"):
+        f = pick_csv("/kaggle/input")
+        if f: return f
+    # previously downloaded copy
+    f = pick_csv("data") if os.path.isdir("data") else None
+    if f: return f
+    m = re.search(r"kaggle\.com/datasets/([^/?#]+/[^/?#]+)", spec)
+    slug = m.group(1) if m else (spec if re.fullmatch(r"[\w.-]+/[\w.-]+", spec) else None)
+    if slug:
+        try:
+            import kagglehub
+        except ImportError:
+            import subprocess, sys
+            subprocess.run([sys.executable, "-m", "pip", "install", "-q", "kagglehub"], check=True)
+            import kagglehub
+        f = pick_csv(kagglehub.dataset_download(slug))
+        if f: return f
+    if spec.startswith("http"):
+        os.makedirs("data", exist_ok=True)
+        dst = os.path.join("data", os.path.basename(spec.split("?")[0]) or "dataset.csv")
+        print("downloading", spec); urllib.request.urlretrieve(spec, dst)
+        if zipfile.is_zipfile(dst):
+            zipfile.ZipFile(dst).extractall("data"); return pick_csv("data")
+        return dst
+    raise FileNotFoundError(f"Could not find the dataset from DATASET = {spec!r}. "
+                            "Set DATASET to a Kaggle link, a direct CSV/ZIP link, or a local path.")
+
+DATA_PATH = resolve_dataset(DATASET)
 header = pd.read_csv(DATA_PATH, nrows=0).columns
 raw = pd.read_csv(DATA_PATH, dtype={c: np.uint8 for c in header if c != "diseases"})
 print("file:", DATA_PATH)
