@@ -1,0 +1,66 @@
+{
+ "food_insecure_modsev": {
+  "label": "Moderate/severe food insecurity (HFIAS)",
+  "n": 5239,
+  "prevalence": 24.9,
+  "auc_gbm": 0.763,
+  "auc_logit": 0.761,
+  "captured_top30_pct": 57.9,
+  "top_features": {
+   "land_cult": 0.0339,
+   "div_Dhaka": 0.0315,
+   "clock": 0.0296,
+   "rooms": 0.0272,
+   "wardrobe": 0.0233,
+   "hh_size": 0.0213
+  }
+ },
+ "no_water_soap": {
+  "label": "No handwashing place with water and soap (observed)",
+  "n": 5239,
+  "prevalence": 44.3,
+  "auc_gbm": 0.773,
+  "auc_logit": 0.777,
+  "captured_top30_pct": 43.9,
+  "top_features": {
+   "shared_toilet": 0.0746,
+   "div_Rangpur": 0.0568,
+   "finished_floor": 0.0232,
+   "div_Sylhet": 0.0194,
+   "hh_size": 0.018,
+   "internet": 0.0166
+  }
+ },
+ "low_dds_cook": {
+  "label": "Cook ate fewer than 5 food groups",
+  "n": 5239,
+  "prevalence": 64.3,
+  "auc_gbm": 0.75,
+  "auc_logit": 0.687,
+  "captured_top30_pct": 51.8,
+  "top_features": {
+   "div_Khulna": 0.0452,
+   "urban": 0.0271,
+   "div_Chattogram": 0.0259,
+   "land_cult": 0.0248,
+   "slum": 0.0245,
+   "fridge": 0.0234
+  }
+ },
+ "low_fs_know": {
+  "label": "Cook food-safety knowledge below 50",
+  "n": 5239,
+  "prevalence": 34.0,
+  "auc_gbm": 0.737,
+  "auc_logit": 0.698,
+  "captured_top30_pct": 43.6,
+  "top_features": {
+   "div_Dhaka": 0.0657,
+   "clock": 0.0415,
+   "land_cult": 0.0257,
+   "div_Khulna": 0.0238,
+   "div_Chattogram": 0.0215,
+   "div_Barishal": 0.0214
+  }
+ }
+}

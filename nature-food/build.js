@@ -81,10 +81,35 @@ children.push(P(C.authors));
 C.affiliations.forEach((a, i) => children.push(new Paragraph({ spacing: { after: 60 }, children: [new TextRun({ text: String(i + 1), superScript: true }), ...runs(" " + a, { size: 20 })] })));
 children.push(P("Correspondence: " + C.corresponding, { para: { spacing: { before: 120, after: 120 } } }));
 children.push(P("**Running title:** " + C.runningTitle));
-children.push(P(`**Word counts:** abstract ${absWords}; main text (introduction, results and discussion) ${mainWords}; display items: 5 figures and 1 table; Extended Data: 8 tables.`));
+children.push(P(`**Word counts:** abstract ${absWords}; main text (introduction, results and discussion) ${mainWords}; display items: 5 figures and 1 table (placed in the text at first citation); Extended Data: 8 tables.`));
 children.push(pageBreak());
 children.push(H1("Abstract")); children.push(P(C.abstract)); children.push(pageBreak());
-C.sections.forEach((s, i) => { if (i === 0) children.push(H1("Main")); if (s.h) children.push(H1(s.h)); if (s.h2) children.push(H2(s.h2)); s.paras.forEach((p) => children.push(P(p))); });
+// figures and Table 1 are placed immediately after the paragraph that first cites them
+const pngSize = (f) => { const b = fs.readFileSync(f); return [b.readUInt32BE(16), b.readUInt32BE(20)]; };
+const placed = new Set();
+function figureBlock(f) {
+  const [w, h] = pngSize(FIG + f.file); const width = 615, height = Math.round(width * h / w);
+  return [
+    new Paragraph({ alignment: AlignmentType.CENTER, keepNext: true, spacing: { before: 240, after: 80 }, children: [new ImageRun({ type: "png", data: fs.readFileSync(FIG + f.file), transformation: { width, height } })] }),
+    new Paragraph({ spacing: { before: 60, after: 280, line: 300 }, children: runs("**" + f.title + "** " + f.legend, { size: 18 }) }),
+  ];
+}
+function table1Block() {
+  return [new Paragraph({ spacing: { before: 240, after: 120 }, keepNext: true, children: runs("**Table 1 | Association of basic nutrition knowledge (per 10 points) with diet.**") }), table1,
+    note("Estimates per 10-point higher knowledge score (0–100) with 95% confidence intervals. Dietary diversity: number of ten food groups consumed in the previous 24 hours (weighted linear regression). Minimum dietary diversity: five or more groups. Discretionary foods: savoury or fried snacks, sweets or sugar-sweetened beverages in the previous 24 hours (weighted logistic regression; OR, odds ratio). Adjusted models include wealth quintile, log food expenditure per person, food insecurity (HFIAS category), household internet access, division and (rural–urban only) urban residence. Standard errors clustered by primary sampling unit; rural–urban and slum samples analysed separately.")];
+}
+C.sections.forEach((sec, i) => {
+  if (i === 0) children.push(H1("Main")); if (sec.h) children.push(H1(sec.h)); if (sec.h2) children.push(H2(sec.h2));
+  sec.paras.forEach((p) => {
+    children.push(P(p));
+    for (const f of C.figures) {
+      const re = new RegExp(f.ref.replace(".", "\\.") + "(?![0-9])");
+      if (!placed.has(f.ref) && re.test(p)) { placed.add(f.ref); children.push(...figureBlock(f)); }
+    }
+    if (!placed.has("Table 1") && /Table 1(?![0-9])/.test(p.replace(/Extended Data Table 1/g, ""))) { placed.add("Table 1"); children.push(...table1Block()); }
+  });
+});
+C.figures.forEach((f) => { if (!placed.has(f.ref)) console.warn("figure not cited:", f.ref); });
 children.push(H1("Methods"));
 C.methods.forEach((s) => { children.push(H2(s.h2)); s.paras.forEach((p) => children.push(P(p))); });
 children.push(H1("Data availability")); children.push(P(C.dataAvailability));
@@ -95,18 +120,6 @@ children.push(H1("Acknowledgements")); children.push(P(C.acknowledgements));
 children.push(H1("Author contributions")); children.push(P(C.contributions));
 children.push(H1("Competing interests")); children.push(P(C.competing));
 children.push(H1("Inclusion and ethics statement")); children.push(P(C.inclusion));
-
-children.push(pageBreak());
-children.push(tTitle("**Table 1 | Association of basic nutrition knowledge (per 10 points) with diet.**"));
-children.push(table1);
-children.push(note("Estimates per 10-point higher knowledge score (0–100) with 95% confidence intervals. Dietary diversity: number of ten food groups consumed in the previous 24 hours (weighted linear regression). Minimum dietary diversity: five or more groups. Discretionary foods: savoury or fried snacks, sweets or sugar-sweetened beverages in the previous 24 hours (weighted logistic regression; OR, odds ratio). Adjusted models include wealth quintile, log food expenditure per person, food insecurity (HFIAS category), household internet access, division and (rural–urban only) urban residence. Standard errors clustered by primary sampling unit; rural–urban and slum samples analysed separately."));
-
-C.figures.forEach((f) => {
-  children.push(pageBreak());
-  const width = 620, height = Math.round(width * f.h / f.w);
-  children.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ type: "png", data: fs.readFileSync(FIG + f.file), transformation: { width, height } })] }));
-  children.push(new Paragraph({ spacing: { before: 160, after: 80, line: 360 }, children: runs("**" + f.title + "** " + f.legend) }));
-});
 
 // ================= Extended Data =================
 children.push(pageBreak()); children.push(H1("Extended Data"));
