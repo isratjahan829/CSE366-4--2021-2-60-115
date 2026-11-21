@@ -80,12 +80,7 @@ Monitoring tells us what is happening; control decides what to do about it. Most
 
 **Optimising whole campaigns.** Beyond real-time control, AI is used to optimise run-to-run decisions: the next feed recipe, the harvest time, or perfusion rates in continuous processes. Puranik et al. (2022) and Cheng et al. (2023) noted that most RL studies are still simulation-based, because every real experiment is expensive.
 
-**Critical assessment.** The literature suggests a practical hierarchy:
-
-- PID remains the right tool for fast physical loops.
-- Hybrid-model MPC is ready for nutrient feeding and growth-rate control wherever a validated model exists.
-- RL is best viewed today as a way to generate candidate policies *in silico*, to be checked by MPC or by human experts before use.
-- BO is the most data-efficient tool for run-to-run optimisation. Case D (Section 6.4) quantifies its advantage over classical DoE.
+**Critical assessment.** Taken together, the evidence points to a pragmatic division of labour rather than a single winning method. PID control remains the right tool for fast physical loops such as temperature and pH. Hybrid-model MPC is ready for nutrient feeding and growth-rate control wherever a validated model exists. Reinforcement learning is best regarded, for now, as a generator of candidate policies *in silico* that MPC or human experts must check before use. For run-to-run optimisation, Bayesian optimisation is the most data-efficient option, and Case D (Section 6.5) quantifies its advantage over classical DoE.
 
 ## 3.5 AI in bioreactor scale-up and scale-down
 
@@ -93,16 +88,9 @@ Monitoring tells us what is happening; control decides what to do about it. Most
 
 **Classical criteria and their limits.** Engineers traditionally scale up by holding one quantity constant: P/V, $k_La$, tip speed or mixing time (Eq. 7). These cannot all be held constant at once. Each criterion protects one aspect of the environment while ignoring the others, which is why scale-up remains partly empirical (Wang et al., 2020).
 
-**Compartment models and cell lifelines.** Two modelling advances underpin the AI approaches.
+**Compartment models and cell lifelines.** Two modelling advances underpin the AI approaches. *Compartment models* divide the tank into well-mixed zones connected by flows derived from CFD, giving a spatially resolved yet fast description of the vessel (Nadal-Rey et al., 2021b). *Lifeline* analysis goes a step further: it tracks thousands of virtual cells through a flow field and records the sequence of concentrations that each one experiences. Haringa et al. (2018) coupled such lifelines to a nine-pool metabolic model of *P. chrysogenum* to design rational scale-down experiments, and Wang et al. (2020) generalised the idea into a computational framework built on CFD, lifelines and cell models.
 
-- *Compartment models* divide the tank into well-mixed zones connected by flows derived from CFD (Nadal-Rey et al., 2021b).
-- *Lifeline* analysis tracks thousands of virtual cells through a flow field and records the sequence of concentrations each one experiences. Haringa et al. (2018) coupled lifelines to a nine-pool metabolic model of *P. chrysogenum* to design rational scale-down experiments. Wang et al. (2020) proposed a general computational framework built on CFD, lifelines and cell models.
-
-**Where AI enters.** AI contributes in three ways.
-
-1. *Surrogates*: neural operators and graph networks predict concentration fields for new designs in seconds.
-2. *Learning the cell response*: hybrid models learn how metabolism responds to fluctuating rather than constant conditions.
-3. *Transfer learning*: a small-scale model is adapted to large scale using a handful of plant runs (Bayer et al., 2021; Rogers et al., 2023; Hutter et al., 2021).
+**Where AI enters.** These simulations are powerful but slow, which confines them to a handful of what-if cases. AI removes this bottleneck in three complementary ways. Neural-operator and graph-network *surrogates* predict concentration fields for new designs in seconds. Hybrid models can *learn the cell response* to fluctuating rather than constant conditions. And *transfer learning* adapts a small-scale model to production scale using only a handful of plant runs (Bayer et al., 2021; Hutter et al., 2021; Rogers et al., 2023).
 
 **From single criterion to regime matching.** Combining these strands leads to an idea that is implicit in the literature but rarely formalised. Scale-down should reproduce the full *distribution* of conditions that cells experience at large scale, not a single number such as P/V or mixing time. Section 4 formalises this as an optimal-transport problem, and Case C tests it. Figure 4 outlines the workflow and Table 4 contrasts it with classical practice.
 

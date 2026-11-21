@@ -5,46 +5,25 @@ subtitle: "Book chapter (Elsevier) — extended version with mathematical formul
 
 # Abstract
 
-Bioreactors sit at the heart of biomanufacturing. Yet their design, monitoring and scale-up still rely on empirical rules, sparse offline sampling and costly trial-and-error. A process that performs well in a 2 L vessel often loses titre, quality or robustness in a 50 m³ tank, because cells there pass through gradients of substrate, oxygen and pH that never existed at small scale. This chapter gives a mathematically grounded account of how artificial intelligence (AI) can close this gap. It first builds a common formal language: the balance equations of bioreactor engineering, the scale-up criteria that follow from them, and the statistical, machine-learning (ML), deep-learning (DL), physics-informed, reinforcement-learning and language-model tools that act on them. Recent literature (2020–2025) on design, monitoring, control and scale-up is then reviewed critically, and the evidence is synthesised into the *Design–Sense–Decide–Scale (DSDS)* framework. In this framework a single hybrid digital twin is carried across the whole bioreactor lifecycle. A central element is *regime-matched scale-up*: the scale-down design is chosen to minimise a distributional distance (the Wasserstein distance) between the conditions that cells experience at production and at laboratory scale. Four reproducible in-silico case studies, all based on simulated data, test the framework.
-
-- **Case A (hybrid model).** A hybrid neural–mechanistic model reduced median prediction error from 8.9% to 4.4% compared with a black-box network (Wilcoxon p = 0.002).
-- **Case B (Raman soft sensor).** A Raman partial least squares (PLS) soft sensor reached a prediction error of 0.26 g/L for glucose. Its multivariate control charts detected a raw-material drift within two samples of its onset.
-- **Case C (scale-down design).** A regime-matched scale-down design reduced the environmental mismatch by 85% relative to a homogeneous laboratory vessel.
-- **Case D (Bayesian optimisation).** Bayesian optimisation reached a median 97% of the true optimum in 15 runs, against 89% for a classical response-surface design.
-
-The chapter closes with practical recommendations for industry, academia and regulators, and with a research agenda for trustworthy, data-efficient AI in bioprocessing.
+Bioreactors are the workhorses of biomanufacturing, yet their design, monitoring and scale-up still rest on empirical correlations, sparse sampling and trial-and-error. The cost of this empiricism peaks at scale-up. In a 50 m³ fermenter, the liquid takes longer to mix than cells take to exhaust the local substrate, so each cell cycles between feast and famine, and processes that excel at 2 L lose yield and quality in production. Here we examine how artificial intelligence (AI) can replace this empiricism with predictive, data-efficient and verifiable engineering. We unify bioreactor transport and kinetics with statistical, machine-learning, deep-learning, physics-informed, reinforcement-learning and language-model methods in one mathematical framework, and critically review the literature from 2020–2025. From this synthesis we propose the Design–Sense–Decide–Scale (DSDS) framework, in which one hybrid digital twin spans the entire bioreactor lifecycle. Within it, we formalise regime-matched scale-down as the minimisation of a Wasserstein distance between the environments that cells experience at laboratory and at production scale. Four reproducible in-silico case studies quantify the gains. Hybrid models halved prediction error relative to black-box networks (4.4% versus 8.9%; p = 0.002). A Raman soft sensor predicted glucose to within 0.26 g/L and detected a raw-material drift within two samples. Regime matching reduced environmental mismatch by 85%, and Bayesian optimisation reached a median 97% of the optimum within 15 runs. The case studies also delineate a limit: no model class extrapolated reliably beyond the temperature range covered by its training data. These results offer a quantitative roadmap towards trustworthy, AI-enabled bioprocessing.
 
 **Keywords:** artificial intelligence; bioreactor; hybrid modelling; soft sensor; multivariate statistical process control; digital twin; scale-up; scale-down; Wasserstein distance; Bayesian optimisation; physics-informed machine learning; reinforcement learning
 
 # 1. Introduction
 
-A bioreactor is a vessel in which living cells or enzymes convert raw materials into valuable products under controlled conditions. Monoclonal antibodies, insulin, vaccines, industrial enzymes, organic acids, biofuels and cultivated meat all depend on it. The basic hardware has changed little in decades: a stirred tank with an impeller, a sparger, a cooling jacket and a handful of probes. The demands placed on it, however, have grown sharply. Regulators expect manufacturers to understand their processes scientifically under Quality by Design (QbD). Continuous manufacturing is now formally recognised in ICH Q13 (ICH, 2022). And companies must move new molecules from the bench to commercial production faster and at lower cost (Rathore et al., 2021).
+Biomanufacturing now underpins a substantial share of modern medicine and an expanding part of the industrial economy. Monoclonal antibodies, insulin, vaccines, industrial enzymes, organic acids, biofuels and cultivated meat are all made by living cells growing in a bioreactor. The core hardware has barely changed in decades: a stirred tank, an impeller, a sparger, a cooling jacket and a handful of probes. What has changed is the pressure on it. Regulators expect processes to be understood scientifically rather than merely reproduced, under the Quality by Design (QbD) paradigm. Continuous manufacturing has been formally codified in ICH Q13 (ICH, 2022). And every month a new therapy spends in development delays patient access and adds cost (Rathore et al., 2021). The bioreactor has thus become both the most valuable and the least predictable step in the production chain.
 
-Three long-standing problems make this difficult.
+Three long-standing problems explain why. The first is *design*. Choosing vessel geometry, impeller type, gassing strategy and feeding profile demands many costly experiments, because cell metabolism is non-linear and only partly understood. The second is *monitoring*. The variables that define performance, including viable cell density, glucose, lactate, titre and glycosylation, are typically measured offline once or twice a day, so a process can drift for hours before anyone notices (Gargalo et al., 2020). The third, and most consequential, is *scale-up*. A production tank is not simply a large flask. In a 50 m³ fermenter, mixing can take more than a minute, while a cell consumes the glucose in its immediate surroundings within seconds. Cells therefore circulate repeatedly between zones of excess and starvation (Nadal-Rey et al., 2021a). These fluctuations shift substrate yield, by-product formation and productivity in ways that laboratory experiments do not reveal, which is why a process optimised at 2 L so often under-performs at production scale (Wang et al., 2020).
 
-1. **Design.** Choosing vessel geometry, impeller type, gassing strategy and feeding profile requires many experiments, because cell metabolism is highly non-linear and only partly understood.
-2. **Monitoring.** The variables that matter most are usually measured offline once or twice a day: viable cell density, glucose, lactate, titre and glycosylation. A process can therefore drift for hours before anyone notices (Gargalo et al., 2020).
-3. **Scale-up.** A large tank is not simply a big flask. In a 50 m³ fermenter, mixing can take more than a minute, while a cell consumes the local glucose in a few seconds. As a result, each cell repeatedly passes between zones of excess and starvation (Nadal-Rey et al., 2021a). These fluctuations can reduce yield by 10–30% or trigger stress responses that change product quality. Such effects are difficult to predict from laboratory data (Wang et al., 2020).
+Artificial intelligence (AI), meaning computational methods that learn patterns from data and use them to predict, classify or decide, has matured in precisely the areas these problems require. Machine-learning soft sensors convert an in-line Raman spectrum into a glucose concentration every few minutes (Esmonde-White et al., 2022). Hybrid models embed neural networks within mass balances and need far fewer experiments than purely empirical models (Narayanan et al., 2020; Sokolov et al., 2021). Reinforcement learning can discover feeding policies in simulation (Petsagkourakis et al., 2020). Physics-informed networks and neural operators can emulate hours of computational fluid dynamics (CFD) in seconds (Karniadakis et al., 2021). Large language models open new ways to mine decades of batch records and deviation reports. Combined with cheaper sensors and cloud data platforms, these tools underpin the vision of *Bioprocessing 4.0* (Isoko et al., 2024).
 
-Artificial intelligence (AI) here means computational methods that learn patterns from data and use them to predict, classify or decide. It has matured in exactly the areas these problems need.
+Yet three gaps prevent this promise from translating into routine practice. First, the literature is fragmented. Most reviews address a single task or a single model family (Mowbray et al., 2021; Helleckes et al., 2023; Rathore et al., 2023), so a model built during development is rarely carried forward to monitoring, control and scale-up, and knowledge is lost at every hand-over. Second, the mathematics that connects bioreactor physics to learning algorithms is seldom made explicit, which leaves engineers and data scientists without a shared language. Third, quantitative evidence is scarce. Few studies compare model classes head-to-head under controlled conditions, separate interpolation from extrapolation, or apply statistical tests, and almost none address scale-up as a problem of reproducing the environment that cells actually experience. Limited data, poor transferability between scales and cell lines, and regulatory uncertainty about "black-box" models compound these gaps (FDA, 2023).
 
-- **Soft sensing.** ML models turn a Raman spectrum into a glucose concentration every few minutes (Esmonde-White et al., 2022).
-- **Hybrid modelling.** Hybrid models embed neural networks inside mass balances and need far fewer experiments than purely empirical models (Narayanan et al., 2020; Sokolov et al., 2021).
-- **Control.** Reinforcement learning (RL) can learn feeding policies in simulation (Petsagkourakis et al., 2020).
-- **Fast simulation.** Physics-informed networks and neural operators can reproduce expensive computational fluid dynamics (CFD) in seconds (Karniadakis et al., 2021).
-- **Language models.** Large language models open new ways to mine batch records and deviation reports.
+This chapter responds by combining mathematical synthesis, critical review, conceptual design and quantitative testing in a single account. It treats the bioreactor lifecycle as one connected problem rather than four separate ones, and it argues that the persistent asset of a bioprocess should be a continuously learning model, not a series of disconnected experiments. Its central conceptual proposal is that scale-down should be designed to reproduce the full *distribution* of conditions experienced by cells at production scale, rather than a single engineering parameter such as power input per volume or mixing time.
 
-Together with cheaper sensors and cloud data platforms, these tools underpin the vision of *Bioprocessing 4.0* (Isoko et al., 2024).
+Accordingly, the chapter pursues four objectives. The first is to establish a unified mathematical foundation that links bioreactor transport, kinetics and scale-up criteria to the statistical, machine-learning, deep-learning, physics-informed, control and language-model methods that act on them. The second is to critically evaluate recent evidence (2020–2025) on AI for bioreactor design, monitoring, control and scale-up, and to identify the gaps that limit industrial adoption. The third is to develop an integrated Design–Sense–Decide–Scale framework centred on a hybrid digital twin, including a formal, optimal-transport definition of regime-matched scale-down. The fourth is to quantify, through four reproducible in-silico case studies with statistical testing, how much hybrid modelling, soft sensing with drift detection, regime matching and Bayesian optimisation actually improve on conventional practice, and where their limits lie.
 
-Yet the literature remains fragmented. Most reviews focus on one task or one model family (Mowbray et al., 2021; Helleckes et al., 2023; Rathore et al., 2023). Few provide the mathematics that connects bioreactor physics to the learning algorithms. Few show quantitatively how much each AI component actually contributes. Fewer still explain how a model built during development can be carried through monitoring to the production scale. Industrial uptake is further slowed by limited data, poor transferability between scales and cell lines, and regulatory uncertainty about "black-box" models (FDA, 2023).
-
-This chapter addresses these gaps in five ways:
-
-1. It derives the core mathematics of bioreactor transport, kinetics and scale-up. It then sets out the statistical, ML, DL, physics-informed, control and language-model formulations in a single notation (Section 2).
-2. It critically reviews recent work on AI in design, monitoring, control and scale-up (Section 3).
-3. It proposes the Design–Sense–Decide–Scale (DSDS) framework. This includes a formal definition of *regime-matched* scale-down as an optimal-transport problem (Section 4).
-4. It tests the main claims in four reproducible in-silico case studies, using statistical hypothesis tests (Sections 5 and 6).
-5. It distils findings, recommendations and a research agenda (Sections 7–9).
+The remainder of the chapter follows these objectives. Section 2 develops the theoretical and mathematical foundations, and Section 3 reviews the literature. Section 4 presents the DSDS framework, Section 5 describes the case-study methodology and Section 6 reports the results. Sections 7–9 distil the findings, discuss their implications with recommendations for industry, academia and regulators, and set out directions for future research.
 
 # 2. Theoretical overview and mathematical foundations
 
@@ -274,11 +253,7 @@ where $\mathcal{M}$ is the set of $M$ inputs and $f_S$ is the model evaluated us
 
 A large share of bioprocess knowledge is not numeric. Batch records, deviation and CAPA (corrective and preventive action) reports, standard operating procedures, regulatory submissions and the scientific literature are all text. Transformer language models, Eq. (14), map text to vectors (embeddings) $\mathbf{e}\in\mathbb{R}^d$. Semantic similarity between two documents is then $\cos(\mathbf{e}_1,\mathbf{e}_2)=\mathbf{e}_1^\top\mathbf{e}_2/(\|\mathbf{e}_1\|\|\mathbf{e}_2\|)$.
 
-*Retrieval-augmented generation (RAG)* combines such retrieval with a generative model, so that answers are grounded in a company's own validated documents (Lewis et al., 2020). Typical uses include:
-
-- finding past deviations similar to a current foaming event;
-- extracting process parameters from decades of PDF batch records into structured tables for ML;
-- drafting first versions of investigation reports for human review.
+*Retrieval-augmented generation (RAG)* combines such retrieval with a generative model, so that answers are grounded in a company's own validated documents (Lewis et al., 2020). In bioprocessing, such systems can retrieve past deviations that resemble a current foaming event, extract process parameters from decades of scanned batch records into structured tables for machine learning, and draft first versions of investigation reports for expert review.
 
 Foundation models pre-trained on broad data (Bommasani et al., 2021) also promise transfer to spectra and time series. Their outputs, however, must be verified: hallucinated content is unacceptable in a GMP context. In the DSDS framework, language models therefore sit in the data and trust layers, as assistants that *structure* knowledge. They are not autonomous decision-makers.
 
@@ -374,12 +349,7 @@ Monitoring tells us what is happening; control decides what to do about it. Most
 
 **Optimising whole campaigns.** Beyond real-time control, AI is used to optimise run-to-run decisions: the next feed recipe, the harvest time, or perfusion rates in continuous processes. Puranik et al. (2022) and Cheng et al. (2023) noted that most RL studies are still simulation-based, because every real experiment is expensive.
 
-**Critical assessment.** The literature suggests a practical hierarchy:
-
-- PID remains the right tool for fast physical loops.
-- Hybrid-model MPC is ready for nutrient feeding and growth-rate control wherever a validated model exists.
-- RL is best viewed today as a way to generate candidate policies *in silico*, to be checked by MPC or by human experts before use.
-- BO is the most data-efficient tool for run-to-run optimisation. Case D (Section 6.4) quantifies its advantage over classical DoE.
+**Critical assessment.** Taken together, the evidence points to a pragmatic division of labour rather than a single winning method. PID control remains the right tool for fast physical loops such as temperature and pH. Hybrid-model MPC is ready for nutrient feeding and growth-rate control wherever a validated model exists. Reinforcement learning is best regarded, for now, as a generator of candidate policies *in silico* that MPC or human experts must check before use. For run-to-run optimisation, Bayesian optimisation is the most data-efficient option, and Case D (Section 6.5) quantifies its advantage over classical DoE.
 
 ## 3.5 AI in bioreactor scale-up and scale-down
 
@@ -387,16 +357,9 @@ Monitoring tells us what is happening; control decides what to do about it. Most
 
 **Classical criteria and their limits.** Engineers traditionally scale up by holding one quantity constant: P/V, $k_La$, tip speed or mixing time (Eq. 7). These cannot all be held constant at once. Each criterion protects one aspect of the environment while ignoring the others, which is why scale-up remains partly empirical (Wang et al., 2020).
 
-**Compartment models and cell lifelines.** Two modelling advances underpin the AI approaches.
+**Compartment models and cell lifelines.** Two modelling advances underpin the AI approaches. *Compartment models* divide the tank into well-mixed zones connected by flows derived from CFD, giving a spatially resolved yet fast description of the vessel (Nadal-Rey et al., 2021b). *Lifeline* analysis goes a step further: it tracks thousands of virtual cells through a flow field and records the sequence of concentrations that each one experiences. Haringa et al. (2018) coupled such lifelines to a nine-pool metabolic model of *P. chrysogenum* to design rational scale-down experiments, and Wang et al. (2020) generalised the idea into a computational framework built on CFD, lifelines and cell models.
 
-- *Compartment models* divide the tank into well-mixed zones connected by flows derived from CFD (Nadal-Rey et al., 2021b).
-- *Lifeline* analysis tracks thousands of virtual cells through a flow field and records the sequence of concentrations each one experiences. Haringa et al. (2018) coupled lifelines to a nine-pool metabolic model of *P. chrysogenum* to design rational scale-down experiments. Wang et al. (2020) proposed a general computational framework built on CFD, lifelines and cell models.
-
-**Where AI enters.** AI contributes in three ways.
-
-1. *Surrogates*: neural operators and graph networks predict concentration fields for new designs in seconds.
-2. *Learning the cell response*: hybrid models learn how metabolism responds to fluctuating rather than constant conditions.
-3. *Transfer learning*: a small-scale model is adapted to large scale using a handful of plant runs (Bayer et al., 2021; Rogers et al., 2023; Hutter et al., 2021).
+**Where AI enters.** These simulations are powerful but slow, which confines them to a handful of what-if cases. AI removes this bottleneck in three complementary ways. Neural-operator and graph-network *surrogates* predict concentration fields for new designs in seconds. Hybrid models can *learn the cell response* to fluctuating rather than constant conditions. And *transfer learning* adapts a small-scale model to production scale using only a handful of plant runs (Bayer et al., 2021; Hutter et al., 2021; Rogers et al., 2023).
 
 **From single criterion to regime matching.** Combining these strands leads to an idea that is implicit in the literature but rarely formalised. Scale-down should reproduce the full *distribution* of conditions that cells experience at large scale, not a single number such as P/V or mixing time. Section 4 formalises this as an optimal-transport problem, and Case C tests it. Figure 4 outlines the workflow and Table 4 contrasts it with classical practice.
 
@@ -592,11 +555,11 @@ Table: **Table 5.** Consequences of classical scale-up criteria for a geometrica
 
 ## 6.2 Case A: hybrid models generalise best, but not everywhere
 
-Table 6 and Figure 6 summarise the 10 replicates.
+Table 6 and Figure 6 summarise the 10 replicates. Within the training window, the hybrid model halved the median prediction error relative to both alternatives, from 8.9% for the black-box network and 8.2% for the textbook model to 4.4%, and it won in all 10 replicates against each (Wilcoxon p = 0.002 for both comparisons).
 
-- **Interpolation.** The hybrid model halved the median error compared with both alternatives: 4.4% versus 8.9% for the black-box network and 8.2% for the textbook model. It won in all 10 replicates against each (Wilcoxon p = 0.002 for both comparisons).
-- **Extrapolation in feed rate.** Here the mass balances carry the extrapolation. The hybrid model remained accurate (median 7.3%) and beat the black-box network in 8 of 10 replicates (p = 0.010) and the textbook model in 10 of 10 (p = 0.002). Figure 6b–c shows why. At an unseen high feed rate, the black-box network badly underestimated the exponential growth phase, predicting a biomass of about 36 g/L against 77 g/L in the virtual plant. The hybrid model followed the true trajectory closely.
-- **Extrapolation in temperature.** Here the unknown kinetics must extrapolate, and *all* models failed badly (median errors 50–80%). The hybrid model was still significantly better than the alternatives (p ≤ 0.014). Even so, an error of 50% is unusable.
+The advantage persisted when the feed rate was pushed beyond the training range, a direction in which the known mass balances carry the extrapolation. Here the hybrid model remained accurate (median 7.3%) and outperformed the black-box network in 8 of 10 replicates (p = 0.010) and the textbook model in all 10 (p = 0.002). Figure 6b–c shows why: at an unseen high feed rate, the black-box network badly underestimated the exponential growth phase, predicting about 36 g/L of biomass where the virtual plant reached 77 g/L, whereas the hybrid model followed the true trajectory closely.
+
+Temperature extrapolation told a different story. In this direction the learned kinetics must carry the extrapolation, and every model failed badly, with median errors of 50–80%. The hybrid model remained significantly better than the alternatives (p ≤ 0.014), but an error of 50% is unusable in practice.
 
 The lesson is precise. Physics in the model buys extrapolation along physically modelled directions. It does not create knowledge about biology that the data never contained. In practice, the experimental design must span the ranges of the variables that act through learned kinetics, and model uncertainty should flag excursions outside them.
 
@@ -693,24 +656,9 @@ A model that predicts titre in one laboratory is of limited value if it cannot b
 
 The framework also has limitations. Hybrid models require mechanistic expertise that is scarce in many companies. CFD libraries for training surrogates are expensive to generate. Production-scale data are proprietary. The case studies are simulation-based: they demonstrate mechanisms and relative performance, not absolute numbers for a specific process. Their virtual plant, compartment model and acetate kinetics are deliberately simple, and real cells add memory effects, population heterogeneity and oxygen and CO₂ gradients that were not modelled here.
 
-Based on these observations we recommend:
+These observations translate into concrete recommendations. **Industry** should begin where the evidence is strongest, with hybrid models and Raman soft sensors. Uncertainty bands and T²/Q monitoring should be required for every deployed model, and contextualised data infrastructure should be built early, with language models used to structure legacy batch records. **Process developers** should combine intensified DoE with Bayesian optimisation, seeding the optimiser with a small space-filling design. They should design scale-down experiments by matching regime distributions (Eq. 28) rather than mixing time alone, and always span the ranges of variables that act through learned kinetics.
 
-- **For industry:**
-    - Start with hybrid models and Raman soft sensors, where the evidence is strongest.
-    - Require uncertainty bands and T²/Q monitoring for every deployed model.
-    - Invest early in contextualised data infrastructure, using language models to structure legacy batch records.
-- **For process developers:**
-    - Combine intensified DoE with Bayesian optimisation, seeding BO with a small space-filling design.
-    - Design scale-down experiments by matching regime distributions (Eq. 28) rather than by mixing time alone.
-    - Always span the ranges of variables that act through learned kinetics.
-- **For academia:**
-    - Publish benchmark datasets, ideally including pilot- and production-scale runs.
-    - Report performance separately for interpolation and for physically and kinetically governed extrapolation, with replicated runs and statistical tests, as in Table 6.
-- **For regulators and quality units:**
-    - Adopt risk-based credibility assessment for AI models, building on FDA (2023) and ICH Q13.
-    - Set clear expectations for change control of continuously learning models.
-- **For educators:**
-    - Train bioprocess engineers in statistics and ML, and data scientists in transport phenomena and cell physiology. Hybrid modelling sits exactly at their intersection.
+**Academia** should publish benchmark datasets, ideally including pilot- and production-scale runs. It should also report model performance separately for interpolation, for physically governed extrapolation and for kinetically governed extrapolation, with replicated runs and statistical tests as in Table 6. **Regulators and quality units** should adopt risk-based credibility assessment for AI models, building on FDA (2023) and ICH Q13, and set clear expectations for change control of continuously learning models. Finally, **educators** should train bioprocess engineers in statistics and machine learning, and data scientists in transport phenomena and cell physiology, because hybrid modelling sits precisely at their intersection.
 
 # 9. Future study and conclusion
 
@@ -729,12 +677,7 @@ Six research directions follow from this chapter.
 
 AI is reshaping how bioreactors are designed, monitored and scaled up. This chapter has provided the mathematical foundations needed to understand both the engineering problem and the AI methods. It has critically reviewed the literature from 2020 to 2025 and proposed the Design–Sense–Decide–Scale loop: a single hybrid digital twin that learns throughout the lifecycle and enables regime-matched scale-down, formalised as a Wasserstein-distance optimisation.
 
-Four reproducible in-silico case studies supplied quantitative evidence:
-
-- hybrid models halve prediction error and extrapolate safely along physically modelled directions;
-- MSPC-guarded soft sensors detect and recover from drift that would otherwise quadruple their error;
-- distribution-based scale-down reduces environmental mismatch by 85%;
-- Bayesian optimisation reaches 97% of the optimum in 15 runs.
+Four reproducible in-silico case studies supplied the quantitative evidence. Hybrid models halved prediction error and extrapolated safely along physically modelled directions. MSPC-guarded soft sensors detected, and recovered from, a drift that would otherwise have quadrupled their error. Distribution-based scale-down reduced environmental mismatch by 85%, and Bayesian optimisation reached a median 97% of the optimum within 15 runs. Equally important, the studies showed where current methods stop working: no model class extrapolated reliably along directions governed by learned kinetics.
 
 Supported by sound data infrastructure, transparent uncertainty and risk-based regulation, this integrated approach can shorten development timelines, reduce failed scale-up campaigns, and make biomanufacturing more robust, affordable and sustainable.
 

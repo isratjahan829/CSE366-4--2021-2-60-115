@@ -16,11 +16,11 @@ Table: **Table 5.** Consequences of classical scale-up criteria for a geometrica
 
 ## 6.2 Case A: hybrid models generalise best, but not everywhere
 
-Table 6 and Figure 6 summarise the 10 replicates.
+Table 6 and Figure 6 summarise the 10 replicates. Within the training window, the hybrid model halved the median prediction error relative to both alternatives, from 8.9% for the black-box network and 8.2% for the textbook model to 4.4%, and it won in all 10 replicates against each (Wilcoxon p = 0.002 for both comparisons).
 
-- **Interpolation.** The hybrid model halved the median error compared with both alternatives: 4.4% versus 8.9% for the black-box network and 8.2% for the textbook model. It won in all 10 replicates against each (Wilcoxon p = 0.002 for both comparisons).
-- **Extrapolation in feed rate.** Here the mass balances carry the extrapolation. The hybrid model remained accurate (median 7.3%) and beat the black-box network in 8 of 10 replicates (p = 0.010) and the textbook model in 10 of 10 (p = 0.002). Figure 6b–c shows why. At an unseen high feed rate, the black-box network badly underestimated the exponential growth phase, predicting a biomass of about 36 g/L against 77 g/L in the virtual plant. The hybrid model followed the true trajectory closely.
-- **Extrapolation in temperature.** Here the unknown kinetics must extrapolate, and *all* models failed badly (median errors 50–80%). The hybrid model was still significantly better than the alternatives (p ≤ 0.014). Even so, an error of 50% is unusable.
+The advantage persisted when the feed rate was pushed beyond the training range, a direction in which the known mass balances carry the extrapolation. Here the hybrid model remained accurate (median 7.3%) and outperformed the black-box network in 8 of 10 replicates (p = 0.010) and the textbook model in all 10 (p = 0.002). Figure 6b–c shows why: at an unseen high feed rate, the black-box network badly underestimated the exponential growth phase, predicting about 36 g/L of biomass where the virtual plant reached 77 g/L, whereas the hybrid model followed the true trajectory closely.
+
+Temperature extrapolation told a different story. In this direction the learned kinetics must carry the extrapolation, and every model failed badly, with median errors of 50–80%. The hybrid model remained significantly better than the alternatives (p ≤ 0.014), but an error of 50% is unusable in practice.
 
 The lesson is precise. Physics in the model buys extrapolation along physically modelled directions. It does not create knowledge about biology that the data never contained. In practice, the experimental design must span the ranges of the variables that act through learned kinetics, and model uncertainty should flag excursions outside them.
 
@@ -117,24 +117,9 @@ A model that predicts titre in one laboratory is of limited value if it cannot b
 
 The framework also has limitations. Hybrid models require mechanistic expertise that is scarce in many companies. CFD libraries for training surrogates are expensive to generate. Production-scale data are proprietary. The case studies are simulation-based: they demonstrate mechanisms and relative performance, not absolute numbers for a specific process. Their virtual plant, compartment model and acetate kinetics are deliberately simple, and real cells add memory effects, population heterogeneity and oxygen and CO₂ gradients that were not modelled here.
 
-Based on these observations we recommend:
+These observations translate into concrete recommendations. **Industry** should begin where the evidence is strongest, with hybrid models and Raman soft sensors. Uncertainty bands and T²/Q monitoring should be required for every deployed model, and contextualised data infrastructure should be built early, with language models used to structure legacy batch records. **Process developers** should combine intensified DoE with Bayesian optimisation, seeding the optimiser with a small space-filling design. They should design scale-down experiments by matching regime distributions (Eq. 28) rather than mixing time alone, and always span the ranges of variables that act through learned kinetics.
 
-- **For industry:**
-    - Start with hybrid models and Raman soft sensors, where the evidence is strongest.
-    - Require uncertainty bands and T²/Q monitoring for every deployed model.
-    - Invest early in contextualised data infrastructure, using language models to structure legacy batch records.
-- **For process developers:**
-    - Combine intensified DoE with Bayesian optimisation, seeding BO with a small space-filling design.
-    - Design scale-down experiments by matching regime distributions (Eq. 28) rather than by mixing time alone.
-    - Always span the ranges of variables that act through learned kinetics.
-- **For academia:**
-    - Publish benchmark datasets, ideally including pilot- and production-scale runs.
-    - Report performance separately for interpolation and for physically and kinetically governed extrapolation, with replicated runs and statistical tests, as in Table 6.
-- **For regulators and quality units:**
-    - Adopt risk-based credibility assessment for AI models, building on FDA (2023) and ICH Q13.
-    - Set clear expectations for change control of continuously learning models.
-- **For educators:**
-    - Train bioprocess engineers in statistics and ML, and data scientists in transport phenomena and cell physiology. Hybrid modelling sits exactly at their intersection.
+**Academia** should publish benchmark datasets, ideally including pilot- and production-scale runs. It should also report model performance separately for interpolation, for physically governed extrapolation and for kinetically governed extrapolation, with replicated runs and statistical tests as in Table 6. **Regulators and quality units** should adopt risk-based credibility assessment for AI models, building on FDA (2023) and ICH Q13, and set clear expectations for change control of continuously learning models. Finally, **educators** should train bioprocess engineers in statistics and machine learning, and data scientists in transport phenomena and cell physiology, because hybrid modelling sits precisely at their intersection.
 
 # 9. Future study and conclusion
 
@@ -153,12 +138,7 @@ Six research directions follow from this chapter.
 
 AI is reshaping how bioreactors are designed, monitored and scaled up. This chapter has provided the mathematical foundations needed to understand both the engineering problem and the AI methods. It has critically reviewed the literature from 2020 to 2025 and proposed the Design–Sense–Decide–Scale loop: a single hybrid digital twin that learns throughout the lifecycle and enables regime-matched scale-down, formalised as a Wasserstein-distance optimisation.
 
-Four reproducible in-silico case studies supplied quantitative evidence:
-
-- hybrid models halve prediction error and extrapolate safely along physically modelled directions;
-- MSPC-guarded soft sensors detect and recover from drift that would otherwise quadruple their error;
-- distribution-based scale-down reduces environmental mismatch by 85%;
-- Bayesian optimisation reaches 97% of the optimum in 15 runs.
+Four reproducible in-silico case studies supplied the quantitative evidence. Hybrid models halved prediction error and extrapolated safely along physically modelled directions. MSPC-guarded soft sensors detected, and recovered from, a drift that would otherwise have quadrupled their error. Distribution-based scale-down reduced environmental mismatch by 85%, and Bayesian optimisation reached a median 97% of the optimum within 15 runs. Equally important, the studies showed where current methods stop working: no model class extrapolated reliably along directions governed by learned kinetics.
 
 Supported by sound data infrastructure, transparent uncertainty and risk-based regulation, this integrated approach can shorten development timelines, reduce failed scale-up campaigns, and make biomanufacturing more robust, affordable and sustainable.
 
