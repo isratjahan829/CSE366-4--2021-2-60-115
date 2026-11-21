@@ -86,7 +86,7 @@ $$
 
 ## 2.2 Hydrodynamics, mixing and the mathematics of scale-up
 
-The impeller power draw is $P=N_P\,\rho N^3 D_i^5$. Here $N_P$ is the power number (about 5 for a Rushton turbine), $\rho$ is the liquid density, $N$ is the stirrer speed and $D_i$ is the impeller diameter. The Reynolds number is $Re=\rho N D_i^2/\eta$, where $\eta$ is the liquid viscosity, and the tip speed is $u_{tip}=\pi N D_i$. For turbulent, single-impeller tanks, Grenville and Nienow (2004) give the 95% mixing time as
+The impeller power draw is $P=N_P\,\rho N^3 D_i^5$. Here $N_P$ is the power number (about 5 for a Rushton turbine), $\rho$ is the liquid density, $N$ is the stirrer speed and $D_i$ is the impeller diameter. The Reynolds number is $Re=\rho N D_i^2/\eta$, where $\eta$ is the liquid viscosity, and the tip speed is $u_{tip}=\pi N D_i$. For turbulent, single-impeller tanks, Grenville and Nienow (2003) give the 95% mixing time as
 
 $$
 \theta_{95}=\frac{5.20}{N_P^{1/3}\,N}\left(\frac{T_v}{D_i}\right)^2 \qquad (6)
