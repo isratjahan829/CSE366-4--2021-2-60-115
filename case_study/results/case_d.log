@@ -1,0 +1,4 @@
+Bayesian optimisation 90.1 22.2 17
+Random search 66.0 21.4 1
+DoE + RSM (CCD) 88.9 5.5 3
+optimum [32.8   0.32] 10.982098808409042 {'Random search': 1.4624324663684467e-05, 'DoE + RSM (CCD)': 0.0011595632268946146}
